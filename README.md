@@ -1,4 +1,4 @@
-# Testing for Time Stochastic Dominance
+# Testing for Time Stochastic Dominance (Lee, Linton, Whang)
 
 This repository contains MATLAB implementation of testing for time stochastic dominance.
 
