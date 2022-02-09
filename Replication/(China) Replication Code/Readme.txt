@@ -28,17 +28,3 @@ The rest MATLAB codes are functions for running China_phAll.m
 
 9. test_data.m
 - Arrange data to be fit with testing
-
-These are descriptions about data:
-
-1. NCDC_panel0820.csv
-- Data from Almond and Zhang (2021)
-
-2. NCDC_panel_quarterly.csv
-- Quarterly panel data constructed from NCDC_panel0820.csv
-
-3. quarterly_visib.dta
-- dta file of NCDC_panel_quarterly.csv
-
-4. China_CNT_1028.csv
-- Testing Results
