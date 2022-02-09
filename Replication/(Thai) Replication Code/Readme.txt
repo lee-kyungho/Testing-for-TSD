@@ -29,18 +29,4 @@ The rest MATLAB codes are functions for running Thai_211023.m
 
 9. construct_test_data.m
 - Arrange data to be fit with testing
-
-These are descriptions about data:
-
-1. ThaiVillage_Panel.csv
-- Panel data from Kaboski and Townsend (2012)
-
-2. ThaiVillage_Panel.dta
-- dta file of ThaiVillage_Panel.csv
-
-3. P_Values_time_after0Thai_Micro_20211024.csv
-- p-values of time stochastic dominance testing before the initiation of the program.
-
-4. P_Values_time_after1Thai_Micro_20211024.csv
-- p-values of time stochastic dominance testing after the initiation of the program.
  
