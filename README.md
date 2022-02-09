@@ -1,3 +1,5 @@
-# MATLAB implementation of Time Stochastic Dominance Test
+# Testing for Time Stochastic Dominance
 
-TTSD_
+This repository contains MATLAB implementation of testing for time stochastic dominance.
+
+TTSD.m implements testing
