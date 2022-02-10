@@ -1,4 +1,6 @@
-# Testing for Time Stochastic Dominance (Lee, Linton, Whang)
+# Testing for Time Stochastic Dominance 
+
+by Kyungho Lee, Oliver Linton, and Yoon-Jae Whang
 
 This repository contains MATLAB implementation of testing for time stochastic dominance.
 
