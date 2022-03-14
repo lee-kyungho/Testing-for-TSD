@@ -1,10 +1,6 @@
 
 function f = operation(n,m,sample,grid)
 
-
-% Author: Kyungho Lee(SNU Econ)
-
-
 %---- About Input Sample ----%
 % The input sample should have a dimension as N_k * (T+1) * b
 
