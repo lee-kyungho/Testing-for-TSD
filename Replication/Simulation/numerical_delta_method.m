@@ -1,6 +1,5 @@
 
 function NDM_dist = numerical_delta_method(D,b_D_recentered,epsilon,r_N,p,type,way)
-% Author: Kyungho Lee(SNU Econ, kh.lee@snu.ac.kr)
 % input data dimension: (# of GRID) x (Length of Time Horizon + 1) x (# of Bootstrap Sample)
 % If there is no bootstrap sample (i.e. original sample) then the last
 % dimension is 1.
