@@ -4,8 +4,6 @@ function [T_11_max_contact, T_11_sum_contact, T_12_max_contact, T_12_sum_contact
           b_D_21_recentered, b_D_22_collection_recentered, p, N, r_N, c_N)
 
 
-       
-% Author: Kyungho Lee(SNU Econ)
 % In this code, we implement TGI Estimation of (1,1), (1,2), (2,1), (2,2)
 % by once.
 % The code for specific n,m orders TBA.
