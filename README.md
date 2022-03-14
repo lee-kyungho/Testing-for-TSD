@@ -2,7 +2,7 @@
 
 by Kyungho Lee, Oliver Linton, and Yoon-Jae Whang
 
-This repository contains MATLAB implementation of testing for time stochastic dominance.
+This repository contains the MATLAB implementation of testing for time stochastic dominance.
 
 - TTSD folder contains MATLAB codes for implementation
 - TTSD.m implements the time stochastic dominance test
