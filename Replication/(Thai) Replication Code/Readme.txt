@@ -37,10 +37,3 @@ These are descriptions about data:
 
 2. ThaiVillage_Panel.dta
 - dta file of ThaiVillage_Panel.csv
-
-3. P_Values_time_after0Thai_Micro_20211024.csv
-- p-values of time stochastic dominance testing before the initiation of the program.
-
-4. P_Values_time_after1Thai_Micro_20211024.csv
-- p-values of time stochastic dominance testing after the initiation of the program.
- 
