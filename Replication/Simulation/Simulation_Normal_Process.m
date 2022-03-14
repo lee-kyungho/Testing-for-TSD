@@ -19,27 +19,18 @@ alpha = 0.05;
 % Tuning param eta
 eta = 10^(-6);
 
-Results_max_p1 = ["N" "design" "order" "LFC" ...
-                   "contact_1" "contact_2" "contact_3" "contact_4" "contact_5"  ... 
-                   "NDM_1" "NDM_2" "NDM_3" "NDM_4" "NDM_5" ...
-                    ];
+Results_max_p1 = ["N" "design" "order" "sigma" "LFC" ...
+                   "contact_3" "NDM_5"];
 
-Results_sum_p1 = ["N" "design" "order" "LFC" ...
-                   "contact_1" "contact_2" "contact_3" "contact_4" "contact_5"  ... 
-                   "NDM_1" "NDM_2" "NDM_3" "NDM_4" "NDM_5" ...
-                   ];
+Results_sum_p1 = ["N" "design" "order" "sigma" "LFC" ...
+                   "contact_3" "NDM_5"];
 
-Results_max_p2 = [ "N" "design" "(2,2)" "LFC" ...
-                   "contact_1" "contact_2" "contact_3" "contact_4" "contact_5"... 
-                   "NDM_1_1" "NDM_1_2" "NDM_1_3" "NDM_1_4" "NDM_1_5" ...
-                   "NDM_2_1" "NDM_2_2" "NDM_2_3" "NDM_2_4" "NDM_2_5" ];
+Results_max_p2 = ["N" "design" "order" "sigma" "LFC" ...
+                   "contact_3" "NDM_2_1"];
 
               
-Results_sum_p2 =  [ "N" "design" "(2,2)" "LFC" ...
-                   "contact_1" "contact_2" "contact_3" "contact_4" "contact_5" ... 
-                   "NDM_1_1" "NDM_1_2" "NDM_1_3" "NDM_1_4" "NDM_1_5" ...
-                   "NDM_2_1" "NDM_2_2" "NDM_2_3" "NDM_2_4" "NDM_2_5" 
-                   ];
+Results_sum_p2 = ["N" "design" "order" "sigma" "LFC" ...
+                   "contact_3" "NDM_2_1"];
 
 
 % Sample Size
@@ -57,6 +48,7 @@ X(:,1,:) = X0;
 for i = 1:T
     X(:,i+1,:) = 0.5*X(:,i,:) +  randn(N,1,n_simul);
 end
+sigma = 1;
 
 Y = zeros(N,T+1,n_simul);
 Y0 = randn(N,1,n_simul);
@@ -67,17 +59,23 @@ for i = 1:T
 end
 
 if design == 1
-Y(:,1,:) = Y(:,1,:)*0.5;
+    sigma = 0.5;
+    Y(:,1,:) = Y(:,1,:)*sigma;
 elseif design == 2
-Y(:,1,:) = Y(:,1,:)*2;
+    sigma = 2;
+    Y(:,1,:) = Y(:,1,:)*sigma;
 elseif design == 3
-Y(:,3,:) = Y(:,3,:)*0.5;
+    sigma = 0.5;
+    Y(:,3,:) = Y(:,3,:)*sigma;
 elseif design == 4
-Y(:,3,:) = Y(:,3,:)*2;
+    sigma = 2;
+    Y(:,3,:) = Y(:,3,:)*sigma;
 elseif design == 5
-Y(:,T+1,:) = Y(:,T+1,:)*0.5;
+    sigma = 0.5;
+    Y(:,T+1,:) = Y(:,T+1,:)*sigma;
 elseif design == 6
-Y(:,T+1,:) = Y(:,T+1,:)*2;
+    sigma = 2;
+    Y(:,T+1,:) = Y(:,T+1,:)*sigma;
 end
 % for two differenet sample size: 
 % r_N = sqrt(size(X,1)*size(Y,1)/(size(X,1) + size(Y,1)));
@@ -98,91 +96,26 @@ rejection_11_btsp_sum_LFC_p1     = [];
 
 % p = 1 Contact
 
-rejection_11_max_contact_1_p1 = [];
-rejection_11_sum_contact_1_p1 = [];
-
-rejection_11_max_contact_2_p1 = [];
-rejection_11_sum_contact_2_p1 = [];
-
 rejection_11_max_contact_3_p1 = [];
 rejection_11_sum_contact_3_p1 = [];
 
-rejection_11_max_contact_4_p1 = [];
-rejection_11_sum_contact_4_p1 = [];
-
-rejection_11_max_contact_5_p1 = [];
-rejection_11_sum_contact_5_p1 = [];
-
 % p = 1 NDM
-
-rejection_11_btsp_max_NDM_1_p1 = [];
-rejection_11_btsp_sum_NDM_1_p1 = [];
-
-rejection_11_btsp_max_NDM_2_p1 = [];
-rejection_11_btsp_sum_NDM_2_p1 = [];
-
-rejection_11_btsp_max_NDM_3_p1 = [];
-rejection_11_btsp_sum_NDM_3_p1 = [];
-
-rejection_11_btsp_max_NDM_4_p1 = [];
-rejection_11_btsp_sum_NDM_4_p1 = [];
 
 rejection_11_btsp_max_NDM_5_p1 = [];
 rejection_11_btsp_sum_NDM_5_p1 = [];
 
 % p = 2 contact
 
-rejection_11_btsp_max_LFC_p2     = []; 
-rejection_11_btsp_sum_LFC_p2     = [];
-
-rejection_11_max_contact_1_p2 = [];
-rejection_11_sum_contact_1_p2 = [];
-
-rejection_11_max_contact_2_p2 = [];
-rejection_11_sum_contact_2_p2 = [];
+rejection_11_btsp_max_LFC_p2   = []; 
+rejection_11_btsp_sum_LFC_p2   = [];
 
 rejection_11_max_contact_3_p2 = [];
 rejection_11_sum_contact_3_p2 = [];
 
-rejection_11_max_contact_4_p2 = [];
-rejection_11_sum_contact_4_p2 = [];
-
-rejection_11_max_contact_5_p2 = [];
-rejection_11_sum_contact_5_p2 = [];
-
-% p = 2 First way of Approximation
-
-rejection_11_btsp_max_NDM_1_p2_first = [];
-rejection_11_btsp_sum_NDM_1_p2_first = [];
-
-rejection_11_btsp_max_NDM_2_p2_first = [];
-rejection_11_btsp_sum_NDM_2_p2_first = [];
-
-rejection_11_btsp_max_NDM_3_p2_first = [];
-rejection_11_btsp_sum_NDM_3_p2_first = [];
-
-rejection_11_btsp_max_NDM_4_p2_first = [];
-rejection_11_btsp_sum_NDM_4_p2_first = [];
-
-rejection_11_btsp_max_NDM_5_p2_first = [];
-rejection_11_btsp_sum_NDM_5_p2_first = [];
-
-% p = 2 Second way of Approximation
+% p = 2
 
 rejection_11_btsp_max_NDM_1_p2_second = [];
 rejection_11_btsp_sum_NDM_1_p2_second = [];
-
-rejection_11_btsp_max_NDM_2_p2_second = [];
-rejection_11_btsp_sum_NDM_2_p2_second = [];
-
-rejection_11_btsp_max_NDM_3_p2_second = [];
-rejection_11_btsp_sum_NDM_3_p2_second = [];
-
-rejection_11_btsp_max_NDM_4_p2_second = [];
-rejection_11_btsp_sum_NDM_4_p2_second = [];
-
-rejection_11_btsp_max_NDM_5_p2_second = [];
-rejection_11_btsp_sum_NDM_5_p2_second = [];
 
 % (1,2)
 
@@ -193,93 +126,28 @@ rejection_12_btsp_sum_LFC_p1     = [];
 
 % p = 1 Contact
 
-rejection_12_max_contact_1_p1 = [];
-rejection_12_sum_contact_1_p1 = [];
-
-rejection_12_max_contact_2_p1 = [];
-rejection_12_sum_contact_2_p1 = [];
-
 rejection_12_max_contact_3_p1 = [];
 rejection_12_sum_contact_3_p1 = [];
 
-rejection_12_max_contact_4_p1 = [];
-rejection_12_sum_contact_4_p1 = [];
-
-rejection_12_max_contact_5_p1 = [];
-rejection_12_sum_contact_5_p1 = [];
-
 % p = 1 NDM 
-
-rejection_12_btsp_max_NDM_1_p1 = [];
-rejection_12_btsp_sum_NDM_1_p1 = [];
-
-rejection_12_btsp_max_NDM_2_p1 = [];
-rejection_12_btsp_sum_NDM_2_p1 = [];
-
-rejection_12_btsp_max_NDM_3_p1 = [];
-rejection_12_btsp_sum_NDM_3_p1 = [];
-
-rejection_12_btsp_max_NDM_4_p1 = [];
-rejection_12_btsp_sum_NDM_4_p1 = [];
 
 rejection_12_btsp_max_NDM_5_p1 = [];
 rejection_12_btsp_sum_NDM_5_p1 = [];
 
 % p = 2 LFC
 
-rejection_12_btsp_max_LFC_p2     = []; 
-rejection_12_btsp_sum_LFC_p2     = [];
+rejection_12_btsp_max_LFC_p2   = []; 
+rejection_12_btsp_sum_LFC_p2   = [];
 
 % p = 2 Contact
-
-rejection_12_max_contact_1_p2 = [];
-rejection_12_sum_contact_1_p2 = [];
-
-rejection_12_max_contact_2_p2 = [];
-rejection_12_sum_contact_2_p2 = [];
 
 rejection_12_max_contact_3_p2 = [];
 rejection_12_sum_contact_3_p2 = [];
 
-rejection_12_max_contact_4_p2 = [];
-rejection_12_sum_contact_4_p2 = [];
-
-rejection_12_max_contact_5_p2 = [];
-rejection_12_sum_contact_5_p2 = [];
-
-% p = 2 NDM First
-
-rejection_12_btsp_max_NDM_1_p2_first = [];
-rejection_12_btsp_sum_NDM_1_p2_first = [];
-
-rejection_12_btsp_max_NDM_2_p2_first = [];
-rejection_12_btsp_sum_NDM_2_p2_first = [];
-
-rejection_12_btsp_max_NDM_3_p2_first = [];
-rejection_12_btsp_sum_NDM_3_p2_first = [];
-
-rejection_12_btsp_max_NDM_4_p2_first = [];
-rejection_12_btsp_sum_NDM_4_p2_first = [];
-
-rejection_12_btsp_max_NDM_5_p2_first = [];
-rejection_12_btsp_sum_NDM_5_p2_first = [];
-
-% p = 2 NDM Second
+% p = 2 NDM 
 
 rejection_12_btsp_max_NDM_1_p2_second = [];
 rejection_12_btsp_sum_NDM_1_p2_second = [];
-
-rejection_12_btsp_max_NDM_2_p2_second = [];
-rejection_12_btsp_sum_NDM_2_p2_second = [];
-
-rejection_12_btsp_max_NDM_3_p2_second = [];
-rejection_12_btsp_sum_NDM_3_p2_second = [];
-
-rejection_12_btsp_max_NDM_4_p2_second = [];
-rejection_12_btsp_sum_NDM_4_p2_second = [];
-
-rejection_12_btsp_max_NDM_5_p2_second = [];
-rejection_12_btsp_sum_NDM_5_p2_second = [];
 
 % (2,1)
 
@@ -290,34 +158,10 @@ rejection_21_btsp_sum_LFC_p1     = [];
 
 % p = 1 Contact
 
-rejection_21_max_contact_1_p1 = [];
-rejection_21_sum_contact_1_p1 = [];
-
-rejection_21_max_contact_2_p1 = [];
-rejection_21_sum_contact_2_p1 = [];
-
 rejection_21_max_contact_3_p1 = [];
 rejection_21_sum_contact_3_p1 = [];
 
-rejection_21_max_contact_4_p1 = [];
-rejection_21_sum_contact_4_p1 = [];
-
-rejection_21_max_contact_5_p1 = [];
-rejection_21_sum_contact_5_p1 = [];
-
 % p = 1 NDM
-
-rejection_21_btsp_max_NDM_1_p1 = [];
-rejection_21_btsp_sum_NDM_1_p1 = [];
-
-rejection_21_btsp_max_NDM_2_p1 = [];
-rejection_21_btsp_sum_NDM_2_p1 = [];
-
-rejection_21_btsp_max_NDM_3_p1 = [];
-rejection_21_btsp_sum_NDM_3_p1 = [];
-
-rejection_21_btsp_max_NDM_4_p1 = [];
-rejection_21_btsp_sum_NDM_4_p1 = [];
 
 rejection_21_btsp_max_NDM_5_p1 = [];
 rejection_21_btsp_sum_NDM_5_p1 = [];
@@ -329,54 +173,13 @@ rejection_21_btsp_sum_LFC_p2     = [];
 
 % p = 2 Contact
 
-rejection_21_max_contact_1_p2 = [];
-rejection_21_sum_contact_1_p2 = [];
-
-rejection_21_max_contact_2_p2 = [];
-rejection_21_sum_contact_2_p2 = [];
-
 rejection_21_max_contact_3_p2 = [];
 rejection_21_sum_contact_3_p2 = [];
 
-rejection_21_max_contact_4_p2 = [];
-rejection_21_sum_contact_4_p2 = [];
-
-rejection_21_max_contact_5_p2 = [];
-rejection_21_sum_contact_5_p2 = [];
-
-% p = 2 NDM First
-
-rejection_21_btsp_max_NDM_1_p2_first = [];
-rejection_21_btsp_sum_NDM_1_p2_first = [];
-
-rejection_21_btsp_max_NDM_2_p2_first = [];
-rejection_21_btsp_sum_NDM_2_p2_first = [];
-
-rejection_21_btsp_max_NDM_3_p2_first = [];
-rejection_21_btsp_sum_NDM_3_p2_first = [];
-
-rejection_21_btsp_max_NDM_4_p2_first = [];
-rejection_21_btsp_sum_NDM_4_p2_first = [];
-
-rejection_21_btsp_max_NDM_5_p2_first = [];
-rejection_21_btsp_sum_NDM_5_p2_first = [];
-
-% p = 2 NDM Second
+% p = 2 
 
 rejection_21_btsp_max_NDM_1_p2_second = [];
 rejection_21_btsp_sum_NDM_1_p2_second = [];
-
-rejection_21_btsp_max_NDM_2_p2_second = [];
-rejection_21_btsp_sum_NDM_2_p2_second = [];
-
-rejection_21_btsp_max_NDM_3_p2_second = [];
-rejection_21_btsp_sum_NDM_3_p2_second = [];
-
-rejection_21_btsp_max_NDM_4_p2_second = [];
-rejection_21_btsp_sum_NDM_4_p2_second = [];
-
-rejection_21_btsp_max_NDM_5_p2_second = [];
-rejection_21_btsp_sum_NDM_5_p2_second = [];
 
 % (2,2)
 
@@ -387,34 +190,10 @@ rejection_22_btsp_sum_LFC_p1     = [];
 
 % p = 1 Contact
 
-rejection_22_max_contact_1_p1 = [];
-rejection_22_sum_contact_1_p1 = [];
-
-rejection_22_max_contact_2_p1 = [];
-rejection_22_sum_contact_2_p1 = [];
-
 rejection_22_max_contact_3_p1 = [];
 rejection_22_sum_contact_3_p1 = [];
 
-rejection_22_max_contact_4_p1 = [];
-rejection_22_sum_contact_4_p1 = [];
-
-rejection_22_max_contact_5_p1 = [];
-rejection_22_sum_contact_5_p1 = [];
-
 % p = 1 NDM 
-
-rejection_22_btsp_max_NDM_1_p1 = [];
-rejection_22_btsp_sum_NDM_1_p1 = [];
-
-rejection_22_btsp_max_NDM_2_p1 = [];
-rejection_22_btsp_sum_NDM_2_p1 = [];
-
-rejection_22_btsp_max_NDM_3_p1 = [];
-rejection_22_btsp_sum_NDM_3_p1 = [];
-
-rejection_22_btsp_max_NDM_4_p1 = [];
-rejection_22_btsp_sum_NDM_4_p1 = [];
 
 rejection_22_btsp_max_NDM_5_p1 = [];
 rejection_22_btsp_sum_NDM_5_p1 = [];
@@ -426,54 +205,13 @@ rejection_22_btsp_sum_LFC_p2     = [];
 
 % p = 2 Contact
 
-rejection_22_max_contact_1_p2 = [];
-rejection_22_sum_contact_1_p2 = [];
-
-rejection_22_max_contact_2_p2 = [];
-rejection_22_sum_contact_2_p2 = [];
-
 rejection_22_max_contact_3_p2 = [];
 rejection_22_sum_contact_3_p2 = [];
 
-rejection_22_max_contact_4_p2 = [];
-rejection_22_sum_contact_4_p2 = [];
-
-rejection_22_max_contact_5_p2 = [];
-rejection_22_sum_contact_5_p2 = [];
-
-% p = 2 NDM First
-
-rejection_22_btsp_max_NDM_1_p2_first = [];
-rejection_22_btsp_sum_NDM_1_p2_first = [];
-
-rejection_22_btsp_max_NDM_2_p2_first = [];
-rejection_22_btsp_sum_NDM_2_p2_first = [];
-
-rejection_22_btsp_max_NDM_3_p2_first = [];
-rejection_22_btsp_sum_NDM_3_p2_first = [];
-
-rejection_22_btsp_max_NDM_4_p2_first = [];
-rejection_22_btsp_sum_NDM_4_p2_first = [];
-
-rejection_22_btsp_max_NDM_5_p2_first = [];
-rejection_22_btsp_sum_NDM_5_p2_first = [];
-
-% p = 2 NDM Second
+% p = 2 NDM 
 
 rejection_22_btsp_max_NDM_1_p2_second = [];
 rejection_22_btsp_sum_NDM_1_p2_second = [];
-
-rejection_22_btsp_max_NDM_2_p2_second = [];
-rejection_22_btsp_sum_NDM_2_p2_second = [];
-
-rejection_22_btsp_max_NDM_3_p2_second = [];
-rejection_22_btsp_sum_NDM_3_p2_second = [];
-
-rejection_22_btsp_max_NDM_4_p2_second = [];
-rejection_22_btsp_sum_NDM_4_p2_second = [];
-
-rejection_22_btsp_max_NDM_5_p2_second = [];
-rejection_22_btsp_sum_NDM_5_p2_second = [];
 
 tic
 
@@ -688,36 +426,7 @@ btsp_T_22_sum_LFC_p2 = r_N^p2 * trapz(btsp_Lamb_22_sum_LFC_p2,1);
 %---- Bootsrap Sample Statistics -----%
 %---- Contact Set Approach -----------%
 
-% Setting Tuning parameter 
-% Tuning parameters range 0.3 ~ 0.6
-% 1. c = 0.3
-c_N_1 = 0.3*log(log(N));
-
-[T_11_max_contact_1_p1, T_11_sum_contact_1_p1, T_12_max_contact_1_p1, T_12_sum_contact_1_p1, ...
- T_21_max_contact_1_p1, T_21_sum_contact_1_p1, T_22_max_contact_1_p1, T_22_sum_contact_1_p1] = ...
-            TGI_Estimation(D_11,D_12,D_21,D_22_collection,b_D_11_recentered,b_D_12_recentered, ...
-                           b_D_21_recentered, b_D_22_collection_recentered, p1, N, r_N, c_N_1);
-
-                       
-[T_11_max_contact_1_p2, T_11_sum_contact_1_p2, T_12_max_contact_1_p2, T_12_sum_contact_1_p2, ...
- T_21_max_contact_1_p2, T_21_sum_contact_1_p2, T_22_max_contact_1_p2, T_22_sum_contact_1_p2] = ...
-            TGI_Estimation(D_11,D_12,D_21,D_22_collection,b_D_11_recentered,b_D_12_recentered, ...
-                           b_D_21_recentered, b_D_22_collection_recentered, p2, N, r_N, c_N_1);
-
-                       
-% 2. c = 0.4
-c_N_2 = 0.4*log(log(N));
-
-[T_11_max_contact_2_p1, T_11_sum_contact_2_p1, T_12_max_contact_2_p1, T_12_sum_contact_2_p1, ...
- T_21_max_contact_2_p1, T_21_sum_contact_2_p1, T_22_max_contact_2_p1, T_22_sum_contact_2_p1] = ...
-            TGI_Estimation(D_11,D_12,D_21,D_22_collection,b_D_11_recentered,b_D_12_recentered, ...
-                           b_D_21_recentered, b_D_22_collection_recentered, p1, N, r_N, c_N_2);
-
-[T_11_max_contact_2_p2, T_11_sum_contact_2_p2, T_12_max_contact_2_p2, T_12_sum_contact_2_p2, ...
- T_21_max_contact_2_p2, T_21_sum_contact_2_p2, T_22_max_contact_2_p2, T_22_sum_contact_2_p2] = ...
-            TGI_Estimation(D_11,D_12,D_21,D_22_collection,b_D_11_recentered,b_D_12_recentered, ...
-                           b_D_21_recentered, b_D_22_collection_recentered, p2, N, r_N, c_N_2);
-                          
+% Setting Tuning parameter                           
 % 3. c = 0.5
 c_N_3 = 0.5*log(log(N));
 
@@ -729,34 +438,7 @@ c_N_3 = 0.5*log(log(N));
 [T_11_max_contact_3_p2, T_11_sum_contact_3_p2, T_12_max_contact_3_p2, T_12_sum_contact_3_p2, ...
  T_21_max_contact_3_p2, T_21_sum_contact_3_p2, T_22_max_contact_3_p2, T_22_sum_contact_3_p2] = ...
             TGI_Estimation(D_11,D_12,D_21,D_22_collection,b_D_11_recentered,b_D_12_recentered, ...
-                           b_D_21_recentered, b_D_22_collection_recentered, p2, N, r_N, c_N_3);
-%                                  
-% 4. c = 0.6
-c_N_4 = 0.6*log(log(N));
-
-[T_11_max_contact_4_p1, T_11_sum_contact_4_p1, T_12_max_contact_4_p1, T_12_sum_contact_4_p1, ...
- T_21_max_contact_4_p1, T_21_sum_contact_4_p1, T_22_max_contact_4_p1, T_22_sum_contact_4_p1] = ...
-            TGI_Estimation(D_11,D_12,D_21,D_22_collection,b_D_11_recentered,b_D_12_recentered, ...
-                           b_D_21_recentered, b_D_22_collection_recentered, p1, N, r_N, c_N_4);
-
-[T_11_max_contact_4_p2, T_11_sum_contact_4_p2, T_12_max_contact_4_p2, T_12_sum_contact_4_p2, ...
- T_21_max_contact_4_p2, T_21_sum_contact_4_p2, T_22_max_contact_4_p2, T_22_sum_contact_4_p2] = ...
-            TGI_Estimation(D_11,D_12,D_21,D_22_collection,b_D_11_recentered,b_D_12_recentered, ...
-                           b_D_21_recentered, b_D_22_collection_recentered, p2, N, r_N, c_N_4);
-                                  
-% 5. c = 0.7
-c_N_5 = 0.7*log(log(N));
-
-[T_11_max_contact_5_p1, T_11_sum_contact_5_p1, T_12_max_contact_5_p1, T_12_sum_contact_5_p1, ...
- T_21_max_contact_5_p1, T_21_sum_contact_5_p1, T_22_max_contact_5_p1, T_22_sum_contact_5_p1] = ...
-            TGI_Estimation(D_11,D_12,D_21,D_22_collection,b_D_11_recentered,b_D_12_recentered, ...
-                           b_D_21_recentered, b_D_22_collection_recentered, p1, N, r_N, c_N_5);
-
-
-[T_11_max_contact_5_p2, T_11_sum_contact_5_p2, T_12_max_contact_5_p2, T_12_sum_contact_5_p2, ...
- T_21_max_contact_5_p2, T_21_sum_contact_5_p2, T_22_max_contact_5_p2, T_22_sum_contact_5_p2] = ...
-            TGI_Estimation(D_11,D_12,D_21,D_22_collection,b_D_11_recentered,b_D_12_recentered, ...
-                           b_D_21_recentered, b_D_22_collection_recentered, p2, N, r_N, c_N_5);                       
+                           b_D_21_recentered, b_D_22_collection_recentered, p2, N, r_N, c_N_3);                
                 
 %--------- Numerical Delta Method ----------------------%
 % We follow Hong and Li(2018)
@@ -771,181 +453,20 @@ epsilon_1 = r_N^(-1/128);
 % Bootstrap Statistics ----------------------%
 
 % (1,1)
-btsp_phi_dist_11_max_1_p1        = numerical_delta_method(D_11,b_D_11_recentered,epsilon_1,r_N,p1,'max',1);
-btsp_phi_dist_11_sum_1_p1        = numerical_delta_method(D_11,b_D_11_recentered,epsilon_1,r_N,p1,'sum',1);
-
-btsp_phi_dist_11_max_1_p2_first  = numerical_delta_method(D_11,b_D_11_recentered,epsilon_1,r_N,p2,'max',1);
-btsp_phi_dist_11_sum_1_p2_first  = numerical_delta_method(D_11,b_D_11_recentered,epsilon_1,r_N,p2,'sum',1);
-
 btsp_phi_dist_11_max_1_p2_second = numerical_delta_method(D_11,b_D_11_recentered,epsilon_1,r_N,p2,'max',2);
 btsp_phi_dist_11_sum_1_p2_second = numerical_delta_method(D_11,b_D_11_recentered,epsilon_1,r_N,p2,'sum',2);
 
 % (1,2)
-btsp_phi_dist_12_max_1_p1        = numerical_delta_method(D_12,b_D_12_recentered,epsilon_1,r_N,p1,'max',1);
-btsp_phi_dist_12_sum_1_p1        = numerical_delta_method(D_12,b_D_12_recentered,epsilon_1,r_N,p1,'sum',1);
-
-btsp_phi_dist_12_max_1_p2_first  = numerical_delta_method(D_12,b_D_12_recentered,epsilon_1,r_N,p2,'max',1);
-btsp_phi_dist_12_sum_1_p2_first  = numerical_delta_method(D_12,b_D_12_recentered,epsilon_1,r_N,p2,'sum',1);
-
 btsp_phi_dist_12_max_1_p2_second = numerical_delta_method(D_12,b_D_12_recentered,epsilon_1,r_N,p2,'max',2);
 btsp_phi_dist_12_sum_1_p2_second = numerical_delta_method(D_12,b_D_12_recentered,epsilon_1,r_N,p2,'sum',2);
 
 % (2,1)
-btsp_phi_dist_21_max_1_p1        = numerical_delta_method(D_21,b_D_21_recentered,epsilon_1,r_N,p1,'max',1);
-btsp_phi_dist_21_sum_1_p1        = numerical_delta_method(D_21,b_D_21_recentered,epsilon_1,r_N,p1,'sum',1);
-
-btsp_phi_dist_21_max_1_p2_first  = numerical_delta_method(D_21,b_D_21_recentered,epsilon_1,r_N,p2,'max',1);
-btsp_phi_dist_21_sum_1_p2_first  = numerical_delta_method(D_21,b_D_21_recentered,epsilon_1,r_N,p2,'sum',1);
-
 btsp_phi_dist_21_max_1_p2_second = numerical_delta_method(D_21,b_D_21_recentered,epsilon_1,r_N,p2,'max',2);
 btsp_phi_dist_21_sum_1_p2_second = numerical_delta_method(D_21,b_D_21_recentered,epsilon_1,r_N,p2,'sum',2);
 
 % (2,2)
-btsp_phi_dist_22_max_1_p1        = numerical_delta_method(D_22,b_D_22_recentered,epsilon_1,r_N,p1,'max',1);
-btsp_phi_dist_22_sum_1_p1        = numerical_delta_method(D_22,b_D_22_recentered,epsilon_1,r_N,p1,'sum',1);
-
-btsp_phi_dist_22_max_1_p2_first  = numerical_delta_method(D_22,b_D_22_recentered,epsilon_1,r_N,p2,'max',1);
-btsp_phi_dist_22_sum_1_p2_first  = numerical_delta_method(D_22,b_D_22_recentered,epsilon_1,r_N,p2,'sum',1);
-
 btsp_phi_dist_22_max_1_p2_second = numerical_delta_method(D_22,b_D_22_recentered,epsilon_1,r_N,p2,'max',2);
 btsp_phi_dist_22_sum_1_p2_second = numerical_delta_method(D_22,b_D_22_recentered,epsilon_1,r_N,p2,'sum',2);
-
-% %2. r_N^(-1/64)
-epsilon_2 = r_N^(-1/64);
-% 
-% % Bootstrap Statistics ----------------------%
-% 
-% % (1,1)
-btsp_phi_dist_11_max_2_p1        = numerical_delta_method(D_11,b_D_11_recentered,epsilon_2,r_N,p1,'max',1);
-btsp_phi_dist_11_sum_2_p1        = numerical_delta_method(D_11,b_D_11_recentered,epsilon_2,r_N,p1,'sum',1);
-
-btsp_phi_dist_11_max_2_p2_first  = numerical_delta_method(D_11,b_D_11_recentered,epsilon_2,r_N,p2,'max',1);
-btsp_phi_dist_11_sum_2_p2_first  = numerical_delta_method(D_11,b_D_11_recentered,epsilon_2,r_N,p2,'sum',1);
-
-btsp_phi_dist_11_max_2_p2_second = numerical_delta_method(D_11,b_D_11_recentered,epsilon_2,r_N,p2,'max',2);
-btsp_phi_dist_11_sum_2_p2_second = numerical_delta_method(D_11,b_D_11_recentered,epsilon_2,r_N,p2,'sum',2);
-
-% % (1,2)
-btsp_phi_dist_12_max_2_p1        = numerical_delta_method(D_12,b_D_12_recentered,epsilon_2,r_N,p1,'max',1);
-btsp_phi_dist_12_sum_2_p1        = numerical_delta_method(D_12,b_D_12_recentered,epsilon_2,r_N,p1,'sum',1);
-
-btsp_phi_dist_12_max_2_p2_first  = numerical_delta_method(D_12,b_D_12_recentered,epsilon_2,r_N,p2,'max',1);
-btsp_phi_dist_12_sum_2_p2_first  = numerical_delta_method(D_12,b_D_12_recentered,epsilon_2,r_N,p2,'sum',1);
-
-btsp_phi_dist_12_max_2_p2_second = numerical_delta_method(D_12,b_D_12_recentered,epsilon_2,r_N,p2,'max',2);
-btsp_phi_dist_12_sum_2_p2_second = numerical_delta_method(D_12,b_D_12_recentered,epsilon_2,r_N,p2,'sum',2);
-
-% % (2,1)
-btsp_phi_dist_21_max_2_p1        = numerical_delta_method(D_21,b_D_21_recentered,epsilon_2,r_N,p1,'max',1);
-btsp_phi_dist_21_sum_2_p1        = numerical_delta_method(D_21,b_D_21_recentered,epsilon_2,r_N,p1,'sum',1);
-
-btsp_phi_dist_21_max_2_p2_first  = numerical_delta_method(D_21,b_D_21_recentered,epsilon_2,r_N,p2,'max',1);
-btsp_phi_dist_21_sum_2_p2_first  = numerical_delta_method(D_21,b_D_21_recentered,epsilon_2,r_N,p2,'sum',1);
-
-btsp_phi_dist_21_max_2_p2_second = numerical_delta_method(D_21,b_D_21_recentered,epsilon_2,r_N,p2,'max',2);
-btsp_phi_dist_21_sum_2_p2_second = numerical_delta_method(D_21,b_D_21_recentered,epsilon_2,r_N,p2,'sum',2);
-
-% % (2,2)
-btsp_phi_dist_22_max_2_p1        = numerical_delta_method(D_22,b_D_22_recentered,epsilon_2,r_N,p1,'max',1);
-btsp_phi_dist_22_sum_2_p1        = numerical_delta_method(D_22,b_D_22_recentered,epsilon_2,r_N,p1,'sum',1);
-
-btsp_phi_dist_22_max_2_p2_first  = numerical_delta_method(D_22,b_D_22_recentered,epsilon_2,r_N,p2,'max',1);
-btsp_phi_dist_22_sum_2_p2_first  = numerical_delta_method(D_22,b_D_22_recentered,epsilon_2,r_N,p2,'sum',1);
-
-btsp_phi_dist_22_max_2_p2_second = numerical_delta_method(D_22,b_D_22_recentered,epsilon_2,r_N,p2,'max',2);
-btsp_phi_dist_22_sum_2_p2_second = numerical_delta_method(D_22,b_D_22_recentered,epsilon_2,r_N,p2,'sum',2);
-
-% %3. r_N^(-1/32)
-
-epsilon_3 = r_N^(-1/32);
-% 
-% % Bootstrap Statistics ----------------------%
-% 
-% % (1,1)
-btsp_phi_dist_11_max_3_p1        = numerical_delta_method(D_11,b_D_11_recentered,epsilon_3,r_N,p1,'max',1);
-btsp_phi_dist_11_sum_3_p1        = numerical_delta_method(D_11,b_D_11_recentered,epsilon_3,r_N,p1,'sum',1);
-
-btsp_phi_dist_11_max_3_p2_first  = numerical_delta_method(D_11,b_D_11_recentered,epsilon_3,r_N,p2,'max',1);
-btsp_phi_dist_11_sum_3_p2_first  = numerical_delta_method(D_11,b_D_11_recentered,epsilon_3,r_N,p2,'sum',1);
-
-btsp_phi_dist_11_max_3_p2_second = numerical_delta_method(D_11,b_D_11_recentered,epsilon_3,r_N,p2,'max',2);
-btsp_phi_dist_11_sum_3_p2_second = numerical_delta_method(D_11,b_D_11_recentered,epsilon_3,r_N,p2,'sum',2);
-
-% % (1,2)
-btsp_phi_dist_12_max_3_p1        = numerical_delta_method(D_12,b_D_12_recentered,epsilon_3,r_N,p1,'max',1);
-btsp_phi_dist_12_sum_3_p1        = numerical_delta_method(D_12,b_D_12_recentered,epsilon_3,r_N,p1,'sum',1);
-
-btsp_phi_dist_12_max_3_p2_first  = numerical_delta_method(D_12,b_D_12_recentered,epsilon_3,r_N,p2,'max',1);
-btsp_phi_dist_12_sum_3_p2_first  = numerical_delta_method(D_12,b_D_12_recentered,epsilon_3,r_N,p2,'sum',1);
-
-btsp_phi_dist_12_max_3_p2_second = numerical_delta_method(D_12,b_D_12_recentered,epsilon_3,r_N,p2,'max',2);
-btsp_phi_dist_12_sum_3_p2_second = numerical_delta_method(D_12,b_D_12_recentered,epsilon_3,r_N,p2,'sum',2);
-
-% % (2,1)
-btsp_phi_dist_21_max_3_p1        = numerical_delta_method(D_21,b_D_21_recentered,epsilon_3,r_N,p1,'max',1);
-btsp_phi_dist_21_sum_3_p1        = numerical_delta_method(D_21,b_D_21_recentered,epsilon_3,r_N,p1,'sum',1);
-
-btsp_phi_dist_21_max_3_p2_first  = numerical_delta_method(D_21,b_D_21_recentered,epsilon_3,r_N,p2,'max',1);
-btsp_phi_dist_21_sum_3_p2_first  = numerical_delta_method(D_21,b_D_21_recentered,epsilon_3,r_N,p2,'sum',1);
-
-btsp_phi_dist_21_max_3_p2_second = numerical_delta_method(D_21,b_D_21_recentered,epsilon_3,r_N,p2,'max',2);
-btsp_phi_dist_21_sum_3_p2_second = numerical_delta_method(D_21,b_D_21_recentered,epsilon_3,r_N,p2,'sum',2);
-
-% % (2,2)
-btsp_phi_dist_22_max_3_p1        = numerical_delta_method(D_22,b_D_22_recentered,epsilon_3,r_N,p1,'max',1);
-btsp_phi_dist_22_sum_3_p1        = numerical_delta_method(D_22,b_D_22_recentered,epsilon_3,r_N,p1,'sum',1);
-
-btsp_phi_dist_22_max_3_p2_first  = numerical_delta_method(D_22,b_D_22_recentered,epsilon_3,r_N,p2,'max',1);
-btsp_phi_dist_22_sum_3_p2_first  = numerical_delta_method(D_22,b_D_22_recentered,epsilon_3,r_N,p2,'sum',1);
-
-btsp_phi_dist_22_max_3_p2_second = numerical_delta_method(D_22,b_D_22_recentered,epsilon_3,r_N,p2,'max',2);
-btsp_phi_dist_22_sum_3_p2_second = numerical_delta_method(D_22,b_D_22_recentered,epsilon_3,r_N,p2,'sum',2);
-
-% % 4. r_N^(-1/16)
-% 
-epsilon_4 = r_N^(-1/16);
-% 
-% % Bootstrap Statistics ----------------------%
-
-% (1,1)
-btsp_phi_dist_11_max_4_p1        = numerical_delta_method(D_11,b_D_11_recentered,epsilon_4,r_N,p1,'max',1);
-btsp_phi_dist_11_sum_4_p1        = numerical_delta_method(D_11,b_D_11_recentered,epsilon_4,r_N,p1,'sum',1);
-
-btsp_phi_dist_11_max_4_p2_first  = numerical_delta_method(D_11,b_D_11_recentered,epsilon_4,r_N,p2,'max',1);
-btsp_phi_dist_11_sum_4_p2_first  = numerical_delta_method(D_11,b_D_11_recentered,epsilon_4,r_N,p2,'sum',1);
-
-btsp_phi_dist_11_max_4_p2_second = numerical_delta_method(D_11,b_D_11_recentered,epsilon_4,r_N,p2,'max',2);
-btsp_phi_dist_11_sum_4_p2_second = numerical_delta_method(D_11,b_D_11_recentered,epsilon_4,r_N,p2,'sum',2);
-
-% (1,2)
-btsp_phi_dist_12_max_4_p1        = numerical_delta_method(D_12,b_D_12_recentered,epsilon_4,r_N,p1,'max',1);
-btsp_phi_dist_12_sum_4_p1        = numerical_delta_method(D_12,b_D_12_recentered,epsilon_4,r_N,p1,'sum',1);
-
-btsp_phi_dist_12_max_4_p2_first  = numerical_delta_method(D_12,b_D_12_recentered,epsilon_4,r_N,p2,'max',1);
-btsp_phi_dist_12_sum_4_p2_first  = numerical_delta_method(D_12,b_D_12_recentered,epsilon_4,r_N,p2,'sum',1);
-
-btsp_phi_dist_12_max_4_p2_second = numerical_delta_method(D_12,b_D_12_recentered,epsilon_4,r_N,p2,'max',2);
-btsp_phi_dist_12_sum_4_p2_second = numerical_delta_method(D_12,b_D_12_recentered,epsilon_4,r_N,p2,'sum',2);
-
-% (2,1)
-btsp_phi_dist_21_max_4_p1        = numerical_delta_method(D_21,b_D_21_recentered,epsilon_4,r_N,p1,'max',1);
-btsp_phi_dist_21_sum_4_p1        = numerical_delta_method(D_21,b_D_21_recentered,epsilon_4,r_N,p1,'sum',1);
-
-btsp_phi_dist_21_max_4_p2_first  = numerical_delta_method(D_21,b_D_21_recentered,epsilon_4,r_N,p2,'max',1);
-btsp_phi_dist_21_sum_4_p2_first  = numerical_delta_method(D_21,b_D_21_recentered,epsilon_4,r_N,p2,'sum',1);
-
-btsp_phi_dist_21_max_4_p2_second = numerical_delta_method(D_21,b_D_21_recentered,epsilon_4,r_N,p2,'max',2);
-btsp_phi_dist_21_sum_4_p2_second = numerical_delta_method(D_21,b_D_21_recentered,epsilon_4,r_N,p2,'sum',2);
-
-% (2,2)
-btsp_phi_dist_22_max_4_p1        = numerical_delta_method(D_22,b_D_22_recentered,epsilon_4,r_N,p1,'max',1);
-btsp_phi_dist_22_sum_4_p1        = numerical_delta_method(D_22,b_D_22_recentered,epsilon_4,r_N,p1,'sum',1);
-
-btsp_phi_dist_22_max_4_p2_first  = numerical_delta_method(D_22,b_D_22_recentered,epsilon_4,r_N,p2,'max',1);
-btsp_phi_dist_22_sum_4_p2_first  = numerical_delta_method(D_22,b_D_22_recentered,epsilon_4,r_N,p2,'sum',1);
-
-btsp_phi_dist_22_max_4_p2_second = numerical_delta_method(D_22,b_D_22_recentered,epsilon_4,r_N,p2,'max',2);
-btsp_phi_dist_22_sum_4_p2_second = numerical_delta_method(D_22,b_D_22_recentered,epsilon_4,r_N,p2,'sum',2);
 
 % 5. r_N^(-1/8)
 
@@ -957,41 +478,17 @@ epsilon_5 = r_N^(-1/8);
 btsp_phi_dist_11_max_5_p1        = numerical_delta_method(D_11,b_D_11_recentered,epsilon_5,r_N,p1,'max',1);
 btsp_phi_dist_11_sum_5_p1        = numerical_delta_method(D_11,b_D_11_recentered,epsilon_5,r_N,p1,'sum',1);
 
-btsp_phi_dist_11_max_5_p2_first  = numerical_delta_method(D_11,b_D_11_recentered,epsilon_5,r_N,p2,'max',1);
-btsp_phi_dist_11_sum_5_p2_first  = numerical_delta_method(D_11,b_D_11_recentered,epsilon_5,r_N,p2,'sum',1);
-
-btsp_phi_dist_11_max_5_p2_second = numerical_delta_method(D_11,b_D_11_recentered,epsilon_5,r_N,p2,'max',2);
-btsp_phi_dist_11_sum_5_p2_second = numerical_delta_method(D_11,b_D_11_recentered,epsilon_5,r_N,p2,'sum',2);
-
 % (1,2)
 btsp_phi_dist_12_max_5_p1        = numerical_delta_method(D_12,b_D_12_recentered,epsilon_5,r_N,p1,'max',1);
 btsp_phi_dist_12_sum_5_p1        = numerical_delta_method(D_12,b_D_12_recentered,epsilon_5,r_N,p1,'sum',1);
-
-btsp_phi_dist_12_max_5_p2_first  = numerical_delta_method(D_12,b_D_12_recentered,epsilon_5,r_N,p2,'max',1);
-btsp_phi_dist_12_sum_5_p2_first  = numerical_delta_method(D_12,b_D_12_recentered,epsilon_5,r_N,p2,'sum',1);
-
-btsp_phi_dist_12_max_5_p2_second = numerical_delta_method(D_12,b_D_12_recentered,epsilon_5,r_N,p2,'max',2);
-btsp_phi_dist_12_sum_5_p2_second = numerical_delta_method(D_12,b_D_12_recentered,epsilon_5,r_N,p2,'sum',2);
 
 % (2,1)
 btsp_phi_dist_21_max_5_p1        = numerical_delta_method(D_21,b_D_21_recentered,epsilon_5,r_N,p1,'max',1);
 btsp_phi_dist_21_sum_5_p1        = numerical_delta_method(D_21,b_D_21_recentered,epsilon_5,r_N,p1,'sum',1);
 
-btsp_phi_dist_21_max_5_p2_first  = numerical_delta_method(D_21,b_D_21_recentered,epsilon_5,r_N,p2,'max',1);
-btsp_phi_dist_21_sum_5_p2_first  = numerical_delta_method(D_21,b_D_21_recentered,epsilon_5,r_N,p2,'sum',1);
-
-btsp_phi_dist_21_max_5_p2_second = numerical_delta_method(D_21,b_D_21_recentered,epsilon_5,r_N,p2,'max',2);
-btsp_phi_dist_21_sum_5_p2_second = numerical_delta_method(D_21,b_D_21_recentered,epsilon_5,r_N,p2,'sum',2);
-
 % (2,2)
 btsp_phi_dist_22_max_5_p1        = numerical_delta_method(D_22,b_D_22_recentered,epsilon_5,r_N,p1,'max',1);
 btsp_phi_dist_22_sum_5_p1        = numerical_delta_method(D_22,b_D_22_recentered,epsilon_5,r_N,p1,'sum',1);
-
-btsp_phi_dist_22_max_5_p2_first  = numerical_delta_method(D_22,b_D_22_recentered,epsilon_5,r_N,p2,'max',1);
-btsp_phi_dist_22_sum_5_p2_first  = numerical_delta_method(D_22,b_D_22_recentered,epsilon_5,r_N,p2,'sum',1);
-
-btsp_phi_dist_22_max_5_p2_second = numerical_delta_method(D_22,b_D_22_recentered,epsilon_5,r_N,p2,'max',2);
-btsp_phi_dist_22_sum_5_p2_second = numerical_delta_method(D_22,b_D_22_recentered,epsilon_5,r_N,p2,'sum',2);
 
 % % Deciding rejection starts here
 % 
@@ -1001,29 +498,8 @@ btsp_phi_dist_22_sum_5_p2_second = numerical_delta_method(D_22,b_D_22_recentered
 critical_value_11_btsp_max_LFC_p1       = quantile(btsp_T_11_max_LFC_p1,1-alpha);
 critical_value_11_btsp_sum_LFC_p1       = quantile(btsp_T_11_sum_LFC_p1,1-alpha);
 
-critical_value_11_max_contact_1_p1 = max(quantile(T_11_max_contact_1_p1,1-alpha),eta);
-critical_value_11_max_contact_2_p1 = max(quantile(T_11_max_contact_2_p1,1-alpha),eta);
 critical_value_11_max_contact_3_p1 = max(quantile(T_11_max_contact_3_p1,1-alpha),eta);
-critical_value_11_max_contact_4_p1 = max(quantile(T_11_max_contact_4_p1,1-alpha),eta);
-critical_value_11_max_contact_5_p1 = max(quantile(T_11_max_contact_5_p1,1-alpha),eta);
-
-critical_value_11_sum_contact_1_p1 = max(quantile(T_11_sum_contact_1_p1,1-alpha),eta);
-critical_value_11_sum_contact_2_p1 = max(quantile(T_11_sum_contact_2_p1,1-alpha),eta);
 critical_value_11_sum_contact_3_p1 = max(quantile(T_11_sum_contact_3_p1,1-alpha),eta);
-critical_value_11_sum_contact_4_p1 = max(quantile(T_11_sum_contact_4_p1,1-alpha),eta);
-critical_value_11_sum_contact_5_p1 = max(quantile(T_11_sum_contact_5_p1,1-alpha),eta);
-
-critical_value_11_btsp_max_NDM_1_p1     = quantile(btsp_phi_dist_11_max_1_p1,1-alpha);
-critical_value_11_btsp_sum_NDM_1_p1     = quantile(btsp_phi_dist_11_sum_1_p1,1-alpha);
-
-critical_value_11_btsp_max_NDM_2_p1     = quantile(btsp_phi_dist_11_max_2_p1,1-alpha);
-critical_value_11_btsp_sum_NDM_2_p1     = quantile(btsp_phi_dist_11_sum_2_p1,1-alpha);
-
-critical_value_11_btsp_max_NDM_3_p1     = quantile(btsp_phi_dist_11_max_3_p1,1-alpha);
-critical_value_11_btsp_sum_NDM_3_p1     = quantile(btsp_phi_dist_11_sum_3_p1,1-alpha);
-
-critical_value_11_btsp_max_NDM_4_p1     = quantile(btsp_phi_dist_11_max_4_p1,1-alpha);
-critical_value_11_btsp_sum_NDM_4_p1     = quantile(btsp_phi_dist_11_sum_4_p1,1-alpha);
 
 critical_value_11_btsp_max_NDM_5_p1     = quantile(btsp_phi_dist_11_max_5_p1,1-alpha);
 critical_value_11_btsp_sum_NDM_5_p1     = quantile(btsp_phi_dist_11_sum_5_p1,1-alpha);
@@ -1033,51 +509,11 @@ critical_value_11_btsp_sum_NDM_5_p1     = quantile(btsp_phi_dist_11_sum_5_p1,1-a
 critical_value_11_btsp_max_LFC_p2       = quantile(btsp_T_11_max_LFC_p2,1-alpha);
 critical_value_11_btsp_sum_LFC_p2       = quantile(btsp_T_11_sum_LFC_p2,1-alpha);
 
-critical_value_11_max_contact_1_p2 = max(quantile(T_11_max_contact_1_p2,1-alpha),eta);
-critical_value_11_max_contact_2_p2 = max(quantile(T_11_max_contact_2_p2,1-alpha),eta);
 critical_value_11_max_contact_3_p2 = max(quantile(T_11_max_contact_3_p2,1-alpha),eta);
-critical_value_11_max_contact_4_p2 = max(quantile(T_11_max_contact_4_p2,1-alpha),eta);
-critical_value_11_max_contact_5_p2 = max(quantile(T_11_max_contact_5_p2,1-alpha),eta);
-
-critical_value_11_sum_contact_1_p2 = max(quantile(T_11_sum_contact_1_p2,1-alpha),eta);
-critical_value_11_sum_contact_2_p2 = max(quantile(T_11_sum_contact_2_p2,1-alpha),eta);
 critical_value_11_sum_contact_3_p2 = max(quantile(T_11_sum_contact_3_p2,1-alpha),eta);
-critical_value_11_sum_contact_4_p2 = max(quantile(T_11_sum_contact_4_p2,1-alpha),eta);
-critical_value_11_sum_contact_5_p2 = max(quantile(T_11_sum_contact_5_p2,1-alpha),eta);
-
-% first
-
-critical_value_11_btsp_max_NDM_1_p2_first     = quantile(btsp_phi_dist_11_max_1_p2_first,1-alpha);
-critical_value_11_btsp_sum_NDM_1_p2_first     = quantile(btsp_phi_dist_11_sum_1_p2_first,1-alpha);
-
-critical_value_11_btsp_max_NDM_2_p2_first     = quantile(btsp_phi_dist_11_max_2_p2_first,1-alpha);
-critical_value_11_btsp_sum_NDM_2_p2_first     = quantile(btsp_phi_dist_11_sum_2_p2_first,1-alpha);
-
-critical_value_11_btsp_max_NDM_3_p2_first     = quantile(btsp_phi_dist_11_max_3_p2_first,1-alpha);
-critical_value_11_btsp_sum_NDM_3_p2_first     = quantile(btsp_phi_dist_11_sum_3_p2_first,1-alpha);
-
-critical_value_11_btsp_max_NDM_4_p2_first     = quantile(btsp_phi_dist_11_max_4_p2_first,1-alpha);
-critical_value_11_btsp_sum_NDM_4_p2_first     = quantile(btsp_phi_dist_11_sum_4_p2_first,1-alpha);
-
-critical_value_11_btsp_max_NDM_5_p2_first     = quantile(btsp_phi_dist_11_max_5_p2_first,1-alpha);
-critical_value_11_btsp_sum_NDM_5_p2_first     = quantile(btsp_phi_dist_11_sum_5_p2_first,1-alpha);
-
-% second
 
 critical_value_11_btsp_max_NDM_1_p2_second    = quantile(btsp_phi_dist_11_max_1_p2_second,1-alpha);
 critical_value_11_btsp_sum_NDM_1_p2_second    = quantile(btsp_phi_dist_11_sum_1_p2_second,1-alpha);
-
-critical_value_11_btsp_max_NDM_2_p2_second    = quantile(btsp_phi_dist_11_max_2_p2_second,1-alpha);
-critical_value_11_btsp_sum_NDM_2_p2_second    = quantile(btsp_phi_dist_11_sum_2_p2_second,1-alpha);
-
-critical_value_11_btsp_max_NDM_3_p2_second    = quantile(btsp_phi_dist_11_max_3_p2_second,1-alpha);
-critical_value_11_btsp_sum_NDM_3_p2_second    = quantile(btsp_phi_dist_11_sum_3_p2_second,1-alpha);
-
-critical_value_11_btsp_max_NDM_4_p2_second    = quantile(btsp_phi_dist_11_max_4_p2_second,1-alpha);
-critical_value_11_btsp_sum_NDM_4_p2_second    = quantile(btsp_phi_dist_11_sum_4_p2_second,1-alpha);
-
-critical_value_11_btsp_max_NDM_5_p2_second    = quantile(btsp_phi_dist_11_max_5_p2_second,1-alpha);
-critical_value_11_btsp_sum_NDM_5_p2_second    = quantile(btsp_phi_dist_11_sum_5_p2_second,1-alpha);
 
 % (n,m) = 1,2
 
@@ -1085,29 +521,8 @@ critical_value_11_btsp_sum_NDM_5_p2_second    = quantile(btsp_phi_dist_11_sum_5_
 critical_value_12_btsp_max_LFC_p1       = quantile(btsp_T_12_max_LFC_p1,1-alpha);
 critical_value_12_btsp_sum_LFC_p1       = quantile(btsp_T_12_sum_LFC_p1,1-alpha);
 
-critical_value_12_max_contact_1_p1 = max(quantile(T_12_max_contact_1_p1,1-alpha),eta);
-critical_value_12_max_contact_2_p1 = max(quantile(T_12_max_contact_2_p1,1-alpha),eta);
 critical_value_12_max_contact_3_p1 = max(quantile(T_12_max_contact_3_p1,1-alpha),eta);
-critical_value_12_max_contact_4_p1 = max(quantile(T_12_max_contact_4_p1,1-alpha),eta);
-critical_value_12_max_contact_5_p1 = max(quantile(T_12_max_contact_5_p1,1-alpha),eta);
-
-critical_value_12_sum_contact_1_p1 = max(quantile(T_12_sum_contact_1_p1,1-alpha),eta);
-critical_value_12_sum_contact_2_p1 = max(quantile(T_12_sum_contact_2_p1,1-alpha),eta);
 critical_value_12_sum_contact_3_p1 = max(quantile(T_12_sum_contact_3_p1,1-alpha),eta);
-critical_value_12_sum_contact_4_p1 = max(quantile(T_12_sum_contact_4_p1,1-alpha),eta);
-critical_value_12_sum_contact_5_p1 = max(quantile(T_12_sum_contact_5_p1,1-alpha),eta);
-
-critical_value_12_btsp_max_NDM_1_p1     = quantile(btsp_phi_dist_12_max_1_p1,1-alpha);
-critical_value_12_btsp_sum_NDM_1_p1     = quantile(btsp_phi_dist_12_sum_1_p1,1-alpha);
- 
-critical_value_12_btsp_max_NDM_2_p1     = quantile(btsp_phi_dist_12_max_2_p1,1-alpha);
-critical_value_12_btsp_sum_NDM_2_p1     = quantile(btsp_phi_dist_12_sum_2_p1,1-alpha);
-
-critical_value_12_btsp_max_NDM_3_p1     = quantile(btsp_phi_dist_12_max_3_p1,1-alpha);
-critical_value_12_btsp_sum_NDM_3_p1     = quantile(btsp_phi_dist_12_sum_3_p1,1-alpha);
-
-critical_value_12_btsp_max_NDM_4_p1     = quantile(btsp_phi_dist_12_max_4_p1,1-alpha);
-critical_value_12_btsp_sum_NDM_4_p1     = quantile(btsp_phi_dist_12_sum_4_p1,1-alpha);
 
 critical_value_12_btsp_max_NDM_5_p1     = quantile(btsp_phi_dist_12_max_5_p1,1-alpha);
 critical_value_12_btsp_sum_NDM_5_p1     = quantile(btsp_phi_dist_12_sum_5_p1,1-alpha);
@@ -1117,51 +532,11 @@ critical_value_12_btsp_sum_NDM_5_p1     = quantile(btsp_phi_dist_12_sum_5_p1,1-a
 critical_value_12_btsp_max_LFC_p2       = quantile(btsp_T_12_max_LFC_p2,1-alpha);
 critical_value_12_btsp_sum_LFC_p2       = quantile(btsp_T_12_sum_LFC_p2,1-alpha);
 
-critical_value_12_max_contact_1_p2 = max(quantile(T_12_max_contact_1_p2,1-alpha),eta);
-critical_value_12_max_contact_2_p2 = max(quantile(T_12_max_contact_2_p2,1-alpha),eta);
 critical_value_12_max_contact_3_p2 = max(quantile(T_12_max_contact_3_p2,1-alpha),eta);
-critical_value_12_max_contact_4_p2 = max(quantile(T_12_max_contact_4_p2,1-alpha),eta);
-critical_value_12_max_contact_5_p2 = max(quantile(T_12_max_contact_5_p2,1-alpha),eta);
-
-critical_value_12_sum_contact_1_p2 = max(quantile(T_12_sum_contact_1_p2,1-alpha),eta);
-critical_value_12_sum_contact_2_p2 = max(quantile(T_12_sum_contact_2_p2,1-alpha),eta);
 critical_value_12_sum_contact_3_p2 = max(quantile(T_12_sum_contact_3_p2,1-alpha),eta);
-critical_value_12_sum_contact_4_p2 = max(quantile(T_12_sum_contact_4_p2,1-alpha),eta);
-critical_value_12_sum_contact_5_p2 = max(quantile(T_12_sum_contact_5_p2,1-alpha),eta);
-
-% first
-
-critical_value_12_btsp_max_NDM_1_p2_first     = quantile(btsp_phi_dist_12_max_1_p2_first,1-alpha);
-critical_value_12_btsp_sum_NDM_1_p2_first     = quantile(btsp_phi_dist_12_sum_1_p2_first,1-alpha);
-
-critical_value_12_btsp_max_NDM_2_p2_first     = quantile(btsp_phi_dist_12_max_2_p2_first,1-alpha);
-critical_value_12_btsp_sum_NDM_2_p2_first     = quantile(btsp_phi_dist_12_sum_2_p2_first,1-alpha);
-
-critical_value_12_btsp_max_NDM_3_p2_first     = quantile(btsp_phi_dist_12_max_3_p2_first,1-alpha);
-critical_value_12_btsp_sum_NDM_3_p2_first     = quantile(btsp_phi_dist_12_sum_3_p2_first,1-alpha);
-
-critical_value_12_btsp_max_NDM_4_p2_first     = quantile(btsp_phi_dist_12_max_4_p2_first,1-alpha);
-critical_value_12_btsp_sum_NDM_4_p2_first     = quantile(btsp_phi_dist_12_sum_4_p2_first,1-alpha);
-
-critical_value_12_btsp_max_NDM_5_p2_first     = quantile(btsp_phi_dist_12_max_5_p2_first,1-alpha);
-critical_value_12_btsp_sum_NDM_5_p2_first     = quantile(btsp_phi_dist_12_sum_5_p2_first,1-alpha);
-
-% second
 
 critical_value_12_btsp_max_NDM_1_p2_second    = quantile(btsp_phi_dist_12_max_1_p2_second,1-alpha);
 critical_value_12_btsp_sum_NDM_1_p2_second    = quantile(btsp_phi_dist_12_sum_1_p2_second,1-alpha);
-% 
-critical_value_12_btsp_max_NDM_2_p2_second    = quantile(btsp_phi_dist_12_max_2_p2_second,1-alpha);
-critical_value_12_btsp_sum_NDM_2_p2_second    = quantile(btsp_phi_dist_12_sum_2_p2_second,1-alpha);
-
-critical_value_12_btsp_max_NDM_3_p2_second    = quantile(btsp_phi_dist_12_max_3_p2_second,1-alpha);
-critical_value_12_btsp_sum_NDM_3_p2_second    = quantile(btsp_phi_dist_12_sum_3_p2_second,1-alpha);
-
-critical_value_12_btsp_max_NDM_4_p2_second    = quantile(btsp_phi_dist_12_max_4_p2_second,1-alpha);
-critical_value_12_btsp_sum_NDM_4_p2_second    = quantile(btsp_phi_dist_12_sum_4_p2_second,1-alpha);
-
-critical_value_12_btsp_max_NDM_5_p2_second    = quantile(btsp_phi_dist_12_max_5_p2_second,1-alpha);
-critical_value_12_btsp_sum_NDM_5_p2_second    = quantile(btsp_phi_dist_12_sum_5_p2_second,1-alpha);
 
 % (n,m) = 2,1
 
@@ -1169,29 +544,8 @@ critical_value_12_btsp_sum_NDM_5_p2_second    = quantile(btsp_phi_dist_12_sum_5_
 critical_value_21_btsp_max_LFC_p1       = quantile(btsp_T_21_max_LFC_p1,1-alpha);
 critical_value_21_btsp_sum_LFC_p1       = quantile(btsp_T_21_sum_LFC_p1,1-alpha);
 
-critical_value_21_max_contact_1_p1 = max(quantile(T_21_max_contact_1_p1,1-alpha),eta);
-critical_value_21_max_contact_2_p1 = max(quantile(T_21_max_contact_2_p1,1-alpha),eta);
 critical_value_21_max_contact_3_p1 = max(quantile(T_21_max_contact_3_p1,1-alpha),eta);
-critical_value_21_max_contact_4_p1 = max(quantile(T_21_max_contact_4_p1,1-alpha),eta);
-critical_value_21_max_contact_5_p1 = max(quantile(T_21_max_contact_5_p1,1-alpha),eta);
-
-critical_value_21_sum_contact_1_p1 = max(quantile(T_21_sum_contact_1_p1,1-alpha),eta);
-critical_value_21_sum_contact_2_p1 = max(quantile(T_21_sum_contact_2_p1,1-alpha),eta);
 critical_value_21_sum_contact_3_p1 = max(quantile(T_21_sum_contact_3_p1,1-alpha),eta);
-critical_value_21_sum_contact_4_p1 = max(quantile(T_21_sum_contact_4_p1,1-alpha),eta);
-critical_value_21_sum_contact_5_p1 = max(quantile(T_21_sum_contact_5_p1,1-alpha),eta);
-
-critical_value_21_btsp_max_NDM_1_p1     = quantile(btsp_phi_dist_21_max_1_p1,1-alpha);
-critical_value_21_btsp_sum_NDM_1_p1     = quantile(btsp_phi_dist_21_sum_1_p1,1-alpha);
-
-critical_value_21_btsp_max_NDM_2_p1     = quantile(btsp_phi_dist_21_max_2_p1,1-alpha);
-critical_value_21_btsp_sum_NDM_2_p1     = quantile(btsp_phi_dist_21_sum_2_p1,1-alpha);
-
-critical_value_21_btsp_max_NDM_3_p1     = quantile(btsp_phi_dist_21_max_3_p1,1-alpha);
-critical_value_21_btsp_sum_NDM_3_p1     = quantile(btsp_phi_dist_21_sum_3_p1,1-alpha);
-
-critical_value_21_btsp_max_NDM_4_p1     = quantile(btsp_phi_dist_21_max_4_p1,1-alpha);
-critical_value_21_btsp_sum_NDM_4_p1     = quantile(btsp_phi_dist_21_sum_4_p1,1-alpha);
 
 critical_value_21_btsp_max_NDM_5_p1     = quantile(btsp_phi_dist_21_max_5_p1,1-alpha);
 critical_value_21_btsp_sum_NDM_5_p1     = quantile(btsp_phi_dist_21_sum_5_p1,1-alpha);
@@ -1201,51 +555,12 @@ critical_value_21_btsp_sum_NDM_5_p1     = quantile(btsp_phi_dist_21_sum_5_p1,1-a
 critical_value_21_btsp_max_LFC_p2       = quantile(btsp_T_21_max_LFC_p2,1-alpha);
 critical_value_21_btsp_sum_LFC_p2       = quantile(btsp_T_21_sum_LFC_p2,1-alpha);
 
-critical_value_21_max_contact_1_p2 = max(quantile(T_21_max_contact_1_p2,1-alpha),eta);
-critical_value_21_max_contact_2_p2 = max(quantile(T_21_max_contact_2_p2,1-alpha),eta);
 critical_value_21_max_contact_3_p2 = max(quantile(T_21_max_contact_3_p2,1-alpha),eta);
-critical_value_21_max_contact_4_p2 = max(quantile(T_21_max_contact_4_p2,1-alpha),eta);
-critical_value_21_max_contact_5_p2 = max(quantile(T_21_max_contact_5_p2,1-alpha),eta);
-
-critical_value_21_sum_contact_1_p2 = max(quantile(T_21_sum_contact_1_p2,1-alpha),eta);
-critical_value_21_sum_contact_2_p2 = max(quantile(T_21_sum_contact_2_p2,1-alpha),eta);
 critical_value_21_sum_contact_3_p2 = max(quantile(T_21_sum_contact_3_p2,1-alpha),eta);
-critical_value_21_sum_contact_4_p2 = max(quantile(T_21_sum_contact_4_p2,1-alpha),eta);
-critical_value_21_sum_contact_5_p2 = max(quantile(T_21_sum_contact_5_p2,1-alpha),eta);
-
-% first
-
-critical_value_21_btsp_max_NDM_1_p2_first     = quantile(btsp_phi_dist_21_max_1_p2_first,1-alpha);
-critical_value_21_btsp_sum_NDM_1_p2_first     = quantile(btsp_phi_dist_21_sum_1_p2_first,1-alpha);
-
-critical_value_21_btsp_max_NDM_2_p2_first     = quantile(btsp_phi_dist_21_max_2_p2_first,1-alpha);
-critical_value_21_btsp_sum_NDM_2_p2_first     = quantile(btsp_phi_dist_21_sum_2_p2_first,1-alpha);
-
-critical_value_21_btsp_max_NDM_3_p2_first     = quantile(btsp_phi_dist_21_max_3_p2_first,1-alpha);
-critical_value_21_btsp_sum_NDM_3_p2_first     = quantile(btsp_phi_dist_21_sum_3_p2_first,1-alpha);
-
-critical_value_21_btsp_max_NDM_4_p2_first     = quantile(btsp_phi_dist_21_max_4_p2_first,1-alpha);
-critical_value_21_btsp_sum_NDM_4_p2_first     = quantile(btsp_phi_dist_21_sum_4_p2_first,1-alpha);
-
-critical_value_21_btsp_max_NDM_5_p2_first     = quantile(btsp_phi_dist_21_max_5_p2_first,1-alpha);
-critical_value_21_btsp_sum_NDM_5_p2_first     = quantile(btsp_phi_dist_21_sum_5_p2_first,1-alpha);
-
-% second
 
 critical_value_21_btsp_max_NDM_1_p2_second    = quantile(btsp_phi_dist_21_max_1_p2_second,1-alpha);
 critical_value_21_btsp_sum_NDM_1_p2_second    = quantile(btsp_phi_dist_21_sum_1_p2_second,1-alpha);
 
-critical_value_21_btsp_max_NDM_2_p2_second    = quantile(btsp_phi_dist_21_max_2_p2_second,1-alpha);
-critical_value_21_btsp_sum_NDM_2_p2_second    = quantile(btsp_phi_dist_21_sum_2_p2_second,1-alpha);
-
-critical_value_21_btsp_max_NDM_3_p2_second    = quantile(btsp_phi_dist_21_max_3_p2_second,1-alpha);
-critical_value_21_btsp_sum_NDM_3_p2_second    = quantile(btsp_phi_dist_21_sum_3_p2_second,1-alpha);
-
-critical_value_21_btsp_max_NDM_4_p2_second    = quantile(btsp_phi_dist_21_max_4_p2_second,1-alpha);
-critical_value_21_btsp_sum_NDM_4_p2_second    = quantile(btsp_phi_dist_21_sum_4_p2_second,1-alpha);
-
-critical_value_21_btsp_max_NDM_5_p2_second    = quantile(btsp_phi_dist_21_max_5_p2_second,1-alpha);
-critical_value_21_btsp_sum_NDM_5_p2_second    = quantile(btsp_phi_dist_21_sum_5_p2_second,1-alpha);
 
 % (n,m) = 2,2
 % p = 1
@@ -1254,29 +569,8 @@ critical_value_21_btsp_sum_NDM_5_p2_second    = quantile(btsp_phi_dist_21_sum_5_
 critical_value_22_btsp_max_LFC_p1       = quantile(btsp_T_22_max_LFC_p1,1-alpha);
 critical_value_22_btsp_sum_LFC_p1       = quantile(btsp_T_22_sum_LFC_p1,1-alpha);
 
-critical_value_22_max_contact_1_p1 = max(quantile(T_22_max_contact_1_p1,1-alpha),eta);
-critical_value_22_max_contact_2_p1 = max(quantile(T_22_max_contact_2_p1,1-alpha),eta);
 critical_value_22_max_contact_3_p1 = max(quantile(T_22_max_contact_3_p1,1-alpha),eta);
-critical_value_22_max_contact_4_p1 = max(quantile(T_22_max_contact_4_p1,1-alpha),eta);
-critical_value_22_max_contact_5_p1 = max(quantile(T_22_max_contact_5_p1,1-alpha),eta);
-
-critical_value_22_sum_contact_1_p1 = max(quantile(T_22_sum_contact_1_p1,1-alpha),eta);
-critical_value_22_sum_contact_2_p1 = max(quantile(T_22_sum_contact_2_p1,1-alpha),eta);
 critical_value_22_sum_contact_3_p1 = max(quantile(T_22_sum_contact_3_p1,1-alpha),eta);
-critical_value_22_sum_contact_4_p1 = max(quantile(T_22_sum_contact_4_p1,1-alpha),eta);
-critical_value_22_sum_contact_5_p1 = max(quantile(T_22_sum_contact_5_p1,1-alpha),eta);
-
-critical_value_22_btsp_max_NDM_1_p1     = quantile(btsp_phi_dist_22_max_1_p1,1-alpha);
-critical_value_22_btsp_sum_NDM_1_p1     = quantile(btsp_phi_dist_22_sum_1_p1,1-alpha);
-% 
-critical_value_22_btsp_max_NDM_2_p1     = quantile(btsp_phi_dist_22_max_2_p1,1-alpha);
-critical_value_22_btsp_sum_NDM_2_p1     = quantile(btsp_phi_dist_22_sum_2_p1,1-alpha);
-
-critical_value_22_btsp_max_NDM_3_p1     = quantile(btsp_phi_dist_22_max_3_p1,1-alpha);
-critical_value_22_btsp_sum_NDM_3_p1     = quantile(btsp_phi_dist_22_sum_3_p1,1-alpha);
-
-critical_value_22_btsp_max_NDM_4_p1     = quantile(btsp_phi_dist_22_max_4_p1,1-alpha);
-critical_value_22_btsp_sum_NDM_4_p1     = quantile(btsp_phi_dist_22_sum_4_p1,1-alpha);
 
 critical_value_22_btsp_max_NDM_5_p1     = quantile(btsp_phi_dist_22_max_5_p1,1-alpha);
 critical_value_22_btsp_sum_NDM_5_p1     = quantile(btsp_phi_dist_22_sum_5_p1,1-alpha);
@@ -1286,51 +580,11 @@ critical_value_22_btsp_sum_NDM_5_p1     = quantile(btsp_phi_dist_22_sum_5_p1,1-a
 critical_value_22_btsp_max_LFC_p2       = quantile(btsp_T_22_max_LFC_p2,1-alpha);
 critical_value_22_btsp_sum_LFC_p2       = quantile(btsp_T_22_sum_LFC_p2,1-alpha);
 
-critical_value_22_max_contact_1_p2 = max(quantile(T_22_max_contact_1_p2,1-alpha),eta);
-critical_value_22_max_contact_2_p2 = max(quantile(T_22_max_contact_2_p2,1-alpha),eta);
 critical_value_22_max_contact_3_p2 = max(quantile(T_22_max_contact_3_p2,1-alpha),eta);
-critical_value_22_max_contact_4_p2 = max(quantile(T_22_max_contact_4_p2,1-alpha),eta);
-critical_value_22_max_contact_5_p2 = max(quantile(T_22_max_contact_5_p2,1-alpha),eta);
-
-critical_value_22_sum_contact_1_p2 = max(quantile(T_22_sum_contact_1_p2,1-alpha),eta);
-critical_value_22_sum_contact_2_p2 = max(quantile(T_22_sum_contact_2_p2,1-alpha),eta);
 critical_value_22_sum_contact_3_p2 = max(quantile(T_22_sum_contact_3_p2,1-alpha),eta);
-critical_value_22_sum_contact_4_p2 = max(quantile(T_22_sum_contact_4_p2,1-alpha),eta);
-critical_value_22_sum_contact_5_p2 = max(quantile(T_22_sum_contact_5_p2,1-alpha),eta);
-
-% first
-
-critical_value_22_btsp_max_NDM_1_p2_first     = quantile(btsp_phi_dist_22_max_1_p2_first,1-alpha);
-critical_value_22_btsp_sum_NDM_1_p2_first     = quantile(btsp_phi_dist_22_sum_1_p2_first,1-alpha);
-
-critical_value_22_btsp_max_NDM_2_p2_first     = quantile(btsp_phi_dist_22_max_2_p2_first,1-alpha);
-critical_value_22_btsp_sum_NDM_2_p2_first     = quantile(btsp_phi_dist_22_sum_2_p2_first,1-alpha);
-
-critical_value_22_btsp_max_NDM_3_p2_first     = quantile(btsp_phi_dist_22_max_3_p2_first,1-alpha);
-critical_value_22_btsp_sum_NDM_3_p2_first     = quantile(btsp_phi_dist_22_sum_3_p2_first,1-alpha);
-
-critical_value_22_btsp_max_NDM_4_p2_first     = quantile(btsp_phi_dist_22_max_4_p2_first,1-alpha);
-critical_value_22_btsp_sum_NDM_4_p2_first     = quantile(btsp_phi_dist_22_sum_4_p2_first,1-alpha);
-
-critical_value_22_btsp_max_NDM_5_p2_first     = quantile(btsp_phi_dist_22_max_5_p2_first,1-alpha);
-critical_value_22_btsp_sum_NDM_5_p2_first     = quantile(btsp_phi_dist_22_sum_5_p2_first,1-alpha);
-
-% second
 
 critical_value_22_btsp_max_NDM_1_p2_second    = quantile(btsp_phi_dist_22_max_1_p2_second,1-alpha);
 critical_value_22_btsp_sum_NDM_1_p2_second    = quantile(btsp_phi_dist_22_sum_1_p2_second,1-alpha);
-
-critical_value_22_btsp_max_NDM_2_p2_second    = quantile(btsp_phi_dist_22_max_2_p2_second,1-alpha);
-critical_value_22_btsp_sum_NDM_2_p2_second    = quantile(btsp_phi_dist_22_sum_2_p2_second,1-alpha);
-
-critical_value_22_btsp_max_NDM_3_p2_second    = quantile(btsp_phi_dist_22_max_3_p2_second,1-alpha);
-critical_value_22_btsp_sum_NDM_3_p2_second    = quantile(btsp_phi_dist_22_sum_3_p2_second,1-alpha);
-
-critical_value_22_btsp_max_NDM_4_p2_second    = quantile(btsp_phi_dist_22_max_4_p2_second,1-alpha);
-critical_value_22_btsp_sum_NDM_4_p2_second    = quantile(btsp_phi_dist_22_sum_4_p2_second,1-alpha);
-
-critical_value_22_btsp_max_NDM_5_p2_second    = quantile(btsp_phi_dist_22_max_5_p2_second,1-alpha);
-critical_value_22_btsp_sum_NDM_5_p2_second    = quantile(btsp_phi_dist_22_sum_5_p2_second,1-alpha);
 
 % Checking Rejection 
 % % (1,1)
@@ -1340,32 +594,8 @@ critical_value_22_btsp_sum_NDM_5_p2_second    = quantile(btsp_phi_dist_22_sum_5_
 rejection_11_btsp_max_LFC_p1     = [rejection_11_btsp_max_LFC_p1, T_11_max_p1 > critical_value_11_btsp_max_LFC_p1];
 rejection_11_btsp_sum_LFC_p1     = [rejection_11_btsp_sum_LFC_p1, T_11_sum_p1 > critical_value_11_btsp_sum_LFC_p1];
 
-rejection_11_max_contact_1_p1 =  [rejection_11_max_contact_1_p1, T_11_max_p1 > critical_value_11_max_contact_1_p1];
-rejection_11_sum_contact_1_p1 =  [rejection_11_sum_contact_1_p1, T_11_sum_p1 > critical_value_11_sum_contact_1_p1];
-
-rejection_11_max_contact_2_p1 =  [rejection_11_max_contact_2_p1, T_11_max_p1 > critical_value_11_max_contact_2_p1];
-rejection_11_sum_contact_2_p1 =  [rejection_11_sum_contact_2_p1, T_11_sum_p1 > critical_value_11_sum_contact_2_p1];
-
 rejection_11_max_contact_3_p1 =  [rejection_11_max_contact_3_p1, T_11_max_p1 > critical_value_11_max_contact_3_p1];
 rejection_11_sum_contact_3_p1 =  [rejection_11_sum_contact_3_p1, T_11_sum_p1 > critical_value_11_sum_contact_3_p1];
-
-rejection_11_max_contact_4_p1 =  [rejection_11_max_contact_4_p1, T_11_max_p1 > critical_value_11_max_contact_4_p1];
-rejection_11_sum_contact_4_p1 =  [rejection_11_sum_contact_4_p1, T_11_sum_p1 > critical_value_11_sum_contact_4_p1];
-
-rejection_11_max_contact_5_p1 =  [rejection_11_max_contact_5_p1, T_11_max_p1 > critical_value_11_max_contact_5_p1];
-rejection_11_sum_contact_5_p1 =  [rejection_11_sum_contact_5_p1, T_11_sum_p1 > critical_value_11_sum_contact_5_p1];
-
-rejection_11_btsp_max_NDM_1_p1     = [rejection_11_btsp_max_NDM_1_p1, T_11_max_p1 > critical_value_11_btsp_max_NDM_1_p1];
-rejection_11_btsp_sum_NDM_1_p1     = [rejection_11_btsp_sum_NDM_1_p1, T_11_sum_p1 > critical_value_11_btsp_sum_NDM_1_p1];
-
-rejection_11_btsp_max_NDM_2_p1     = [rejection_11_btsp_max_NDM_2_p1, T_11_max_p1 > critical_value_11_btsp_max_NDM_2_p1];
-rejection_11_btsp_sum_NDM_2_p1     = [rejection_11_btsp_sum_NDM_2_p1, T_11_sum_p1 > critical_value_11_btsp_sum_NDM_2_p1];
-
-rejection_11_btsp_max_NDM_3_p1     = [rejection_11_btsp_max_NDM_3_p1, T_11_max_p1 > critical_value_11_btsp_max_NDM_3_p1];
-rejection_11_btsp_sum_NDM_3_p1     = [rejection_11_btsp_sum_NDM_3_p1, T_11_sum_p1 > critical_value_11_btsp_sum_NDM_3_p1];
-
-rejection_11_btsp_max_NDM_4_p1     = [rejection_11_btsp_max_NDM_4_p1, T_11_max_p1 > critical_value_11_btsp_max_NDM_4_p1];
-rejection_11_btsp_sum_NDM_4_p1     = [rejection_11_btsp_sum_NDM_4_p1, T_11_sum_p1 > critical_value_11_btsp_sum_NDM_4_p1];
 
 rejection_11_btsp_max_NDM_5_p1     = [rejection_11_btsp_max_NDM_5_p1, T_11_max_p1 > critical_value_11_btsp_max_NDM_5_p1];
 rejection_11_btsp_sum_NDM_5_p1     = [rejection_11_btsp_sum_NDM_5_p1, T_11_sum_p1 > critical_value_11_btsp_sum_NDM_5_p1];
@@ -1375,83 +605,19 @@ rejection_11_btsp_sum_NDM_5_p1     = [rejection_11_btsp_sum_NDM_5_p1, T_11_sum_p
 rejection_11_btsp_max_LFC_p2     = [rejection_11_btsp_max_LFC_p2, T_11_max_p2 > critical_value_11_btsp_max_LFC_p2];
 rejection_11_btsp_sum_LFC_p2     = [rejection_11_btsp_sum_LFC_p2, T_11_sum_p2 > critical_value_11_btsp_sum_LFC_p2];
 
-
-rejection_11_max_contact_1_p2    = [rejection_11_max_contact_1_p2, T_11_max_p2 > critical_value_11_max_contact_1_p2];
-rejection_11_sum_contact_1_p2    = [rejection_11_sum_contact_1_p2, T_11_sum_p2 > critical_value_11_sum_contact_1_p2];
-
-rejection_11_max_contact_2_p2    = [rejection_11_max_contact_2_p2, T_11_max_p2 > critical_value_11_max_contact_2_p2];
-rejection_11_sum_contact_2_p2    = [rejection_11_sum_contact_2_p2, T_11_sum_p2 > critical_value_11_sum_contact_2_p2];
-
 rejection_11_max_contact_3_p2    = [rejection_11_max_contact_3_p2, T_11_max_p2 > critical_value_11_max_contact_3_p2];
 rejection_11_sum_contact_3_p2    = [rejection_11_sum_contact_3_p2, T_11_sum_p2 > critical_value_11_sum_contact_3_p2];
 
-rejection_11_max_contact_4_p2    = [rejection_11_max_contact_4_p2, T_11_max_p2 > critical_value_11_max_contact_4_p2];
-rejection_11_sum_contact_4_p2    = [rejection_11_sum_contact_4_p2, T_11_sum_p2 > critical_value_11_sum_contact_4_p2];
-
-rejection_11_max_contact_5_p2    = [rejection_11_max_contact_5_p2, T_11_max_p2 > critical_value_11_max_contact_5_p2];
-rejection_11_sum_contact_5_p2    = [rejection_11_sum_contact_5_p2, T_11_sum_p2 > critical_value_11_sum_contact_5_p2];
-
-rejection_11_btsp_max_NDM_1_p2_first     = [rejection_11_btsp_max_NDM_1_p2_first, T_11_max_p2 > critical_value_11_btsp_max_NDM_1_p2_first];
-rejection_11_btsp_sum_NDM_1_p2_first     = [rejection_11_btsp_sum_NDM_1_p2_first, T_11_sum_p2 > critical_value_11_btsp_sum_NDM_1_p2_first];
-
-rejection_11_btsp_max_NDM_2_p2_first     = [rejection_11_btsp_max_NDM_2_p2_first, T_11_max_p2 > critical_value_11_btsp_max_NDM_2_p2_first];
-rejection_11_btsp_sum_NDM_2_p2_first     = [rejection_11_btsp_sum_NDM_2_p2_first, T_11_sum_p2 > critical_value_11_btsp_sum_NDM_2_p2_first];
-
-rejection_11_btsp_max_NDM_3_p2_first     = [rejection_11_btsp_max_NDM_3_p2_first, T_11_max_p2 > critical_value_11_btsp_max_NDM_3_p2_first];
-rejection_11_btsp_sum_NDM_3_p2_first     = [rejection_11_btsp_sum_NDM_3_p2_first, T_11_sum_p2 > critical_value_11_btsp_sum_NDM_3_p2_first];
-
-rejection_11_btsp_max_NDM_4_p2_first     = [rejection_11_btsp_max_NDM_4_p2_first, T_11_max_p2 > critical_value_11_btsp_max_NDM_4_p2_first];
-rejection_11_btsp_sum_NDM_4_p2_first     = [rejection_11_btsp_sum_NDM_4_p2_first, T_11_sum_p2 > critical_value_11_btsp_sum_NDM_4_p2_first];
-
-rejection_11_btsp_max_NDM_5_p2_first     = [rejection_11_btsp_max_NDM_5_p2_first, T_11_max_p2 > critical_value_11_btsp_max_NDM_5_p2_first];
-rejection_11_btsp_sum_NDM_5_p2_first     = [rejection_11_btsp_sum_NDM_5_p2_first, T_11_sum_p2 > critical_value_11_btsp_sum_NDM_5_p2_first];
-
 rejection_11_btsp_max_NDM_1_p2_second    = [rejection_11_btsp_max_NDM_1_p2_second, T_11_max_p2 > critical_value_11_btsp_max_NDM_1_p2_second];
 rejection_11_btsp_sum_NDM_1_p2_second    = [rejection_11_btsp_sum_NDM_1_p2_second, T_11_sum_p2 > critical_value_11_btsp_sum_NDM_1_p2_second];
-
-rejection_11_btsp_max_NDM_2_p2_second    = [rejection_11_btsp_max_NDM_2_p2_second, T_11_max_p2 > critical_value_11_btsp_max_NDM_2_p2_second];
-rejection_11_btsp_sum_NDM_2_p2_second    = [rejection_11_btsp_sum_NDM_2_p2_second, T_11_sum_p2 > critical_value_11_btsp_sum_NDM_2_p2_second];
-
-rejection_11_btsp_max_NDM_3_p2_second    = [rejection_11_btsp_max_NDM_3_p2_second, T_11_max_p2 > critical_value_11_btsp_max_NDM_3_p2_second];
-rejection_11_btsp_sum_NDM_3_p2_second    = [rejection_11_btsp_sum_NDM_3_p2_second, T_11_sum_p2 > critical_value_11_btsp_sum_NDM_3_p2_second];
-
-rejection_11_btsp_max_NDM_4_p2_second    = [rejection_11_btsp_max_NDM_4_p2_second, T_11_max_p2 > critical_value_11_btsp_max_NDM_4_p2_second];
-rejection_11_btsp_sum_NDM_4_p2_second    = [rejection_11_btsp_sum_NDM_4_p2_second, T_11_sum_p2 > critical_value_11_btsp_sum_NDM_4_p2_second];
-
-rejection_11_btsp_max_NDM_5_p2_second    = [rejection_11_btsp_max_NDM_5_p2_second, T_11_max_p2 > critical_value_11_btsp_max_NDM_5_p2_second];
-rejection_11_btsp_sum_NDM_5_p2_second    = [rejection_11_btsp_sum_NDM_5_p2_second, T_11_sum_p2 > critical_value_11_btsp_sum_NDM_5_p2_second];
 
 % (1,2)
 
 rejection_12_btsp_max_LFC_p1     = [rejection_12_btsp_max_LFC_p1, T_12_max_p1 > critical_value_12_btsp_max_LFC_p1];
 rejection_12_btsp_sum_LFC_p1     = [rejection_12_btsp_sum_LFC_p1, T_12_sum_p1 > critical_value_12_btsp_sum_LFC_p1];
 
-rejection_12_max_contact_1_p1 =  [rejection_12_max_contact_1_p1, T_12_max_p1 > critical_value_12_max_contact_1_p1];
-rejection_12_sum_contact_1_p1 =  [rejection_12_sum_contact_1_p1, T_12_sum_p1 > critical_value_12_sum_contact_1_p1];
-
-rejection_12_max_contact_2_p1 =  [rejection_12_max_contact_2_p1, T_12_max_p1 > critical_value_12_max_contact_2_p1];
-rejection_12_sum_contact_2_p1 =  [rejection_12_sum_contact_2_p1, T_12_sum_p1 > critical_value_12_sum_contact_2_p1];
-
 rejection_12_max_contact_3_p1 =  [rejection_12_max_contact_3_p1, T_12_max_p1 > critical_value_12_max_contact_3_p1];
 rejection_12_sum_contact_3_p1 =  [rejection_12_sum_contact_3_p1, T_12_sum_p1 > critical_value_12_sum_contact_3_p1];
-
-rejection_12_max_contact_4_p1 =  [rejection_12_max_contact_4_p1, T_12_max_p1 > critical_value_12_max_contact_4_p1];
-rejection_12_sum_contact_4_p1 =  [rejection_12_sum_contact_4_p1, T_12_sum_p1 > critical_value_12_sum_contact_4_p1];
-
-rejection_12_max_contact_5_p1 =  [rejection_12_max_contact_5_p1, T_12_max_p1 > critical_value_12_max_contact_5_p1];
-rejection_12_sum_contact_5_p1 =  [rejection_12_sum_contact_5_p1, T_12_sum_p1 > critical_value_12_sum_contact_5_p1];
-
-rejection_12_btsp_max_NDM_1_p1     = [rejection_12_btsp_max_NDM_1_p1, T_12_max_p1 > critical_value_12_btsp_max_NDM_1_p1];
-rejection_12_btsp_sum_NDM_1_p1     = [rejection_12_btsp_sum_NDM_1_p1, T_12_sum_p1 > critical_value_12_btsp_sum_NDM_1_p1];
-
-rejection_12_btsp_max_NDM_2_p1     = [rejection_12_btsp_max_NDM_2_p1, T_12_max_p1 > critical_value_12_btsp_max_NDM_2_p1];
-rejection_12_btsp_sum_NDM_2_p1     = [rejection_12_btsp_sum_NDM_2_p1, T_12_sum_p1 > critical_value_12_btsp_sum_NDM_2_p1];
-
-rejection_12_btsp_max_NDM_3_p1     = [rejection_12_btsp_max_NDM_3_p1, T_12_max_p1 > critical_value_12_btsp_max_NDM_3_p1];
-rejection_12_btsp_sum_NDM_3_p1     = [rejection_12_btsp_sum_NDM_3_p1, T_12_sum_p1 > critical_value_12_btsp_sum_NDM_3_p1];
-
-rejection_12_btsp_max_NDM_4_p1     = [rejection_12_btsp_max_NDM_4_p1, T_12_max_p1 > critical_value_12_btsp_max_NDM_4_p1];
-rejection_12_btsp_sum_NDM_4_p1     = [rejection_12_btsp_sum_NDM_4_p1, T_12_sum_p1 > critical_value_12_btsp_sum_NDM_4_p1];
 
 rejection_12_btsp_max_NDM_5_p1     = [rejection_12_btsp_max_NDM_5_p1, T_12_max_p1 > critical_value_12_btsp_max_NDM_5_p1];
 rejection_12_btsp_sum_NDM_5_p1     = [rejection_12_btsp_sum_NDM_5_p1, T_12_sum_p1 > critical_value_12_btsp_sum_NDM_5_p1];
@@ -1461,82 +627,19 @@ rejection_12_btsp_sum_NDM_5_p1     = [rejection_12_btsp_sum_NDM_5_p1, T_12_sum_p
 rejection_12_btsp_max_LFC_p2     = [rejection_12_btsp_max_LFC_p2, T_12_max_p2 > critical_value_12_btsp_max_LFC_p2];
 rejection_12_btsp_sum_LFC_p2     = [rejection_12_btsp_sum_LFC_p2, T_12_sum_p2 > critical_value_12_btsp_sum_LFC_p2];
 
-rejection_12_max_contact_1_p2    = [rejection_12_max_contact_1_p2, T_12_max_p2 > critical_value_12_max_contact_1_p2];
-rejection_12_sum_contact_1_p2    = [rejection_12_sum_contact_1_p2, T_12_sum_p2 > critical_value_12_sum_contact_1_p2];
-
-rejection_12_max_contact_2_p2    = [rejection_12_max_contact_2_p2, T_12_max_p2 > critical_value_12_max_contact_2_p2];
-rejection_12_sum_contact_2_p2    = [rejection_12_sum_contact_2_p2, T_12_sum_p2 > critical_value_12_sum_contact_2_p2];
-
 rejection_12_max_contact_3_p2    = [rejection_12_max_contact_3_p2, T_12_max_p2 > critical_value_12_max_contact_3_p2];
 rejection_12_sum_contact_3_p2    = [rejection_12_sum_contact_3_p2, T_12_sum_p2 > critical_value_12_sum_contact_3_p2];
 
-rejection_12_max_contact_4_p2    = [rejection_12_max_contact_4_p2, T_12_max_p2 > critical_value_12_max_contact_4_p2];
-rejection_12_sum_contact_4_p2    = [rejection_12_sum_contact_4_p2, T_12_sum_p2 > critical_value_12_sum_contact_4_p2];
-
-rejection_12_max_contact_5_p2    = [rejection_12_max_contact_5_p2, T_12_max_p2 > critical_value_12_max_contact_5_p2];
-rejection_12_sum_contact_5_p2    = [rejection_12_sum_contact_5_p2, T_12_sum_p2 > critical_value_12_sum_contact_5_p2];
-
-rejection_12_btsp_max_NDM_1_p2_first     = [rejection_12_btsp_max_NDM_1_p2_first, T_12_max_p2 > critical_value_12_btsp_max_NDM_1_p2_first];
-rejection_12_btsp_sum_NDM_1_p2_first     = [rejection_12_btsp_sum_NDM_1_p2_first, T_12_sum_p2 > critical_value_12_btsp_sum_NDM_1_p2_first];
-
-rejection_12_btsp_max_NDM_2_p2_first     = [rejection_12_btsp_max_NDM_2_p2_first, T_12_max_p2 > critical_value_12_btsp_max_NDM_2_p2_first];
-rejection_12_btsp_sum_NDM_2_p2_first     = [rejection_12_btsp_sum_NDM_2_p2_first, T_12_sum_p2 > critical_value_12_btsp_sum_NDM_2_p2_first];
-
-rejection_12_btsp_max_NDM_3_p2_first     = [rejection_12_btsp_max_NDM_3_p2_first, T_12_max_p2 > critical_value_12_btsp_max_NDM_3_p2_first];
-rejection_12_btsp_sum_NDM_3_p2_first     = [rejection_12_btsp_sum_NDM_3_p2_first, T_12_sum_p2 > critical_value_12_btsp_sum_NDM_3_p2_first];
-
-rejection_12_btsp_max_NDM_4_p2_first     = [rejection_12_btsp_max_NDM_4_p2_first, T_12_max_p2 > critical_value_12_btsp_max_NDM_4_p2_first];
-rejection_12_btsp_sum_NDM_4_p2_first     = [rejection_12_btsp_sum_NDM_4_p2_first, T_12_sum_p2 > critical_value_12_btsp_sum_NDM_4_p2_first];
-
-rejection_12_btsp_max_NDM_5_p2_first     = [rejection_12_btsp_max_NDM_5_p2_first, T_12_max_p2 > critical_value_12_btsp_max_NDM_5_p2_first];
-rejection_12_btsp_sum_NDM_5_p2_first     = [rejection_12_btsp_sum_NDM_5_p2_first, T_12_sum_p2 > critical_value_12_btsp_sum_NDM_5_p2_first];
-
 rejection_12_btsp_max_NDM_1_p2_second    = [rejection_12_btsp_max_NDM_1_p2_second, T_12_max_p2 > critical_value_12_btsp_max_NDM_1_p2_second];
 rejection_12_btsp_sum_NDM_1_p2_second    = [rejection_12_btsp_sum_NDM_1_p2_second, T_12_sum_p2 > critical_value_12_btsp_sum_NDM_1_p2_second];
-
-rejection_12_btsp_max_NDM_2_p2_second    = [rejection_12_btsp_max_NDM_2_p2_second, T_12_max_p2 > critical_value_12_btsp_max_NDM_2_p2_second];
-rejection_12_btsp_sum_NDM_2_p2_second    = [rejection_12_btsp_sum_NDM_2_p2_second, T_12_sum_p2 > critical_value_12_btsp_sum_NDM_2_p2_second];
-
-rejection_12_btsp_max_NDM_3_p2_second    = [rejection_12_btsp_max_NDM_3_p2_second, T_12_max_p2 > critical_value_12_btsp_max_NDM_3_p2_second];
-rejection_12_btsp_sum_NDM_3_p2_second    = [rejection_12_btsp_sum_NDM_3_p2_second, T_12_sum_p2 > critical_value_12_btsp_sum_NDM_3_p2_second];
-
-rejection_12_btsp_max_NDM_4_p2_second    = [rejection_12_btsp_max_NDM_4_p2_second, T_12_max_p2 > critical_value_12_btsp_max_NDM_4_p2_second];
-rejection_12_btsp_sum_NDM_4_p2_second    = [rejection_12_btsp_sum_NDM_4_p2_second, T_12_sum_p2 > critical_value_12_btsp_sum_NDM_4_p2_second];
-
-rejection_12_btsp_max_NDM_5_p2_second    = [rejection_12_btsp_max_NDM_5_p2_second, T_12_max_p2 > critical_value_12_btsp_max_NDM_5_p2_second];
-rejection_12_btsp_sum_NDM_5_p2_second    = [rejection_12_btsp_sum_NDM_5_p2_second, T_12_sum_p2 > critical_value_12_btsp_sum_NDM_5_p2_second];
 
 % (2,1)
 
 rejection_21_btsp_max_LFC_p1     = [rejection_21_btsp_max_LFC_p1, T_21_max_p1 > critical_value_21_btsp_max_LFC_p1];
 rejection_21_btsp_sum_LFC_p1     = [rejection_21_btsp_sum_LFC_p1, T_21_sum_p1 > critical_value_21_btsp_sum_LFC_p1];
 
-rejection_21_max_contact_1_p1 =  [rejection_21_max_contact_1_p1, T_21_max_p1 > critical_value_21_max_contact_1_p1];
-rejection_21_sum_contact_1_p1 =  [rejection_21_sum_contact_1_p1, T_21_sum_p1 > critical_value_21_sum_contact_1_p1];
-
-rejection_21_max_contact_2_p1 =  [rejection_21_max_contact_2_p1, T_21_max_p1 > critical_value_21_max_contact_2_p1];
-rejection_21_sum_contact_2_p1 =  [rejection_21_sum_contact_2_p1, T_21_sum_p1 > critical_value_21_sum_contact_2_p1];
-
 rejection_21_max_contact_3_p1 =  [rejection_21_max_contact_3_p1, T_21_max_p1 > critical_value_21_max_contact_3_p1];
 rejection_21_sum_contact_3_p1 =  [rejection_21_sum_contact_3_p1, T_21_sum_p1 > critical_value_21_sum_contact_3_p1];
-
-rejection_21_max_contact_4_p1 =  [rejection_21_max_contact_4_p1, T_21_max_p1 > critical_value_21_max_contact_4_p1];
-rejection_21_sum_contact_4_p1 =  [rejection_21_sum_contact_4_p1, T_21_sum_p1 > critical_value_21_sum_contact_4_p1];
-
-rejection_21_max_contact_5_p1 =  [rejection_21_max_contact_5_p1, T_21_max_p1 > critical_value_21_max_contact_5_p1];
-rejection_21_sum_contact_5_p1 =  [rejection_21_sum_contact_5_p1, T_21_sum_p1 > critical_value_21_sum_contact_5_p1];
-
-rejection_21_btsp_max_NDM_1_p1     = [rejection_21_btsp_max_NDM_1_p1, T_21_max_p1 > critical_value_21_btsp_max_NDM_1_p1];
-rejection_21_btsp_sum_NDM_1_p1     = [rejection_21_btsp_sum_NDM_1_p1, T_21_sum_p1 > critical_value_21_btsp_sum_NDM_1_p1];
-
-rejection_21_btsp_max_NDM_2_p1     = [rejection_21_btsp_max_NDM_2_p1, T_21_max_p1 > critical_value_21_btsp_max_NDM_2_p1];
-rejection_21_btsp_sum_NDM_2_p1     = [rejection_21_btsp_sum_NDM_2_p1, T_21_sum_p1 > critical_value_21_btsp_sum_NDM_2_p1];
-
-rejection_21_btsp_max_NDM_3_p1     = [rejection_21_btsp_max_NDM_3_p1, T_21_max_p1 > critical_value_21_btsp_max_NDM_3_p1];
-rejection_21_btsp_sum_NDM_3_p1     = [rejection_21_btsp_sum_NDM_3_p1, T_21_sum_p1 > critical_value_21_btsp_sum_NDM_3_p1];
-
-rejection_21_btsp_max_NDM_4_p1     = [rejection_21_btsp_max_NDM_4_p1, T_21_max_p1 > critical_value_21_btsp_max_NDM_4_p1];
-rejection_21_btsp_sum_NDM_4_p1     = [rejection_21_btsp_sum_NDM_4_p1, T_21_sum_p1 > critical_value_21_btsp_sum_NDM_4_p1];
 
 rejection_21_btsp_max_NDM_5_p1     = [rejection_21_btsp_max_NDM_5_p1, T_21_max_p1 > critical_value_21_btsp_max_NDM_5_p1];
 rejection_21_btsp_sum_NDM_5_p1     = [rejection_21_btsp_sum_NDM_5_p1, T_21_sum_p1 > critical_value_21_btsp_sum_NDM_5_p1];
@@ -1546,83 +649,20 @@ rejection_21_btsp_sum_NDM_5_p1     = [rejection_21_btsp_sum_NDM_5_p1, T_21_sum_p
 rejection_21_btsp_max_LFC_p2     = [rejection_21_btsp_max_LFC_p2, T_21_max_p2 > critical_value_21_btsp_max_LFC_p2];
 rejection_21_btsp_sum_LFC_p2     = [rejection_21_btsp_sum_LFC_p2, T_21_sum_p2 > critical_value_21_btsp_sum_LFC_p2];
 
-rejection_21_max_contact_1_p2    = [rejection_21_max_contact_1_p2, T_21_max_p2 > critical_value_21_max_contact_1_p2];
-rejection_21_sum_contact_1_p2    = [rejection_21_sum_contact_1_p2, T_21_sum_p2 > critical_value_21_sum_contact_1_p2];
-
-rejection_21_max_contact_2_p2    = [rejection_21_max_contact_2_p2, T_21_max_p2 > critical_value_21_max_contact_2_p2];
-rejection_21_sum_contact_2_p2    = [rejection_21_sum_contact_2_p2, T_21_sum_p2 > critical_value_21_sum_contact_2_p2];
-
 rejection_21_max_contact_3_p2    = [rejection_21_max_contact_3_p2, T_21_max_p2 > critical_value_21_max_contact_3_p2];
 rejection_21_sum_contact_3_p2    = [rejection_21_sum_contact_3_p2, T_21_sum_p2 > critical_value_21_sum_contact_3_p2];
-
-rejection_21_max_contact_4_p2    = [rejection_21_max_contact_4_p2, T_21_max_p2 > critical_value_21_max_contact_4_p2];
-rejection_21_sum_contact_4_p2    = [rejection_21_sum_contact_4_p2, T_21_sum_p2 > critical_value_21_sum_contact_4_p2];
-
-rejection_21_max_contact_5_p2    = [rejection_21_max_contact_5_p2, T_21_max_p2 > critical_value_21_max_contact_5_p2];
-rejection_21_sum_contact_5_p2    = [rejection_21_sum_contact_5_p2, T_21_sum_p2 > critical_value_21_sum_contact_5_p2];
-
-rejection_21_btsp_max_NDM_1_p2_first     = [rejection_21_btsp_max_NDM_1_p2_first, T_21_max_p2 > critical_value_21_btsp_max_NDM_1_p2_first];
-rejection_21_btsp_sum_NDM_1_p2_first     = [rejection_21_btsp_sum_NDM_1_p2_first, T_21_sum_p2 > critical_value_21_btsp_sum_NDM_1_p2_first];
-
-rejection_21_btsp_max_NDM_2_p2_first     = [rejection_21_btsp_max_NDM_2_p2_first, T_21_max_p2 > critical_value_21_btsp_max_NDM_2_p2_first];
-rejection_21_btsp_sum_NDM_2_p2_first     = [rejection_21_btsp_sum_NDM_2_p2_first, T_21_sum_p2 > critical_value_21_btsp_sum_NDM_2_p2_first];
-
-rejection_21_btsp_max_NDM_3_p2_first     = [rejection_21_btsp_max_NDM_3_p2_first, T_21_max_p2 > critical_value_21_btsp_max_NDM_3_p2_first];
-rejection_21_btsp_sum_NDM_3_p2_first     = [rejection_21_btsp_sum_NDM_3_p2_first, T_21_sum_p2 > critical_value_21_btsp_sum_NDM_3_p2_first];
-
-rejection_21_btsp_max_NDM_4_p2_first     = [rejection_21_btsp_max_NDM_4_p2_first, T_21_max_p2 > critical_value_21_btsp_max_NDM_4_p2_first];
-rejection_21_btsp_sum_NDM_4_p2_first     = [rejection_21_btsp_sum_NDM_4_p2_first, T_21_sum_p2 > critical_value_21_btsp_sum_NDM_4_p2_first];
-
-rejection_21_btsp_max_NDM_5_p2_first     = [rejection_21_btsp_max_NDM_5_p2_first, T_21_max_p2 > critical_value_21_btsp_max_NDM_5_p2_first];
-rejection_21_btsp_sum_NDM_5_p2_first     = [rejection_21_btsp_sum_NDM_5_p2_first, T_21_sum_p2 > critical_value_21_btsp_sum_NDM_5_p2_first];
 
 rejection_21_btsp_max_NDM_1_p2_second    = [rejection_21_btsp_max_NDM_1_p2_second, T_21_max_p2 > critical_value_21_btsp_max_NDM_1_p2_second];
 rejection_21_btsp_sum_NDM_1_p2_second    = [rejection_21_btsp_sum_NDM_1_p2_second, T_21_sum_p2 > critical_value_21_btsp_sum_NDM_1_p2_second];
 
-rejection_21_btsp_max_NDM_2_p2_second    = [rejection_21_btsp_max_NDM_2_p2_second, T_21_max_p2 > critical_value_21_btsp_max_NDM_2_p2_second];
-rejection_21_btsp_sum_NDM_2_p2_second    = [rejection_21_btsp_sum_NDM_2_p2_second, T_21_sum_p2 > critical_value_21_btsp_sum_NDM_2_p2_second];
-
-rejection_21_btsp_max_NDM_3_p2_second    = [rejection_21_btsp_max_NDM_3_p2_second, T_21_max_p2 > critical_value_21_btsp_max_NDM_3_p2_second];
-rejection_21_btsp_sum_NDM_3_p2_second    = [rejection_21_btsp_sum_NDM_3_p2_second, T_21_sum_p2 > critical_value_21_btsp_sum_NDM_3_p2_second];
-
-rejection_21_btsp_max_NDM_4_p2_second    = [rejection_21_btsp_max_NDM_4_p2_second, T_21_max_p2 > critical_value_21_btsp_max_NDM_4_p2_second];
-rejection_21_btsp_sum_NDM_4_p2_second    = [rejection_21_btsp_sum_NDM_4_p2_second, T_21_sum_p2 > critical_value_21_btsp_sum_NDM_4_p2_second];
-
-rejection_21_btsp_max_NDM_5_p2_second    = [rejection_21_btsp_max_NDM_5_p2_second, T_21_max_p2 > critical_value_21_btsp_max_NDM_5_p2_second];
-rejection_21_btsp_sum_NDM_5_p2_second    = [rejection_21_btsp_sum_NDM_5_p2_second, T_21_sum_p2 > critical_value_21_btsp_sum_NDM_5_p2_second];
 
 % (2,2)
-
 
 rejection_22_btsp_max_LFC_p1     = [rejection_22_btsp_max_LFC_p1, T_22_max_p1 > critical_value_22_btsp_max_LFC_p1];
 rejection_22_btsp_sum_LFC_p1     = [rejection_22_btsp_sum_LFC_p1, T_22_sum_p1 > critical_value_22_btsp_sum_LFC_p1];
 
-rejection_22_max_contact_1_p1 =  [rejection_22_max_contact_1_p1, T_22_max_p1 > critical_value_22_max_contact_1_p1];
-rejection_22_sum_contact_1_p1 =  [rejection_22_sum_contact_1_p1, T_22_sum_p1 > critical_value_22_sum_contact_1_p1];
-
-rejection_22_max_contact_2_p1 =  [rejection_22_max_contact_2_p1, T_22_max_p1 > critical_value_22_max_contact_2_p1];
-rejection_22_sum_contact_2_p1 =  [rejection_22_sum_contact_2_p1, T_22_sum_p1 > critical_value_22_sum_contact_2_p1];
-
 rejection_22_max_contact_3_p1 =  [rejection_22_max_contact_3_p1, T_22_max_p1 > critical_value_22_max_contact_3_p1];
 rejection_22_sum_contact_3_p1 =  [rejection_22_sum_contact_3_p1, T_22_sum_p1 > critical_value_22_sum_contact_3_p1];
-
-rejection_22_max_contact_4_p1 =  [rejection_22_max_contact_4_p1, T_22_max_p1 > critical_value_22_max_contact_4_p1];
-rejection_22_sum_contact_4_p1 =  [rejection_22_sum_contact_4_p1, T_22_sum_p1 > critical_value_22_sum_contact_4_p1];
-
-rejection_22_max_contact_5_p1 =  [rejection_22_max_contact_5_p1, T_22_max_p1 > critical_value_22_max_contact_5_p1];
-rejection_22_sum_contact_5_p1 =  [rejection_22_sum_contact_5_p1, T_22_sum_p1 > critical_value_22_sum_contact_5_p1];
-
-rejection_22_btsp_max_NDM_1_p1     = [rejection_22_btsp_max_NDM_1_p1, T_22_max_p1 > critical_value_22_btsp_max_NDM_1_p1];
-rejection_22_btsp_sum_NDM_1_p1     = [rejection_22_btsp_sum_NDM_1_p1, T_22_sum_p1 > critical_value_22_btsp_sum_NDM_1_p1];
-
-rejection_22_btsp_max_NDM_2_p1     = [rejection_22_btsp_max_NDM_2_p1, T_22_max_p1 > critical_value_22_btsp_max_NDM_2_p1];
-rejection_22_btsp_sum_NDM_2_p1     = [rejection_22_btsp_sum_NDM_2_p1, T_22_sum_p1 > critical_value_22_btsp_sum_NDM_2_p1];
-
-rejection_22_btsp_max_NDM_3_p1     = [rejection_22_btsp_max_NDM_3_p1, T_22_max_p1 > critical_value_22_btsp_max_NDM_3_p1];
-rejection_22_btsp_sum_NDM_3_p1     = [rejection_22_btsp_sum_NDM_3_p1, T_22_sum_p1 > critical_value_22_btsp_sum_NDM_3_p1];
-
-rejection_22_btsp_max_NDM_4_p1     = [rejection_22_btsp_max_NDM_4_p1, T_22_max_p1 > critical_value_22_btsp_max_NDM_4_p1];
-rejection_22_btsp_sum_NDM_4_p1     = [rejection_22_btsp_sum_NDM_4_p1, T_22_sum_p1 > critical_value_22_btsp_sum_NDM_4_p1];
 
 rejection_22_btsp_max_NDM_5_p1     = [rejection_22_btsp_max_NDM_5_p1, T_22_max_p1 > critical_value_22_btsp_max_NDM_5_p1];
 rejection_22_btsp_sum_NDM_5_p1     = [rejection_22_btsp_sum_NDM_5_p1, T_22_sum_p1 > critical_value_22_btsp_sum_NDM_5_p1];
@@ -1632,50 +672,11 @@ rejection_22_btsp_sum_NDM_5_p1     = [rejection_22_btsp_sum_NDM_5_p1, T_22_sum_p
 rejection_22_btsp_max_LFC_p2     = [rejection_22_btsp_max_LFC_p2, T_22_max_p2 > critical_value_22_btsp_max_LFC_p2];
 rejection_22_btsp_sum_LFC_p2     = [rejection_22_btsp_sum_LFC_p2, T_22_sum_p2 > critical_value_22_btsp_sum_LFC_p2];
 
-rejection_22_max_contact_1_p2    = [rejection_22_max_contact_1_p2, T_22_max_p2 > critical_value_22_max_contact_1_p2];
-rejection_22_sum_contact_1_p2    = [rejection_22_sum_contact_1_p2, T_22_sum_p2 > critical_value_22_sum_contact_1_p2];
-
-rejection_22_max_contact_2_p2    = [rejection_22_max_contact_2_p2, T_22_max_p2 > critical_value_22_max_contact_2_p2];
-rejection_22_sum_contact_2_p2    = [rejection_22_sum_contact_2_p2, T_22_sum_p2 > critical_value_22_sum_contact_2_p2];
-
 rejection_22_max_contact_3_p2    = [rejection_22_max_contact_3_p2, T_22_max_p2 > critical_value_22_max_contact_3_p2];
 rejection_22_sum_contact_3_p2    = [rejection_22_sum_contact_3_p2, T_22_sum_p2 > critical_value_22_sum_contact_3_p2];
 
-rejection_22_max_contact_4_p2    = [rejection_22_max_contact_4_p2, T_22_max_p2 > critical_value_22_max_contact_4_p2];
-rejection_22_sum_contact_4_p2    = [rejection_22_sum_contact_4_p2, T_22_sum_p2 > critical_value_22_sum_contact_4_p2];
-
-rejection_22_max_contact_5_p2    = [rejection_22_max_contact_5_p2, T_22_max_p2 > critical_value_22_max_contact_5_p2];
-rejection_22_sum_contact_5_p2    = [rejection_22_sum_contact_5_p2, T_22_sum_p2 > critical_value_22_sum_contact_5_p2];
-
-rejection_22_btsp_max_NDM_1_p2_first     = [rejection_22_btsp_max_NDM_1_p2_first, T_22_max_p2 > critical_value_22_btsp_max_NDM_1_p2_first];
-rejection_22_btsp_sum_NDM_1_p2_first     = [rejection_22_btsp_sum_NDM_1_p2_first, T_22_sum_p2 > critical_value_22_btsp_sum_NDM_1_p2_first];
-
-rejection_22_btsp_max_NDM_2_p2_first     = [rejection_22_btsp_max_NDM_2_p2_first, T_22_max_p2 > critical_value_22_btsp_max_NDM_2_p2_first];
-rejection_22_btsp_sum_NDM_2_p2_first     = [rejection_22_btsp_sum_NDM_2_p2_first, T_22_sum_p2 > critical_value_22_btsp_sum_NDM_2_p2_first];
-
-rejection_22_btsp_max_NDM_3_p2_first     = [rejection_22_btsp_max_NDM_3_p2_first, T_22_max_p2 > critical_value_22_btsp_max_NDM_3_p2_first];
-rejection_22_btsp_sum_NDM_3_p2_first     = [rejection_22_btsp_sum_NDM_3_p2_first, T_22_sum_p2 > critical_value_22_btsp_sum_NDM_3_p2_first];
-
-rejection_22_btsp_max_NDM_4_p2_first     = [rejection_22_btsp_max_NDM_4_p2_first, T_22_max_p2 > critical_value_22_btsp_max_NDM_4_p2_first];
-rejection_22_btsp_sum_NDM_4_p2_first     = [rejection_22_btsp_sum_NDM_4_p2_first, T_22_sum_p2 > critical_value_22_btsp_sum_NDM_4_p2_first];
-
-rejection_22_btsp_max_NDM_5_p2_first     = [rejection_22_btsp_max_NDM_5_p2_first, T_22_max_p2 > critical_value_22_btsp_max_NDM_5_p2_first];
-rejection_22_btsp_sum_NDM_5_p2_first     = [rejection_22_btsp_sum_NDM_5_p2_first, T_22_sum_p2 > critical_value_22_btsp_sum_NDM_5_p2_first];
-
 rejection_22_btsp_max_NDM_1_p2_second    = [rejection_22_btsp_max_NDM_1_p2_second, T_22_max_p2 > critical_value_22_btsp_max_NDM_1_p2_second];
 rejection_22_btsp_sum_NDM_1_p2_second    = [rejection_22_btsp_sum_NDM_1_p2_second, T_22_sum_p2 > critical_value_22_btsp_sum_NDM_1_p2_second];
-
-rejection_22_btsp_max_NDM_2_p2_second    = [rejection_22_btsp_max_NDM_2_p2_second, T_22_max_p2 > critical_value_22_btsp_max_NDM_2_p2_second];
-rejection_22_btsp_sum_NDM_2_p2_second    = [rejection_22_btsp_sum_NDM_2_p2_second, T_22_sum_p2 > critical_value_22_btsp_sum_NDM_2_p2_second];
-
-rejection_22_btsp_max_NDM_3_p2_second    = [rejection_22_btsp_max_NDM_3_p2_second, T_22_max_p2 > critical_value_22_btsp_max_NDM_3_p2_second];
-rejection_22_btsp_sum_NDM_3_p2_second    = [rejection_22_btsp_sum_NDM_3_p2_second, T_22_sum_p2 > critical_value_22_btsp_sum_NDM_3_p2_second];
-
-rejection_22_btsp_max_NDM_4_p2_second    = [rejection_22_btsp_max_NDM_4_p2_second, T_22_max_p2 > critical_value_22_btsp_max_NDM_4_p2_second];
-rejection_22_btsp_sum_NDM_4_p2_second    = [rejection_22_btsp_sum_NDM_4_p2_second, T_22_sum_p2 > critical_value_22_btsp_sum_NDM_4_p2_second];
-
-rejection_22_btsp_max_NDM_5_p2_second    = [rejection_22_btsp_max_NDM_5_p2_second, T_22_max_p2 > critical_value_22_btsp_max_NDM_5_p2_second];
-rejection_22_btsp_sum_NDM_5_p2_second    = [rejection_22_btsp_sum_NDM_5_p2_second, T_22_sum_p2 > critical_value_22_btsp_sum_NDM_5_p2_second];
 
 % Simulation Ends
 end
@@ -1689,32 +690,8 @@ toc
 rejection_ratio_11_btsp_max_LFC_p1    = mean(rejection_11_btsp_max_LFC_p1);
 rejection_ratio_11_btsp_sum_LFC_p1    = mean(rejection_11_btsp_sum_LFC_p1);
 
-rejection_ratio_11_max_contact_1_p1 = mean(rejection_11_max_contact_1_p1);
-rejection_ratio_11_sum_contact_1_p1 = mean(rejection_11_sum_contact_1_p1);
-
-rejection_ratio_11_max_contact_2_p1 = mean(rejection_11_max_contact_2_p1);
-rejection_ratio_11_sum_contact_2_p1 = mean(rejection_11_sum_contact_2_p1);
-
 rejection_ratio_11_max_contact_3_p1 = mean(rejection_11_max_contact_3_p1);
 rejection_ratio_11_sum_contact_3_p1 = mean(rejection_11_sum_contact_3_p1);
-
-rejection_ratio_11_max_contact_4_p1 = mean(rejection_11_max_contact_4_p1);
-rejection_ratio_11_sum_contact_4_p1 = mean(rejection_11_sum_contact_4_p1);
-
-rejection_ratio_11_max_contact_5_p1 = mean(rejection_11_max_contact_5_p1);
-rejection_ratio_11_sum_contact_5_p1 = mean(rejection_11_sum_contact_5_p1);
-
-rejection_ratio_11_btsp_max_NDM_1_p1 = mean(rejection_11_btsp_max_NDM_1_p1);
-rejection_ratio_11_btsp_sum_NDM_1_p1 = mean(rejection_11_btsp_sum_NDM_1_p1);
-
-rejection_ratio_11_btsp_max_NDM_2_p1 = mean(rejection_11_btsp_max_NDM_2_p1);
-rejection_ratio_11_btsp_sum_NDM_2_p1 = mean(rejection_11_btsp_sum_NDM_2_p1);
-
-rejection_ratio_11_btsp_max_NDM_3_p1 = mean(rejection_11_btsp_max_NDM_3_p1);
-rejection_ratio_11_btsp_sum_NDM_3_p1 = mean(rejection_11_btsp_sum_NDM_3_p1);
-
-rejection_ratio_11_btsp_max_NDM_4_p1 = mean(rejection_11_btsp_max_NDM_4_p1);
-rejection_ratio_11_btsp_sum_NDM_4_p1 = mean(rejection_11_btsp_sum_NDM_4_p1);
 
 rejection_ratio_11_btsp_max_NDM_5_p1 = mean(rejection_11_btsp_max_NDM_5_p1);
 rejection_ratio_11_btsp_sum_NDM_5_p1 = mean(rejection_11_btsp_sum_NDM_5_p1);
@@ -1724,54 +701,11 @@ rejection_ratio_11_btsp_sum_NDM_5_p1 = mean(rejection_11_btsp_sum_NDM_5_p1);
 rejection_ratio_11_btsp_max_LFC_p2   = mean(rejection_11_btsp_max_LFC_p2);
 rejection_ratio_11_btsp_sum_LFC_p2   = mean(rejection_11_btsp_sum_LFC_p2);
 
-rejection_ratio_11_max_contact_1_p2 = mean(rejection_11_max_contact_1_p2);
-rejection_ratio_11_sum_contact_1_p2 = mean(rejection_11_sum_contact_1_p2);
-
-rejection_ratio_11_max_contact_2_p2 = mean(rejection_11_max_contact_2_p2);
-rejection_ratio_11_sum_contact_2_p2 = mean(rejection_11_sum_contact_2_p2);
-
 rejection_ratio_11_max_contact_3_p2 = mean(rejection_11_max_contact_3_p2);
 rejection_ratio_11_sum_contact_3_p2 = mean(rejection_11_sum_contact_3_p2);
 
-rejection_ratio_11_max_contact_4_p2 = mean(rejection_11_max_contact_4_p2);
-rejection_ratio_11_sum_contact_4_p2 = mean(rejection_11_sum_contact_4_p2);
-
-rejection_ratio_11_max_contact_5_p2 = mean(rejection_11_max_contact_5_p2);
-rejection_ratio_11_sum_contact_5_p2 = mean(rejection_11_sum_contact_5_p2);
-
-% first
-
-rejection_ratio_11_btsp_max_NDM_1_p2_first = mean(rejection_11_btsp_max_NDM_1_p2_first);
-rejection_ratio_11_btsp_sum_NDM_1_p2_first = mean(rejection_11_btsp_sum_NDM_1_p2_first);
-
-rejection_ratio_11_btsp_max_NDM_2_p2_first = mean(rejection_11_btsp_max_NDM_2_p2_first);
-rejection_ratio_11_btsp_sum_NDM_2_p2_first = mean(rejection_11_btsp_sum_NDM_2_p2_first);
-
-rejection_ratio_11_btsp_max_NDM_3_p2_first = mean(rejection_11_btsp_max_NDM_3_p2_first);
-rejection_ratio_11_btsp_sum_NDM_3_p2_first = mean(rejection_11_btsp_sum_NDM_3_p2_first);
-
-rejection_ratio_11_btsp_max_NDM_4_p2_first = mean(rejection_11_btsp_max_NDM_4_p2_first);
-rejection_ratio_11_btsp_sum_NDM_4_p2_first = mean(rejection_11_btsp_sum_NDM_4_p2_first);
-
-rejection_ratio_11_btsp_max_NDM_5_p2_first = mean(rejection_11_btsp_max_NDM_5_p2_first);
-rejection_ratio_11_btsp_sum_NDM_5_p2_first = mean(rejection_11_btsp_sum_NDM_5_p2_first);
-
-% second
-
 rejection_ratio_11_btsp_max_NDM_1_p2_second = mean(rejection_11_btsp_max_NDM_1_p2_second);
 rejection_ratio_11_btsp_sum_NDM_1_p2_second = mean(rejection_11_btsp_sum_NDM_1_p2_second);
-
-rejection_ratio_11_btsp_max_NDM_2_p2_second = mean(rejection_11_btsp_max_NDM_2_p2_second);
-rejection_ratio_11_btsp_sum_NDM_2_p2_second = mean(rejection_11_btsp_sum_NDM_2_p2_second);
-
-rejection_ratio_11_btsp_max_NDM_3_p2_second = mean(rejection_11_btsp_max_NDM_3_p2_second);
-rejection_ratio_11_btsp_sum_NDM_3_p2_second = mean(rejection_11_btsp_sum_NDM_3_p2_second);
-
-rejection_ratio_11_btsp_max_NDM_4_p2_second = mean(rejection_11_btsp_max_NDM_4_p2_second);
-rejection_ratio_11_btsp_sum_NDM_4_p2_second = mean(rejection_11_btsp_sum_NDM_4_p2_second);
-
-rejection_ratio_11_btsp_max_NDM_5_p2_second = mean(rejection_11_btsp_max_NDM_5_p2_second);
-rejection_ratio_11_btsp_sum_NDM_5_p2_second = mean(rejection_11_btsp_sum_NDM_5_p2_second);
 
 % % (1,2)
 
@@ -1780,90 +714,22 @@ rejection_ratio_11_btsp_sum_NDM_5_p2_second = mean(rejection_11_btsp_sum_NDM_5_p
 rejection_ratio_12_btsp_max_LFC_p1    = mean(rejection_12_btsp_max_LFC_p1);
 rejection_ratio_12_btsp_sum_LFC_p1    = mean(rejection_12_btsp_sum_LFC_p1);
 
-rejection_ratio_12_max_contact_1_p1 = mean(rejection_12_max_contact_1_p1);
-rejection_ratio_12_sum_contact_1_p1 = mean(rejection_12_sum_contact_1_p1);
-
-rejection_ratio_12_max_contact_2_p1 = mean(rejection_12_max_contact_2_p1);
-rejection_ratio_12_sum_contact_2_p1 = mean(rejection_12_sum_contact_2_p1);
-
 rejection_ratio_12_max_contact_3_p1 = mean(rejection_12_max_contact_3_p1);
 rejection_ratio_12_sum_contact_3_p1 = mean(rejection_12_sum_contact_3_p1);
 
-rejection_ratio_12_max_contact_4_p1 = mean(rejection_12_max_contact_4_p1);
-rejection_ratio_12_sum_contact_4_p1 = mean(rejection_12_sum_contact_4_p1);
-
-rejection_ratio_12_max_contact_5_p1 = mean(rejection_12_max_contact_5_p1);
-rejection_ratio_12_sum_contact_5_p1 = mean(rejection_12_sum_contact_5_p1);
-
-rejection_ratio_12_btsp_max_NDM_1_p1 = mean(rejection_12_btsp_max_NDM_1_p1);
-rejection_ratio_12_btsp_sum_NDM_1_p1 = mean(rejection_12_btsp_sum_NDM_1_p1);
-
-rejection_ratio_12_btsp_max_NDM_2_p1 = mean(rejection_12_btsp_max_NDM_2_p1);
-rejection_ratio_12_btsp_sum_NDM_2_p1 = mean(rejection_12_btsp_sum_NDM_2_p1);
-
-rejection_ratio_12_btsp_max_NDM_3_p1 = mean(rejection_12_btsp_max_NDM_3_p1);
-rejection_ratio_12_btsp_sum_NDM_3_p1 = mean(rejection_12_btsp_sum_NDM_3_p1);
-
-rejection_ratio_12_btsp_max_NDM_4_p1 = mean(rejection_12_btsp_max_NDM_4_p1);
-rejection_ratio_12_btsp_sum_NDM_4_p1 = mean(rejection_12_btsp_sum_NDM_4_p1);
-
 rejection_ratio_12_btsp_max_NDM_5_p1 = mean(rejection_12_btsp_max_NDM_5_p1);
 rejection_ratio_12_btsp_sum_NDM_5_p1 = mean(rejection_12_btsp_sum_NDM_5_p1);
-
 
 % p = 2
 
 rejection_ratio_12_btsp_max_LFC_p2   = mean(rejection_12_btsp_max_LFC_p2);
 rejection_ratio_12_btsp_sum_LFC_p2   = mean(rejection_12_btsp_sum_LFC_p2);
 
-rejection_ratio_12_max_contact_1_p2 = mean(rejection_12_max_contact_1_p2);
-rejection_ratio_12_sum_contact_1_p2 = mean(rejection_12_sum_contact_1_p2);
-
-rejection_ratio_12_max_contact_2_p2 = mean(rejection_12_max_contact_2_p2);
-rejection_ratio_12_sum_contact_2_p2 = mean(rejection_12_sum_contact_2_p2);
-
 rejection_ratio_12_max_contact_3_p2 = mean(rejection_12_max_contact_3_p2);
 rejection_ratio_12_sum_contact_3_p2 = mean(rejection_12_sum_contact_3_p2);
 
-rejection_ratio_12_max_contact_4_p2 = mean(rejection_12_max_contact_4_p2);
-rejection_ratio_12_sum_contact_4_p2 = mean(rejection_12_sum_contact_4_p2);
-
-rejection_ratio_12_max_contact_5_p2 = mean(rejection_12_max_contact_5_p2);
-rejection_ratio_12_sum_contact_5_p2 = mean(rejection_12_sum_contact_5_p2);
-
-% first
-
-rejection_ratio_12_btsp_max_NDM_1_p2_first = mean(rejection_12_btsp_max_NDM_1_p2_first);
-rejection_ratio_12_btsp_sum_NDM_1_p2_first = mean(rejection_12_btsp_sum_NDM_1_p2_first);
-
-rejection_ratio_12_btsp_max_NDM_2_p2_first = mean(rejection_12_btsp_max_NDM_2_p2_first);
-rejection_ratio_12_btsp_sum_NDM_2_p2_first = mean(rejection_12_btsp_sum_NDM_2_p2_first);
-
-rejection_ratio_12_btsp_max_NDM_3_p2_first = mean(rejection_12_btsp_max_NDM_3_p2_first);
-rejection_ratio_12_btsp_sum_NDM_3_p2_first = mean(rejection_12_btsp_sum_NDM_3_p2_first);
-
-rejection_ratio_12_btsp_max_NDM_4_p2_first = mean(rejection_12_btsp_max_NDM_4_p2_first);
-rejection_ratio_12_btsp_sum_NDM_4_p2_first = mean(rejection_12_btsp_sum_NDM_4_p2_first);
-
-rejection_ratio_12_btsp_max_NDM_5_p2_first = mean(rejection_12_btsp_max_NDM_5_p2_first);
-rejection_ratio_12_btsp_sum_NDM_5_p2_first = mean(rejection_12_btsp_sum_NDM_5_p2_first);
-
-% second
-
 rejection_ratio_12_btsp_max_NDM_1_p2_second = mean(rejection_12_btsp_max_NDM_1_p2_second);
 rejection_ratio_12_btsp_sum_NDM_1_p2_second = mean(rejection_12_btsp_sum_NDM_1_p2_second);
-
-rejection_ratio_12_btsp_max_NDM_2_p2_second = mean(rejection_12_btsp_max_NDM_2_p2_second);
-rejection_ratio_12_btsp_sum_NDM_2_p2_second = mean(rejection_12_btsp_sum_NDM_2_p2_second);
-
-rejection_ratio_12_btsp_max_NDM_3_p2_second = mean(rejection_12_btsp_max_NDM_3_p2_second);
-rejection_ratio_12_btsp_sum_NDM_3_p2_second = mean(rejection_12_btsp_sum_NDM_3_p2_second);
-
-rejection_ratio_12_btsp_max_NDM_4_p2_second = mean(rejection_12_btsp_max_NDM_4_p2_second);
-rejection_ratio_12_btsp_sum_NDM_4_p2_second = mean(rejection_12_btsp_sum_NDM_4_p2_second);
-
-rejection_ratio_12_btsp_max_NDM_5_p2_second = mean(rejection_12_btsp_max_NDM_5_p2_second);
-rejection_ratio_12_btsp_sum_NDM_5_p2_second = mean(rejection_12_btsp_sum_NDM_5_p2_second);
 
 % % (2,1)
 
@@ -1872,32 +738,8 @@ rejection_ratio_12_btsp_sum_NDM_5_p2_second = mean(rejection_12_btsp_sum_NDM_5_p
 rejection_ratio_21_btsp_max_LFC_p1    = mean(rejection_21_btsp_max_LFC_p1);
 rejection_ratio_21_btsp_sum_LFC_p1    = mean(rejection_21_btsp_sum_LFC_p1);
 
-rejection_ratio_21_max_contact_1_p1 = mean(rejection_21_max_contact_1_p1);
-rejection_ratio_21_sum_contact_1_p1 = mean(rejection_21_sum_contact_1_p1);
-
-rejection_ratio_21_max_contact_2_p1 = mean(rejection_21_max_contact_2_p1);
-rejection_ratio_21_sum_contact_2_p1 = mean(rejection_21_sum_contact_2_p1);
-
 rejection_ratio_21_max_contact_3_p1 = mean(rejection_21_max_contact_3_p1);
 rejection_ratio_21_sum_contact_3_p1 = mean(rejection_21_sum_contact_3_p1);
-
-rejection_ratio_21_max_contact_4_p1 = mean(rejection_21_max_contact_4_p1);
-rejection_ratio_21_sum_contact_4_p1 = mean(rejection_21_sum_contact_4_p1);
-
-rejection_ratio_21_max_contact_5_p1 = mean(rejection_21_max_contact_5_p1);
-rejection_ratio_21_sum_contact_5_p1 = mean(rejection_21_sum_contact_5_p1);
-
-rejection_ratio_21_btsp_max_NDM_1_p1 = mean(rejection_21_btsp_max_NDM_1_p1);
-rejection_ratio_21_btsp_sum_NDM_1_p1 = mean(rejection_21_btsp_sum_NDM_1_p1);
-
-rejection_ratio_21_btsp_max_NDM_2_p1 = mean(rejection_21_btsp_max_NDM_2_p1);
-rejection_ratio_21_btsp_sum_NDM_2_p1 = mean(rejection_21_btsp_sum_NDM_2_p1);
-
-rejection_ratio_21_btsp_max_NDM_3_p1 = mean(rejection_21_btsp_max_NDM_3_p1);
-rejection_ratio_21_btsp_sum_NDM_3_p1 = mean(rejection_21_btsp_sum_NDM_3_p1);
-
-rejection_ratio_21_btsp_max_NDM_4_p1 = mean(rejection_21_btsp_max_NDM_4_p1);
-rejection_ratio_21_btsp_sum_NDM_4_p1 = mean(rejection_21_btsp_sum_NDM_4_p1);
 
 rejection_ratio_21_btsp_max_NDM_5_p1 = mean(rejection_21_btsp_max_NDM_5_p1);
 rejection_ratio_21_btsp_sum_NDM_5_p1 = mean(rejection_21_btsp_sum_NDM_5_p1);
@@ -1907,54 +749,11 @@ rejection_ratio_21_btsp_sum_NDM_5_p1 = mean(rejection_21_btsp_sum_NDM_5_p1);
 rejection_ratio_21_btsp_max_LFC_p2   = mean(rejection_21_btsp_max_LFC_p2);
 rejection_ratio_21_btsp_sum_LFC_p2   = mean(rejection_21_btsp_sum_LFC_p2);
 
-rejection_ratio_21_max_contact_1_p2 = mean(rejection_21_max_contact_1_p2);
-rejection_ratio_21_sum_contact_1_p2 = mean(rejection_21_sum_contact_1_p2);
-
-rejection_ratio_21_max_contact_2_p2 = mean(rejection_21_max_contact_2_p2);
-rejection_ratio_21_sum_contact_2_p2 = mean(rejection_21_sum_contact_2_p2);
-
 rejection_ratio_21_max_contact_3_p2 = mean(rejection_21_max_contact_3_p2);
 rejection_ratio_21_sum_contact_3_p2 = mean(rejection_21_sum_contact_3_p2);
 
-rejection_ratio_21_max_contact_4_p2 = mean(rejection_21_max_contact_4_p2);
-rejection_ratio_21_sum_contact_4_p2 = mean(rejection_21_sum_contact_4_p2);
-
-rejection_ratio_21_max_contact_5_p2 = mean(rejection_21_max_contact_5_p2);
-rejection_ratio_21_sum_contact_5_p2 = mean(rejection_21_sum_contact_5_p2);
-
-% first
-
-rejection_ratio_21_btsp_max_NDM_1_p2_first = mean(rejection_21_btsp_max_NDM_1_p2_first);
-rejection_ratio_21_btsp_sum_NDM_1_p2_first = mean(rejection_21_btsp_sum_NDM_1_p2_first);
-
-rejection_ratio_21_btsp_max_NDM_2_p2_first = mean(rejection_21_btsp_max_NDM_2_p2_first);
-rejection_ratio_21_btsp_sum_NDM_2_p2_first = mean(rejection_21_btsp_sum_NDM_2_p2_first);
-
-rejection_ratio_21_btsp_max_NDM_3_p2_first = mean(rejection_21_btsp_max_NDM_3_p2_first);
-rejection_ratio_21_btsp_sum_NDM_3_p2_first = mean(rejection_21_btsp_sum_NDM_3_p2_first);
-
-rejection_ratio_21_btsp_max_NDM_4_p2_first = mean(rejection_21_btsp_max_NDM_4_p2_first);
-rejection_ratio_21_btsp_sum_NDM_4_p2_first = mean(rejection_21_btsp_sum_NDM_4_p2_first);
-
-rejection_ratio_21_btsp_max_NDM_5_p2_first = mean(rejection_21_btsp_max_NDM_5_p2_first);
-rejection_ratio_21_btsp_sum_NDM_5_p2_first = mean(rejection_21_btsp_sum_NDM_5_p2_first);
-
-% second
-
 rejection_ratio_21_btsp_max_NDM_1_p2_second = mean(rejection_21_btsp_max_NDM_1_p2_second);
 rejection_ratio_21_btsp_sum_NDM_1_p2_second = mean(rejection_21_btsp_sum_NDM_1_p2_second);
-% 
-rejection_ratio_21_btsp_max_NDM_2_p2_second = mean(rejection_21_btsp_max_NDM_2_p2_second);
-rejection_ratio_21_btsp_sum_NDM_2_p2_second = mean(rejection_21_btsp_sum_NDM_2_p2_second);
-
-rejection_ratio_21_btsp_max_NDM_3_p2_second = mean(rejection_21_btsp_max_NDM_3_p2_second);
-rejection_ratio_21_btsp_sum_NDM_3_p2_second = mean(rejection_21_btsp_sum_NDM_3_p2_second);
-
-rejection_ratio_21_btsp_max_NDM_4_p2_second = mean(rejection_21_btsp_max_NDM_4_p2_second);
-rejection_ratio_21_btsp_sum_NDM_4_p2_second = mean(rejection_21_btsp_sum_NDM_4_p2_second);
-
-rejection_ratio_21_btsp_max_NDM_5_p2_second = mean(rejection_21_btsp_max_NDM_5_p2_second);
-rejection_ratio_21_btsp_sum_NDM_5_p2_second = mean(rejection_21_btsp_sum_NDM_5_p2_second);
 
 % % (2,2)
 
@@ -1967,32 +766,8 @@ rejection_ratio_21_btsp_sum_NDM_5_p2_second = mean(rejection_21_btsp_sum_NDM_5_p
 rejection_ratio_22_btsp_max_LFC_p1    = mean(rejection_22_btsp_max_LFC_p1);
 rejection_ratio_22_btsp_sum_LFC_p1    = mean(rejection_22_btsp_sum_LFC_p1);
 
-rejection_ratio_22_max_contact_1_p1 = mean(rejection_22_max_contact_1_p1);
-rejection_ratio_22_sum_contact_1_p1 = mean(rejection_22_sum_contact_1_p1);
-
-rejection_ratio_22_max_contact_2_p1 = mean(rejection_22_max_contact_2_p1);
-rejection_ratio_22_sum_contact_2_p1 = mean(rejection_22_sum_contact_2_p1);
-
 rejection_ratio_22_max_contact_3_p1 = mean(rejection_22_max_contact_3_p1);
 rejection_ratio_22_sum_contact_3_p1 = mean(rejection_22_sum_contact_3_p1);
-
-rejection_ratio_22_max_contact_4_p1 = mean(rejection_22_max_contact_4_p1);
-rejection_ratio_22_sum_contact_4_p1 = mean(rejection_22_sum_contact_4_p1);
-
-rejection_ratio_22_max_contact_5_p1 = mean(rejection_22_max_contact_5_p1);
-rejection_ratio_22_sum_contact_5_p1 = mean(rejection_22_sum_contact_5_p1);
-
-rejection_ratio_22_btsp_max_NDM_1_p1 = mean(rejection_22_btsp_max_NDM_1_p1);
-rejection_ratio_22_btsp_sum_NDM_1_p1 = mean(rejection_22_btsp_sum_NDM_1_p1);
-
-rejection_ratio_22_btsp_max_NDM_2_p1 = mean(rejection_22_btsp_max_NDM_2_p1);
-rejection_ratio_22_btsp_sum_NDM_2_p1 = mean(rejection_22_btsp_sum_NDM_2_p1);
-
-rejection_ratio_22_btsp_max_NDM_3_p1 = mean(rejection_22_btsp_max_NDM_3_p1);
-rejection_ratio_22_btsp_sum_NDM_3_p1 = mean(rejection_22_btsp_sum_NDM_3_p1);
-
-rejection_ratio_22_btsp_max_NDM_4_p1 = mean(rejection_22_btsp_max_NDM_4_p1);
-rejection_ratio_22_btsp_sum_NDM_4_p1 = mean(rejection_22_btsp_sum_NDM_4_p1);
 
 rejection_ratio_22_btsp_max_NDM_5_p1 = mean(rejection_22_btsp_max_NDM_5_p1);
 rejection_ratio_22_btsp_sum_NDM_5_p1 = mean(rejection_22_btsp_sum_NDM_5_p1);
@@ -2002,155 +777,81 @@ rejection_ratio_22_btsp_sum_NDM_5_p1 = mean(rejection_22_btsp_sum_NDM_5_p1);
 rejection_ratio_22_btsp_max_LFC_p2   = mean(rejection_22_btsp_max_LFC_p2);
 rejection_ratio_22_btsp_sum_LFC_p2   = mean(rejection_22_btsp_sum_LFC_p2);
 
-rejection_ratio_22_max_contact_1_p2 = mean(rejection_22_max_contact_1_p2);
-rejection_ratio_22_sum_contact_1_p2 = mean(rejection_22_sum_contact_1_p2);
-
-rejection_ratio_22_max_contact_2_p2 = mean(rejection_22_max_contact_2_p2);
-rejection_ratio_22_sum_contact_2_p2 = mean(rejection_22_sum_contact_2_p2);
-
 rejection_ratio_22_max_contact_3_p2 = mean(rejection_22_max_contact_3_p2);
 rejection_ratio_22_sum_contact_3_p2 = mean(rejection_22_sum_contact_3_p2);
-
-rejection_ratio_22_max_contact_4_p2 = mean(rejection_22_max_contact_4_p2);
-rejection_ratio_22_sum_contact_4_p2 = mean(rejection_22_sum_contact_4_p2);
-
-rejection_ratio_22_max_contact_5_p2 = mean(rejection_22_max_contact_5_p2);
-rejection_ratio_22_sum_contact_5_p2 = mean(rejection_22_sum_contact_5_p2);
-
-% first
-
-rejection_ratio_22_btsp_max_NDM_1_p2_first = mean(rejection_22_btsp_max_NDM_1_p2_first);
-rejection_ratio_22_btsp_sum_NDM_1_p2_first = mean(rejection_22_btsp_sum_NDM_1_p2_first);
-
-rejection_ratio_22_btsp_max_NDM_2_p2_first = mean(rejection_22_btsp_max_NDM_2_p2_first);
-rejection_ratio_22_btsp_sum_NDM_2_p2_first = mean(rejection_22_btsp_sum_NDM_2_p2_first);
-
-rejection_ratio_22_btsp_max_NDM_3_p2_first = mean(rejection_22_btsp_max_NDM_3_p2_first);
-rejection_ratio_22_btsp_sum_NDM_3_p2_first = mean(rejection_22_btsp_sum_NDM_3_p2_first);
-
-rejection_ratio_22_btsp_max_NDM_4_p2_first = mean(rejection_22_btsp_max_NDM_4_p2_first);
-rejection_ratio_22_btsp_sum_NDM_4_p2_first = mean(rejection_22_btsp_sum_NDM_4_p2_first);
-
-rejection_ratio_22_btsp_max_NDM_5_p2_first = mean(rejection_22_btsp_max_NDM_5_p2_first);
-rejection_ratio_22_btsp_sum_NDM_5_p2_first = mean(rejection_22_btsp_sum_NDM_5_p2_first);
-
-% second
 
 rejection_ratio_22_btsp_max_NDM_1_p2_second = mean(rejection_22_btsp_max_NDM_1_p2_second);
 rejection_ratio_22_btsp_sum_NDM_1_p2_second = mean(rejection_22_btsp_sum_NDM_1_p2_second);
 
-rejection_ratio_22_btsp_max_NDM_2_p2_second = mean(rejection_22_btsp_max_NDM_2_p2_second);
-rejection_ratio_22_btsp_sum_NDM_2_p2_second = mean(rejection_22_btsp_sum_NDM_2_p2_second);
-
-rejection_ratio_22_btsp_max_NDM_3_p2_second = mean(rejection_22_btsp_max_NDM_3_p2_second);
-rejection_ratio_22_btsp_sum_NDM_3_p2_second = mean(rejection_22_btsp_sum_NDM_3_p2_second);
-
-rejection_ratio_22_btsp_max_NDM_4_p2_second = mean(rejection_22_btsp_max_NDM_4_p2_second);
-rejection_ratio_22_btsp_sum_NDM_4_p2_second = mean(rejection_22_btsp_sum_NDM_4_p2_second);
-
-rejection_ratio_22_btsp_max_NDM_5_p2_second = mean(rejection_22_btsp_max_NDM_5_p2_second);
-rejection_ratio_22_btsp_sum_NDM_5_p2_second = mean(rejection_22_btsp_sum_NDM_5_p2_second);
 
 Results_max_p1 = [Results_max_p1; 
      
-     [ N design "(1,1)" rejection_ratio_11_btsp_max_LFC_p1 ...
-     rejection_ratio_11_max_contact_1_p1    rejection_ratio_11_max_contact_2_p1    rejection_ratio_11_max_contact_3_p1    rejection_ratio_11_max_contact_4_p1 rejection_ratio_11_max_contact_5_p1     ... 
-     rejection_ratio_11_btsp_max_NDM_1_p1   rejection_ratio_11_btsp_max_NDM_2_p1   rejection_ratio_11_btsp_max_NDM_3_p1   rejection_ratio_11_btsp_max_NDM_4_p1   rejection_ratio_11_btsp_max_NDM_5_p1 ...
+     [ N design "(1,1)" sigma rejection_ratio_11_btsp_max_LFC_p1 ...
+     rejection_ratio_11_max_contact_3_p1 rejection_ratio_11_btsp_max_NDM_5_p1 ...
      ];     
 
-     [ N design "(1,2)" rejection_ratio_12_btsp_max_LFC_p1 ...
-     rejection_ratio_12_max_contact_1_p1    rejection_ratio_12_max_contact_2_p1    rejection_ratio_12_max_contact_3_p1    rejection_ratio_12_max_contact_4_p1 rejection_ratio_12_max_contact_5_p1    ... 
-     rejection_ratio_12_btsp_max_NDM_1_p1   rejection_ratio_12_btsp_max_NDM_2_p1   rejection_ratio_12_btsp_max_NDM_3_p1   rejection_ratio_12_btsp_max_NDM_4_p1   rejection_ratio_12_btsp_max_NDM_5_p1 ...
+     [ N design "(1,2)" sigma rejection_ratio_12_btsp_max_LFC_p1 ...
+     rejection_ratio_12_max_contact_3_p1 rejection_ratio_12_btsp_max_NDM_5_p1 ...
      ];     
 
-     [ N design "(2,1)" rejection_ratio_21_btsp_max_LFC_p1 ...
-     rejection_ratio_21_max_contact_1_p1    rejection_ratio_21_max_contact_2_p1    rejection_ratio_21_max_contact_3_p1    rejection_ratio_21_max_contact_4_p1 rejection_ratio_21_max_contact_5_p1   ... 
-     rejection_ratio_21_btsp_max_NDM_1_p1   rejection_ratio_21_btsp_max_NDM_2_p1   rejection_ratio_21_btsp_max_NDM_3_p1   rejection_ratio_21_btsp_max_NDM_4_p1   rejection_ratio_21_btsp_max_NDM_5_p1 ...
+     [ N design "(2,1)" sigma rejection_ratio_21_btsp_max_LFC_p1 ...
+     rejection_ratio_21_max_contact_3_p1 rejection_ratio_21_btsp_max_NDM_5_p1 ...
      ];     
 
-     [ N design "(2,2)" rejection_ratio_22_btsp_max_LFC_p1 ...
-     rejection_ratio_22_max_contact_1_p1    rejection_ratio_22_max_contact_2_p1    rejection_ratio_22_max_contact_3_p1    rejection_ratio_22_max_contact_4_p1 rejection_ratio_22_max_contact_5_p1  ... 
-     rejection_ratio_22_btsp_max_NDM_1_p1   rejection_ratio_22_btsp_max_NDM_2_p1   rejection_ratio_22_btsp_max_NDM_3_p1   rejection_ratio_22_btsp_max_NDM_4_p1   rejection_ratio_22_btsp_max_NDM_5_p1 ...
+     [ N design "(2,2)" sigma rejection_ratio_22_btsp_max_LFC_p1 ...
+     rejection_ratio_22_max_contact_3_p1 rejection_ratio_22_btsp_max_NDM_5_p1 ...
      ]  
      ]
  
 Results_max_p2 = [ Results_max_p2; 
      
-     [ N design "(1,1)" rejection_ratio_11_btsp_max_LFC_p2 ...
-     rejection_ratio_11_max_contact_1_p2    rejection_ratio_11_max_contact_2_p2    rejection_ratio_11_max_contact_3_p2    rejection_ratio_11_max_contact_4_p2  rejection_ratio_11_max_contact_5_p2  ... 
-     rejection_ratio_11_btsp_max_NDM_1_p2_first  rejection_ratio_11_btsp_max_NDM_2_p2_first  rejection_ratio_11_btsp_max_NDM_3_p2_first  rejection_ratio_11_btsp_max_NDM_4_p2_first  rejection_ratio_11_btsp_max_NDM_5_p2_first ...
-     rejection_ratio_11_btsp_max_NDM_1_p2_second rejection_ratio_11_btsp_max_NDM_2_p2_second rejection_ratio_11_btsp_max_NDM_3_p2_second rejection_ratio_11_btsp_max_NDM_4_p2_second rejection_ratio_11_btsp_max_NDM_5_p2_second ...
-    ];
+     [ N design "(1,1)" sigma rejection_ratio_11_btsp_max_LFC_p2 ...
+     rejection_ratio_11_max_contact_3_p2 rejection_ratio_11_btsp_max_NDM_1_p2_second];
        
-     [ N design "(1,2)" rejection_ratio_12_btsp_max_LFC_p2 ...
-     rejection_ratio_12_max_contact_1_p2    rejection_ratio_12_max_contact_2_p2    rejection_ratio_12_max_contact_3_p2    rejection_ratio_12_max_contact_4_p2 rejection_ratio_12_max_contact_5_p2    ... 
-     rejection_ratio_12_btsp_max_NDM_1_p2_first  rejection_ratio_12_btsp_max_NDM_2_p2_first  rejection_ratio_12_btsp_max_NDM_3_p2_first  rejection_ratio_12_btsp_max_NDM_4_p2_first  rejection_ratio_12_btsp_max_NDM_5_p2_first ...
-     rejection_ratio_12_btsp_max_NDM_1_p2_second rejection_ratio_12_btsp_max_NDM_2_p2_second rejection_ratio_12_btsp_max_NDM_3_p2_second rejection_ratio_12_btsp_max_NDM_4_p2_second rejection_ratio_12_btsp_max_NDM_5_p2_second ...
-     ];
+     [ N design "(1,2)" sigma rejection_ratio_12_btsp_max_LFC_p2 ...
+     rejection_ratio_12_max_contact_3_p2 rejection_ratio_12_btsp_max_NDM_1_p2_second];
 
-     [ N design "(2,1)" rejection_ratio_21_btsp_max_LFC_p2 ...
-     rejection_ratio_21_max_contact_1_p2    rejection_ratio_21_max_contact_2_p2    rejection_ratio_21_max_contact_3_p2    rejection_ratio_21_max_contact_4_p2 rejection_ratio_21_max_contact_5_p2    ... 
-     rejection_ratio_21_btsp_max_NDM_1_p2_first  rejection_ratio_21_btsp_max_NDM_2_p2_first  rejection_ratio_21_btsp_max_NDM_3_p2_first  rejection_ratio_21_btsp_max_NDM_4_p2_first  rejection_ratio_21_btsp_max_NDM_5_p2_first ...
-     rejection_ratio_21_btsp_max_NDM_1_p2_second rejection_ratio_21_btsp_max_NDM_2_p2_second rejection_ratio_21_btsp_max_NDM_3_p2_second rejection_ratio_21_btsp_max_NDM_4_p2_second rejection_ratio_21_btsp_max_NDM_5_p2_second ...
-     ];
+     [ N design "(2,1)" sigma rejection_ratio_21_btsp_max_LFC_p2 ...
+     rejection_ratio_21_max_contact_3_p2 rejection_ratio_21_btsp_max_NDM_1_p2_second];
  
-     [ N design "(2,2)" rejection_ratio_22_btsp_max_LFC_p2 ...
-     rejection_ratio_22_max_contact_1_p2    rejection_ratio_22_max_contact_2_p2    rejection_ratio_22_max_contact_3_p2    rejection_ratio_22_max_contact_4_p2 rejection_ratio_22_max_contact_5_p2   ... 
-     rejection_ratio_22_btsp_max_NDM_1_p2_first  rejection_ratio_22_btsp_max_NDM_2_p2_first  rejection_ratio_22_btsp_max_NDM_3_p2_first  rejection_ratio_22_btsp_max_NDM_4_p2_first  rejection_ratio_22_btsp_max_NDM_5_p2_first ...
-     rejection_ratio_22_btsp_max_NDM_1_p2_second rejection_ratio_22_btsp_max_NDM_2_p2_second rejection_ratio_22_btsp_max_NDM_3_p2_second rejection_ratio_22_btsp_max_NDM_4_p2_second rejection_ratio_22_btsp_max_NDM_5_p2_second ...
-     ];      
+     [ N design "(2,2)" sigma rejection_ratio_22_btsp_max_LFC_p2 ...
+     rejection_ratio_22_max_contact_3_p2 rejection_ratio_22_btsp_max_NDM_1_p2_second];      
      ]
  
 
 
 Results_sum_p1 = [Results_sum_p1; 
      
-     [ N design "(1,1)" rejection_ratio_11_btsp_sum_LFC_p1 ...
-     rejection_ratio_11_sum_contact_1_p1    rejection_ratio_11_sum_contact_2_p1    rejection_ratio_11_sum_contact_3_p1    rejection_ratio_11_sum_contact_4_p1 rejection_ratio_11_sum_contact_5_p1     ... 
-     rejection_ratio_11_btsp_sum_NDM_1_p1   rejection_ratio_11_btsp_sum_NDM_2_p1   rejection_ratio_11_btsp_sum_NDM_3_p1   rejection_ratio_11_btsp_sum_NDM_4_p1   rejection_ratio_11_btsp_sum_NDM_5_p1 ...
+     [ N design "(1,1)" sigma rejection_ratio_11_btsp_sum_LFC_p1 ...
+     rejection_ratio_11_sum_contact_3_p1 rejection_ratio_11_btsp_sum_NDM_5_p1 ...
      ];     
 
-     [ N design "(1,2)" rejection_ratio_12_btsp_sum_LFC_p1 ...
-     rejection_ratio_12_sum_contact_1_p1    rejection_ratio_12_sum_contact_2_p1    rejection_ratio_12_sum_contact_3_p1    rejection_ratio_12_sum_contact_4_p1 rejection_ratio_12_sum_contact_5_p1    ... 
-     rejection_ratio_12_btsp_sum_NDM_1_p1   rejection_ratio_12_btsp_sum_NDM_2_p1   rejection_ratio_12_btsp_sum_NDM_3_p1   rejection_ratio_12_btsp_sum_NDM_4_p1   rejection_ratio_12_btsp_sum_NDM_5_p1 ...
+     [ N design "(1,2)" sigma rejection_ratio_12_btsp_sum_LFC_p1 ...
+     rejection_ratio_12_sum_contact_3_p1 rejection_ratio_12_btsp_sum_NDM_5_p1 ...
      ];     
 
-     [ N design "(2,1)" rejection_ratio_21_btsp_sum_LFC_p1 ...
-     rejection_ratio_21_sum_contact_1_p1    rejection_ratio_21_sum_contact_2_p1    rejection_ratio_21_sum_contact_3_p1    rejection_ratio_21_sum_contact_4_p1 rejection_ratio_21_sum_contact_5_p1   ... 
-     rejection_ratio_21_btsp_sum_NDM_1_p1   rejection_ratio_21_btsp_sum_NDM_2_p1   rejection_ratio_21_btsp_sum_NDM_3_p1   rejection_ratio_21_btsp_sum_NDM_4_p1   rejection_ratio_21_btsp_sum_NDM_5_p1 ...
+     [ N design "(2,1)" sigma rejection_ratio_21_btsp_sum_LFC_p1 ...
+     rejection_ratio_21_sum_contact_3_p1 rejection_ratio_21_btsp_sum_NDM_5_p1 ...
      ];     
 
-     [ N design "(2,2)" rejection_ratio_22_btsp_sum_LFC_p1 ...
-     rejection_ratio_22_sum_contact_1_p1    rejection_ratio_22_sum_contact_2_p1    rejection_ratio_22_sum_contact_3_p1    rejection_ratio_22_sum_contact_4_p1 rejection_ratio_22_sum_contact_5_p1  ... 
-     rejection_ratio_22_btsp_sum_NDM_1_p1   rejection_ratio_22_btsp_sum_NDM_2_p1   rejection_ratio_22_btsp_sum_NDM_3_p1   rejection_ratio_22_btsp_sum_NDM_4_p1   rejection_ratio_22_btsp_sum_NDM_5_p1 ...
+     [ N design "(2,2)" sigma rejection_ratio_22_btsp_sum_LFC_p1 ...
+     rejection_ratio_22_sum_contact_3_p1 rejection_ratio_22_btsp_sum_NDM_5_p1 ...
      ]  
      ]
  
 Results_sum_p2 = [ Results_sum_p2; 
      
-     [ N design "(1,1)" rejection_ratio_11_btsp_sum_LFC_p2 ...
-     rejection_ratio_11_sum_contact_1_p2    rejection_ratio_11_sum_contact_2_p2    rejection_ratio_11_sum_contact_3_p2    rejection_ratio_11_sum_contact_4_p2  rejection_ratio_11_sum_contact_5_p2  ... 
-     rejection_ratio_11_btsp_sum_NDM_1_p2_first  rejection_ratio_11_btsp_sum_NDM_2_p2_first  rejection_ratio_11_btsp_sum_NDM_3_p2_first  rejection_ratio_11_btsp_sum_NDM_4_p2_first  rejection_ratio_11_btsp_sum_NDM_5_p2_first ...
-     rejection_ratio_11_btsp_sum_NDM_1_p2_second rejection_ratio_11_btsp_sum_NDM_2_p2_second rejection_ratio_11_btsp_sum_NDM_3_p2_second rejection_ratio_11_btsp_sum_NDM_4_p2_second rejection_ratio_11_btsp_sum_NDM_5_p2_second ...
-    ];
+     [ N design "(1,1)" sigma rejection_ratio_11_btsp_sum_LFC_p2 ...
+     rejection_ratio_11_sum_contact_3_p2 rejection_ratio_11_btsp_sum_NDM_1_p2_second];
        
-     [ N design "(1,2)" rejection_ratio_12_btsp_sum_LFC_p2 ...
-     rejection_ratio_12_sum_contact_1_p2    rejection_ratio_12_sum_contact_2_p2    rejection_ratio_12_sum_contact_3_p2    rejection_ratio_12_sum_contact_4_p2 rejection_ratio_12_sum_contact_5_p2    ... 
-     rejection_ratio_12_btsp_sum_NDM_1_p2_first  rejection_ratio_12_btsp_sum_NDM_2_p2_first  rejection_ratio_12_btsp_sum_NDM_3_p2_first  rejection_ratio_12_btsp_sum_NDM_4_p2_first  rejection_ratio_12_btsp_sum_NDM_5_p2_first ...
-     rejection_ratio_12_btsp_sum_NDM_1_p2_second rejection_ratio_12_btsp_sum_NDM_2_p2_second rejection_ratio_12_btsp_sum_NDM_3_p2_second rejection_ratio_12_btsp_sum_NDM_4_p2_second rejection_ratio_12_btsp_sum_NDM_5_p2_second ...
-     ];
+     [ N design "(1,2)" sigma rejection_ratio_12_btsp_sum_LFC_p2 ...
+     rejection_ratio_12_sum_contact_3_p2 rejection_ratio_12_btsp_sum_NDM_1_p2_second];
 
-     [ N design "(2,1)" rejection_ratio_21_btsp_sum_LFC_p2 ...
-     rejection_ratio_21_sum_contact_1_p2    rejection_ratio_21_sum_contact_2_p2    rejection_ratio_21_sum_contact_3_p2    rejection_ratio_21_sum_contact_4_p2 rejection_ratio_21_sum_contact_5_p2    ... 
-     rejection_ratio_21_btsp_sum_NDM_1_p2_first  rejection_ratio_21_btsp_sum_NDM_2_p2_first  rejection_ratio_21_btsp_sum_NDM_3_p2_first  rejection_ratio_21_btsp_sum_NDM_4_p2_first  rejection_ratio_21_btsp_sum_NDM_5_p2_first ...
-     rejection_ratio_21_btsp_sum_NDM_1_p2_second rejection_ratio_21_btsp_sum_NDM_2_p2_second rejection_ratio_21_btsp_sum_NDM_3_p2_second rejection_ratio_21_btsp_sum_NDM_4_p2_second rejection_ratio_21_btsp_sum_NDM_5_p2_second ...
-     ];
+     [ N design "(2,1)" sigma rejection_ratio_21_btsp_sum_LFC_p2 ...
+     rejection_ratio_21_sum_contact_3_p2 rejection_ratio_21_btsp_sum_NDM_1_p2_second];
  
-     [ N design "(2,2)" rejection_ratio_22_btsp_sum_LFC_p2 ...
-     rejection_ratio_22_sum_contact_1_p2    rejection_ratio_22_sum_contact_2_p2    rejection_ratio_22_sum_contact_3_p2    rejection_ratio_22_sum_contact_4_p2 rejection_ratio_22_sum_contact_5_p2   ... 
-     rejection_ratio_22_btsp_sum_NDM_1_p2_first  rejection_ratio_22_btsp_sum_NDM_2_p2_first  rejection_ratio_22_btsp_sum_NDM_3_p2_first  rejection_ratio_22_btsp_sum_NDM_4_p2_first  rejection_ratio_22_btsp_sum_NDM_5_p2_first ...
-     rejection_ratio_22_btsp_sum_NDM_1_p2_second rejection_ratio_22_btsp_sum_NDM_2_p2_second rejection_ratio_22_btsp_sum_NDM_3_p2_second rejection_ratio_22_btsp_sum_NDM_4_p2_second rejection_ratio_22_btsp_sum_NDM_5_p2_second ...
-     ];      
+     [ N design "(2,2)" sigma rejection_ratio_22_btsp_sum_LFC_p2 ...
+     rejection_ratio_22_sum_contact_3_p2 rejection_ratio_22_btsp_sum_NDM_1_p2_second];      
      ]
  
 
