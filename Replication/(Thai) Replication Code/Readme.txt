@@ -1,6 +1,6 @@
 This folder contains MATLAB, Python and Stata codes for replicating results in Section 8.1 of 'Testing for Time Stochastic Dominance' by Kyungho Lee, Oliver Linton, and Yoon-Jae Whang
 
-1. Thai_211023.m
+1. Thai_Replicate.m
 - This MATLAB code implements time stochastic dominance testings Section 8.1.
 
 2. Plotting_Static_SD.py
@@ -9,7 +9,7 @@ This folder contains MATLAB, Python and Stata codes for replicating results in S
 3. Thai_t-test.do
 - This do file implements t-test in Section 8.1.
 
-The rest MATLAB codes are functions for running Thai_211023.m
+The rest MATLAB codes are functions for running Thai_Replicate.m
 
 
 4. Lambda.m
@@ -29,4 +29,18 @@ The rest MATLAB codes are functions for running Thai_211023.m
 
 9. construct_test_data.m
 - Arrange data to be fit with testing
+
+These are descriptions about data:
+
+1. ThaiVillage_Panel.csv
+- Panel data from Kaboski and Townsend (2012)
+
+2. ThaiVillage_Panel.dta
+- dta file of ThaiVillage_Panel.csv
+
+3. P_Values_time_after0Thai_Micro_20211024.csv
+- p-values of time stochastic dominance testing before the initiation of the program.
+
+4. P_Values_time_after1Thai_Micro_20211024.csv
+- p-values of time stochastic dominance testing after the initiation of the program.
  
