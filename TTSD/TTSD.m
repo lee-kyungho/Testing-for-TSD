@@ -73,7 +73,7 @@ D_22_collection = cat(2,D_22,D_12_T); % ngrid * J
 
 Lamb_22_max_p1 = Lambda(D_22_collection,p1,'max'); 
 
-%---- sumegration for T_{N} ----------%
+%---- Integration for T_{N} ----------%
 
 T_11_max_p1 = r_N^p1 * trapz(Lamb_11_max_p1);
 T_22_max_p1 = r_N^p1 * trapz(Lamb_22_max_p1);
@@ -109,7 +109,7 @@ b_D_12_T_recentered = reshape(b_D_12_T_recentered,[size(b_D_12_T_recentered,1),1
 b_D_22_collection_recentered = cat(2,b_D_22_recentered,b_D_12_T_recentered); % ngrid * J * btsp
 btsp_Lamb_22_max_LFC_p1 = Lambda(b_D_22_collection_recentered,p1,'max'); % Output dim: ngrid * 1 * btsp
 
-%---- sumegration for Bootstrap version of T_{N} %
+%---- Integration for Bootstrap version of T_{N} %
 % Bootstrap Sample
 % p = 1
 
