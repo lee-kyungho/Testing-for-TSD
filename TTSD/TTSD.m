@@ -1,4 +1,4 @@
-% MATLAB codes of 'Testing for Time Stochastic Dominance'
+% MATLAB codes for implementing 'Testing for Time Stochastic Dominance'
 % Author: Kyungho Lee, Oliver Linton, and Yoon-Jae Whang
 
 T = 4;
