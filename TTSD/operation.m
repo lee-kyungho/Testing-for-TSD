@@ -2,8 +2,11 @@
 function f = operation(n,m,sample,grid)
 
 
-% Author: Kyungho Lee(SNU Econ)
-
+% Author: Kyungho Lee, Oliver Linton, and Yoon-Jae Whang
+% n : Time order
+% m : Stochastic order
+% Sample
+% grid: grid points
 
 %---- About Input Sample ----%
 % The input sample should have a dimension as N_k * (T+1) * b
@@ -14,7 +17,6 @@ b = size(sample,3);   % Bootstrap sample size
 % operator
 % Note that if n = 1 -> (t+1-s)^(n-1) = 1
 % Note that if n = 2 -> (t+1-s)^(n-1) = (t+1-s)
-% Otherwise the operator is wrong
 
 linear_operator = @(x,t,s) (sample(:,1:t+1,:)<=x).*((x-sample(:,1:t+1,:)).^(m-1)).*((t+1-s).^(n-1))/(factorial(m-1));         
 
