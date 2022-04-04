@@ -1,11 +1,11 @@
 % MATLAB codes for implementing 'Testing for Time Stochastic Dominance'
 % Author: Kyungho Lee, Oliver Linton, and Yoon-Jae Whang
 
-T = 4;
-ngrid = 100;
-btsp = 200; % Number of bootstrapiing
-p1=1;  %  L1 staistics
-p2=2;  %  L2 staistics
+T = 4;       % Terminal Period
+ngrid = 100; % Number of Grid Points
+btsp = 200;  % Number of bootstrapiing
+p1=1;        %  L1 staistics
+p2=2;        %  L2 staistics
 
 % Significance Level
 alpha = 0.05;
@@ -13,6 +13,7 @@ alpha = 0.05;
 % eta
 eta = 10^(-6);
 
+% Number of Observations
 N = 100;
 
 % Generating Data
