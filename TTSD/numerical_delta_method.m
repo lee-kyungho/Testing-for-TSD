@@ -1,6 +1,13 @@
 
 function NDM_dist = numerical_delta_method(D,b_D_recentered,epsilon,r_N,p,type,way)
-% Author: Kyungho Lee(SNU Econ, kh.lee@snu.ac.kr)
+% Author: Kyungho Lee, Oliver Linton, and Yoon-Jae Whang
+% D : difference of EDFTs
+% b_D_recentered : recentered differences (of bootstrap samples)
+% epsilon : length parameter for NDM
+% r_N : sqrt(N)
+% p : 1 or 2 (determining the order of L_p statistic)
+% type : 'max' or 'sum'
+% way : 1 or 2 (the way to approximate the second-order NDM. This parameter does not affect the result when NDM is first-order approximation i.e., if p=1)
 % input data dimension: (# of GRID) x (Length of Time Horizon + 1) x (# of Bootstrap Sample)
 % If there is no bootstrap sample (i.e. original sample) then the last
 % dimension is 1.
