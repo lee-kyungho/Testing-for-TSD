@@ -1,7 +1,7 @@
 
 function f = operation_T(n,m,sample,grid)
 
-% Operator for the terminal period
+% Operator for calculating EDFT at the terminal period
 % Author: Kyungho Lee, Oliver Linton, and Yoon-Jae Whang
 % n : Time order
 % m : Stochastic order
