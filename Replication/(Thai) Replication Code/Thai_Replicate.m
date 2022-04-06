@@ -17,9 +17,7 @@ before_program_mask = logical(before_program_mask);
 
 %-------------------------------% 
 
-% TSD testing
-% We want to test whether different amount of funding program impacts
-% long-run household welfare
+% TSD testing Starts
 
 %-------------------------------%
 
@@ -54,10 +52,6 @@ big_id = [[1:size(big_unique_hh,1)]', big_unique_hh];
 
 if residual_flag == 1
     
-% Stata Specification of Original Paper
-% i.year madult  fadult  kids  maleh farm  ageh  age2h  educh invHHtvfm1 invHHtvfm2  invHHtvfm3 invHHtvfm4 invHHtvfm5 invHHtvfm6  
-% Categorical
-
 % Linear Regression
 
 fitted = fitlm(Thai_data, variable + '~ year + madult + fadult + kids + maleh'...
@@ -119,8 +113,6 @@ covariate_big = cat(3,  madult_big_Thai, fadult_big_Thai, ...
 
 end
 
-% Making a dataset for testing
-
 % Tuning Parameters
 p = 1;
 
@@ -179,8 +171,9 @@ end
 
 end
 
-
+% Number of grid points
 ngrid = 200;
+
 % grid
 grid = linspace(min(min(min(sample1),min(sample2)),[],'all'),max(max(max(sample1),max(sample2)),[],'all'),ngrid)';
 
@@ -396,10 +389,8 @@ T_21_sum_contact_2_list = [T_21_sum_contact_2_list T_21_sum_contact_2];
 T_22_sum_contact_2_list = [T_22_sum_contact_2_list T_22_sum_contact_2];
 
 end
+
 % P-value 
-
-% % Contact Set Approach
-
 p_value_11_sum_contact_2 = mean(T_11_sum <= T_11_sum_contact_2_list);
 p_value_12_sum_contact_2 = mean(T_12_sum <= T_12_sum_contact_2_list);
 p_value_21_sum_contact_2 = mean(T_21_sum <= T_21_sum_contact_2_list);
