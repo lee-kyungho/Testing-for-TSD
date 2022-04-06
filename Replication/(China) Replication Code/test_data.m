@@ -1,14 +1,13 @@
 
 function [result_data,unique_id] = test_data(Data,column)
 
+% This code reformulatesd data to be suitable for testing
 % strategy:
 % First, make zeros matrix with desirable dimension
 % Second, fill values
 % Last, convert zero to nan.
 
 unique_id = unique(Data.stn);
-
-tic
 
 for i = 1:length(unique_id)
     
@@ -23,7 +22,5 @@ for i = 1:length(unique_id)
         y_data(i,t) = Data_pid{j,1};
     end
 end
-
-toc
 
 result_data = y_data;
