@@ -232,7 +232,8 @@ T_21_sum = r_N^p * trapz(Lamb_21_sum);
 T_22_sum = r_N^p * trapz(Lamb_22_sum);
     
 
-parfor b = 1:200
+for b = 1:200
+disp(b)
 
 % Bootstrapping 'Path-Wise'
 index_for_path_wise_construnction1 = 0:N1:N1*T;
