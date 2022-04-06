@@ -3,10 +3,10 @@ function [T_contact] = ...
           TTSD_contact(D,b_D_recentered, ...
           p, N, r_N, c_N, stat_type)
 
-% D
-% b_D_recentered
-% p
-% r_N
+% D : differences of EDFTs
+% b_D_recentered : differences of EDFTs of bootstrap samples
+% p  : 1 or 2 (the order of L_p statistic)
+% r_N: Sqrt(N)
 % c_N: Constant for contact-set band
 % stat_type: "max" or "sum"
       

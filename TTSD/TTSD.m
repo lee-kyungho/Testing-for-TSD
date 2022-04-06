@@ -1,11 +1,11 @@
-% MATLAB codes of 'Testing for Time Stochastic Dominance'
+% MATLAB codes for implementing 'Testing for Time Stochastic Dominance'
 % Author: Kyungho Lee, Oliver Linton, and Yoon-Jae Whang
 
-T = 4;
-ngrid = 100;
-btsp = 200; % Number of bootstrapiing
-p1=1;  %  L1 staistics
-p2=2;  %  L2 staistics
+T = 4;       % Terminal Period
+ngrid = 100; % Number of Grid Points
+btsp = 200;  % Number of bootstrapiing
+p1=1;        %  L1 staistics
+p2=2;        %  L2 staistics
 
 % Significance Level
 alpha = 0.05;
@@ -13,6 +13,7 @@ alpha = 0.05;
 % eta
 eta = 10^(-6);
 
+% Number of Observations
 N = 100;
 
 % Generating Data
@@ -73,7 +74,7 @@ D_22_collection = cat(2,D_22,D_12_T); % ngrid * J
 
 Lamb_22_max_p1 = Lambda(D_22_collection,p1,'max'); 
 
-%---- sumegration for T_{N} ----------%
+%---- Integration for T_{N} ----------%
 
 T_11_max_p1 = r_N^p1 * trapz(Lamb_11_max_p1);
 T_22_max_p1 = r_N^p1 * trapz(Lamb_22_max_p1);
@@ -109,7 +110,7 @@ b_D_12_T_recentered = reshape(b_D_12_T_recentered,[size(b_D_12_T_recentered,1),1
 b_D_22_collection_recentered = cat(2,b_D_22_recentered,b_D_12_T_recentered); % ngrid * J * btsp
 btsp_Lamb_22_max_LFC_p1 = Lambda(b_D_22_collection_recentered,p1,'max'); % Output dim: ngrid * 1 * btsp
 
-%---- sumegration for Bootstrap version of T_{N} %
+%---- Integration for Bootstrap version of T_{N} %
 % Bootstrap Sample
 % p = 1
 

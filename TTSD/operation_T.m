@@ -1,13 +1,19 @@
 
 function f = operation_T(n,m,sample,grid)
 
+% Operator for calculating EDFT at the terminal period
+% Author: Kyungho Lee, Oliver Linton, and Yoon-Jae Whang
+% n : Time order
+% m : Stochastic order
+% Sample
+% grid: grid points
+
 T = size(sample,2)-1; % Terminal period T
 b = size(sample,3);
 
 % operator
 % Note that if n = 1 -> (t+1-s)^(n-1) = 1
 % Note that if n = 2 -> (t+1-s)^(n-1) = (t+1-s)
-% Otherwise the operator is wrong
 
 linear_operator = @(x,t,s) (sample(:,1:t+1,:)<=x).*((x-sample(:,1:t+1,:)).^(m-1)).*((t+1-s).^(n-1))/(factorial(m-1)); 
 

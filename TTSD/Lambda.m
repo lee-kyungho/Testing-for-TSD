@@ -1,7 +1,10 @@
 
 function L = Lambda(D_collectioon,p,type)
 
+% Calculating Lambda
 % D_collection should be n_grid * J dimension * b
+% p : 1 or 2 (determining the order of L_p statistic)
+% type: 'max' or 'sum'
 % About dimension: 
 % if (n,m) = (1,1) , (1,2) , (2,1), J = T+1
 % if (n,m) = (2,2), J = (T+1) + (n-1) = n + T

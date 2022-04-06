@@ -1,7 +1,7 @@
 
 function [result_data,unique_id] = test_data(Data,column)
 
-
+% This code reformulates data suitable for testing
 
 % strategy:
 % First, make zeros matrix with desirable dimension
@@ -21,10 +21,7 @@ for t = 1:length(unique_years)
     Data(Data.year == yr,'time') = table(repmat(t,sum(mask_yr),1));
 end
 
-% pid : id id
-
-
-tic
+% pid : id
 
 for i = 1:length(unique_id)
     
@@ -39,7 +36,5 @@ for i = 1:length(unique_id)
         y_data(i,t) = Data_pid{j,1};
     end
 end
-
-toc
 
 result_data = y_data;
