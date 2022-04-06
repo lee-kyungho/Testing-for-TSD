@@ -54,10 +54,6 @@ big_id = [[1:size(big_unique_hh,1)]', big_unique_hh];
 
 if residual_flag == 1
     
-% Stata Specification of Original Paper
-% i.year madult  fadult  kids  maleh farm  ageh  age2h  educh invHHtvfm1 invHHtvfm2  invHHtvfm3 invHHtvfm4 invHHtvfm5 invHHtvfm6  
-% Categorical
-
 % Linear Regression
 
 fitted = fitlm(Thai_data, variable + '~ year + madult + fadult + kids + maleh'...
@@ -118,8 +114,6 @@ covariate_big = cat(3,  madult_big_Thai, fadult_big_Thai, ...
                          kids_big_Thai, maleh_big_Thai, farm_big_Thai, ageh_big_Thai, age2h_big_Thai, educh_big_Thai);
 
 end
-
-% Making a dataset for testing
 
 % Tuning Parameters
 p = 1;
