@@ -2,6 +2,8 @@
 1. TTSD.m 
  - implement the time stochastic dominance test
 
+The rest codes are functions used in TTSD.m
+
 2. TTSD_contact.m
  - implement the contact-set approach
 
