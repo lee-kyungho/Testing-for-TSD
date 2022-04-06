@@ -4,16 +4,11 @@ function [T_11_max_contact, T_11_sum_contact, T_12_max_contact, T_12_sum_contact
           b_D_21_recentered, b_D_22_collection_recentered, p, N, r_N, c_N)
 
 
-% In this code, we implement TGI Estimation of (1,1), (1,2), (2,1), (2,2)
-% by once.
-% The code for specific n,m orders TBA.
+% In this code, we implement TGI Estimation of (1,1), (1,2), (2,1), (2,2) by once.
 
-epsilon = 10^(-6); % as in the TGFI paper(Lee, Song, and Whang 2019)
+epsilon = 10^(-6);
 
-% This code is to normalize tuning parameters in data-driven way.
-% With conjunction to TGFI paper,
-% s_n equals to r_n{v_n - v*_n}/sigma (sigma is 1 in here)
-
+% Normalize tuning parameters in a data-driven way.
 s_n_11 = r_N.*b_D_11_recentered;
 s_n_12 = r_N.*b_D_12_recentered;
 s_n_21 = r_N.*b_D_21_recentered;
@@ -61,13 +56,8 @@ for i = 1:size(N_subset_colletion_11,2)
 
     A = N_subset_colletion_11{1,i};
     A_complement = setdiff(N_J_11,A);
-    % B_ Contains index for numbers in grid with contact set for given A and
-    % If there is no grid points in Contact set, then the bootstrap statistics 
-    % of contact set approach is the same as LFC cases
-    
+    % B_ Contains index for numbers in grid with contact set for given A and    
     % Censoring Test Stat
-    
-    % censoring Bootstrap Statistics
     b_D_11_A_recentered = b_D_11_recentered;    
     b_D_11_A_recentered(:,A_complement,:) = 0;
     
