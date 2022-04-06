@@ -171,13 +171,13 @@ p_value_22_max_NDM = mean(T_22_max_p1 <= btsp_phi_dist_22_max_1_p1);
 
 % -------- Print Results -------- %
 
-fprintf("Time stochastic dominance testing results (%d, %d) order \n", 1, 1)
+fprintf("Time stochastic dominance testing results of (%d, %d) order \n", 1, 1)
 disp("Procedure :    LFC    Contact    NDM")
 fprintf("P-value   :    %.3f    %.3f    %.3f \n",p_value_11_max_LFC, p_value_11_max_contact, p_value_11_max_NDM)
 fprintf("Reject    :    %d    %d    %d \n", rejection_11_btsp_max_LFC_p1, rejection_11_max_contact_1_p1, rejection_11_btsp_max_NDM_1_p1)
 
 
-fprintf("Time stochastic dominance testing results (%d, %d) order \n", 2, 2)
+fprintf("Time stochastic dominance testing results of (%d, %d) order \n", 2, 2)
 disp("Procedure :    LFC    Contact    NDM")
 fprintf("P-value   :    %.3f    %.3f    %.3f \n",p_value_22_max_LFC, p_value_22_max_contact, p_value_22_max_NDM)
 fprintf("Reject    :    %d    %d    %d \n", rejection_22_btsp_max_LFC_p1, rejection_22_max_contact_1_p1, rejection_22_btsp_max_NDM_1_p1)
