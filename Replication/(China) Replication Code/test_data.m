@@ -1,7 +1,7 @@
 
 function [result_data,unique_id] = test_data(Data,column)
 
-% This code reformulatesd data to be suitable for testing
+% This code reformulates data to be suitable for testing
 % strategy:
 % First, make zeros matrix with desirable dimension
 % Second, fill values
