@@ -55,7 +55,7 @@ end
 
 Results = ["design" 'variable' 'order' 'contact'];
 
-for residual_flag = [1]    
+for residual_flag = [0,1]    
     
 for variable = ["netinc",  "tc"] % "tc" , 
 
