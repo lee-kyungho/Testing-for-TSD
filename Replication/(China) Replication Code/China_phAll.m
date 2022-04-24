@@ -289,7 +289,7 @@ index_mask = logical(index_mask);
 
 table_b = NCDC_phall(index_mask,variables);
 table_b.provgb = categorical(table_b.provgb);
-sampltable_be_data.quarter = categorical(table_b.quarter);
+table_b.quarter = categorical(table_b.quarter);
 
 % sample 1
 y_bsample1 = sample1(pw_btsp_index1);
