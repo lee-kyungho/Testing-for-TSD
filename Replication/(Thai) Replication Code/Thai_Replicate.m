@@ -313,7 +313,7 @@ table_b2.year = covr_cg_b2(:,1);
 table_b2.educh = covr_b2(:,8);
 
 b_fitted = fitlm(table_b, variable_y + '~ year + madult + fadult + kids + maleh'...
-                                + ' + farm + ageh + age2h + educh');
+                                + ' + farm + ageh + age2h + educh','Intercept',false);
 
 b1sample1 = y_b1 - b_fitted.predict(table_b1);
 b1sample1 = b1sample1(pw_btsp_index1);
