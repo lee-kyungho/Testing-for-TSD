@@ -54,7 +54,7 @@ NCDC_phall.quarter = categorical(NCDC_phall.quarter);
 
 Results = ["design" 'residual_flag' "phase" 'order' 'contact'];
 
-for phase = [0 1 2]
+for phase = [0 1 2 3]
 
 if  phase == 0
     sample_data  = NCDC_ph0;
@@ -70,6 +70,12 @@ elseif phase == 2
     sample_data  = NCDC_ph2;
     sample_data0 = NCDC_CNT0_ph2;
     sample_data1 = NCDC_CNT1_ph2;
+
+else
+    sample_data  = NCDC_phall;
+    sample_data0 = NCDC_phall(NCDC_phall.CNT == 0, :);
+    sample_data1 = NCDC_phall(NCDC_phall.CNT == 1, :);
+
 end
 
 sample_data.provgb = categorical(sample_data.provgb);
@@ -218,10 +224,17 @@ Lamb_22_max = Lambda(D_22_collection,p,'max'); % Output dim: ngrid * 1
 %---- Integration for T_{N} ----------%
 
 T_11_max = r_N^p * trapz(Lamb_11_max);
-T_12_max = r_N^p * trapz(Lamb_12_max);
-T_21_max = r_N^p * trapz(Lamb_21_max);
-T_22_max = r_N^p * trapz(Lamb_22_max);
+T_11_sum = r_N^p * trapz(Lamb_11_sum);
 
+T_12_max = r_N^p * trapz(Lamb_12_max);
+T_12_sum = r_N^p * trapz(Lamb_12_sum);
+
+T_21_max = r_N^p * trapz(Lamb_21_max);
+T_21_sum = r_N^p * trapz(Lamb_21_sum);
+
+T_22_max = r_N^p * trapz(Lamb_22_max);
+T_22_sum = r_N^p * trapz(Lamb_22_sum);
+    
 
 parfor b = 1:200
 disp(b)
@@ -274,6 +287,7 @@ y_b2 = reshape(y_bsample2,[size(y_bsample2,1)*size(y_bsample2,2),1]);
 covr_b2 = reshape(covr_bsample2,[size(covr_bsample2,1)*size(covr_bsample2,2),size(covr_bsample2,3)]);
 
 % Concatenating for Bootstrap Regression \hat \theta*
+
 table_b1 = table();
 
 table_b1.visib = y_b1;
@@ -292,10 +306,9 @@ table_b2.prcp = covr_b2(:,3);
 table_b2.provgb = categorical(covr_b2(:,4));                     
 table_b2.quarter = categorical(covr_b2(:,5));                     
 
-% Note on Warning
-% Depending on bootstrap draws, some categorical values are multicollinear
-% One dummy will be dropped while fitlm runs
 b_fitted = fitlm(table_b, "visib" + '~ wdsp + temp + prcp + provgb + quarter');
+
+% Note on warniing: Depending on bootstrap draw, some categorical v
 
 b1sample1 = y_b1 - b_fitted.predict(table_b1);
 b1sample1 = b1sample1(pw_btsp_index1);
@@ -340,10 +353,17 @@ b_D_21_recentered = b_D_21 - D_21;
 b_D_22_recentered = b_D_22 - D_22; 
 b_D_12_T_recentered = b_D_12_T - D_12_T; 
 
+%---------- Calculating Lambda ------%
+Lamb_11_max_LFC = Lambda(b_D_11_recentered,p,'max'); % Output dim: ngrid * 1 * b
+Lamb_12_max_LFC = Lambda(b_D_12_recentered,p,'max'); % Output dim: ngrid * 1 * b
+Lamb_21_max_LFC = Lambda(b_D_21_recentered,p,'max'); % Output dim: ngrid * 1 * b
+
 % For n = 2, m = 2, we need to make collection of D_22 and D_12_T
 % Reshaping for concatenation
 b_D_12_T_recentered = reshape(b_D_12_T_recentered,[size(b_D_12_T_recentered,1),1,size(b_D_12_T_recentered,2)]);
+
 b_D_22_collection_recentered = cat(2,b_D_22_recentered,b_D_12_T_recentered); % ngrid * J * b
+Lamb_22_max_LFC = Lambda(b_D_22_collection_recentered,p,'max'); % Output dim: ngrid * 1 * b
 
 %---- Bootsrap Sample Statistics -----%
 %---- Contact Set Approach -----------%
@@ -364,7 +384,6 @@ T_11_max_contact_2_list = [T_11_max_contact_2_list T_11_max_contact_2];
 T_12_max_contact_2_list = [T_12_max_contact_2_list T_12_max_contact_2];
 T_21_max_contact_2_list = [T_21_max_contact_2_list T_21_max_contact_2];
 T_22_max_contact_2_list = [T_22_max_contact_2_list T_22_max_contact_2];
-
 end
 
 % % Contact Set Approach

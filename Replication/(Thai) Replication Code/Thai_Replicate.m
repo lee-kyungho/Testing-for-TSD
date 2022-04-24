@@ -1,19 +1,25 @@
 
+clear
 % Author: Kyungho Lee, Oliver Linton, Yoon-Jae Whang
 % Date: 2020-11-03
 % This code is to apply TSD_Testing to Thaipanel data (Kaboski and Townsend 2012, AEJ)
 
 Thai_panel = readtable("ThaiVillage_Panel.csv"); % TWO SAMPLES
 
-% Thai_panel = readtable("ThaiVillage_Panel_Q5.csv");
-
 Thai_panel.id = Thai_panel.case_id;
 Thai_panel = Thai_panel(Thai_panel.maleh ~= 0.5, :);
 
+% Dropping NaN values
+Thai_mat = table2array(Thai_panel(:,['netinc','tc',"year",'madult', "fadult", 'kids', 'maleh', 'farm', 'ageh', 'age2h', 'educh']));
+Nan_index = logical(sum(isnan(Thai_mat),2));
+Thai_panel = Thai_panel(~Nan_index,:);
+
+% Index for Before/After Program
 after_program_mask = (Thai_panel.year >= 2002);
 after_program_mask = logical(after_program_mask);
 before_program_mask = (Thai_panel.year < 2002);
 before_program_mask = logical(before_program_mask);
+
 
 %-------------------------------% 
 
@@ -21,18 +27,32 @@ before_program_mask = logical(before_program_mask);
 
 %-------------------------------%
 
-for after = [0,1] % Whether we are going to test 'after' the program
+for after = [1,0] % Whether we are going to test 'after' the program
 
 if after == 1
     
     Thai_data = Thai_panel(after_program_mask,:);
+    year_dummy = dummyvar(categorical(Thai_data.year));
+    Thai_data.y2002 = year_dummy(:,1);
+    Thai_data.y2003 = year_dummy(:,2);
+    Thai_data.y2004 = year_dummy(:,3);
+    Thai_data.y2005 = year_dummy(:,4);
+    Thai_data.y2006 = year_dummy(:,5);
+    Thai_data.y2007 = year_dummy(:,6);
+
 else
     
     Thai_data = Thai_panel(before_program_mask,:);
+    year_dummy = dummyvar(categorical(Thai_data.year));
+    Thai_data.y1997 = year_dummy(:,1);
+    Thai_data.y1998 = year_dummy(:,2);
+    Thai_data.y1999 = year_dummy(:,3);
+    Thai_data.y2000 = year_dummy(:,4);
+    Thai_data.y2001 = year_dummy(:,5);
 
 end
 
-Thai_data.year = categorical(Thai_data.year);
+
 Results = ["design" 'variable' 'order' 'contact'];
 
 for residual_flag = [0,1]    
@@ -53,22 +73,59 @@ big_id = [[1:size(big_unique_hh,1)]', big_unique_hh];
 if residual_flag == 1
     
 % Linear Regression
+if after == 1
 
-fitted = fitlm(Thai_data, variable + '~ year + madult + fadult + kids + maleh'...
-                                + ' + farm + ageh + age2h + educh ' ...                           
-                                ,'Intercept',false); % OLS regression 
-% Extracting Residuals
-                          
+Thai_temp = Thai_data(:,[variable, 'madult', "fadult", 'kids', 'maleh', 'farm', 'ageh', 'age2h', 'educh',...
+            "y2002","y2003","y2004","y2005","y2006","y2007"]);
+Thai_array = table2array(Thai_temp);
+
+y = Thai_array(:,1);
+X = Thai_array(:,2:end);
+
+beta_hat = (X'*X)\X'*y;
+
+Thai_temp_small = Thai_small(:,[variable, 'madult', "fadult", 'kids', 'maleh', 'farm', 'ageh', 'age2h', 'educh',...
+            "y2002","y2003","y2004","y2005","y2006","y2007"]);
+Thai_temp_big   = Thai_big(:,[variable, 'madult', "fadult", 'kids', 'maleh', 'farm', 'ageh', 'age2h', 'educh',...
+            "y2002","y2003","y2004","y2005","y2006","y2007"]);
+
+Thai_array_small = table2array(Thai_temp_small);
+Thai_array_big = table2array(Thai_temp_big);
+
 variable_y = variable;
 variable = "res_" + variable_y;
 
-Thai_data{:,variable} = fitted.Residuals.Raw;
+Thai_small{:,variable} =  Thai_array_small(:,1) - Thai_array_small(:,2:end)*beta_hat;
+Thai_big{:,variable} =  Thai_array_big(:,1) - Thai_array_big(:,2:end)*beta_hat;
 
-% small_mask = Thai_data.small == 1;
-% big_mask = Thai_data.small == 0;
+else 
 
-Thai_small = Thai_data(small_mask,:);
-Thai_big = Thai_data(big_mask,:);
+Thai_temp = Thai_data(:,[variable, 'madult', "fadult", 'kids', 'maleh', 'farm', 'ageh', 'age2h', 'educh',...
+            "y1997","y1998","y1999","y2000","y2001"]);
+Thai_array = table2array(Thai_temp);
+
+y = Thai_array(:,1);
+X = Thai_array(:,2:end);
+
+beta_hat = (X'*X)\X'*y;    
+
+Thai_temp_small = Thai_small(:,[variable, 'madult', "fadult", 'kids', 'maleh', 'farm', 'ageh', 'age2h', 'educh',...
+            "y1997","y1998","y1999","y2000","y2001"]);
+Thai_temp_big   = Thai_big(:,[variable, 'madult', "fadult", 'kids', 'maleh', 'farm', 'ageh', 'age2h', 'educh',...
+            "y1997","y1998","y1999","y2000","y2001"]);
+
+Thai_array_small = table2array(Thai_temp_small);
+Thai_array_big = table2array(Thai_temp_big);
+
+variable_y = variable;
+variable = "res_" + variable_y;
+
+Thai_small{:,variable} =  Thai_array_small(:,1) - Thai_array_small(:,2:end)*beta_hat;
+Thai_big{:,variable}   =  Thai_array_big(:,1) - Thai_array_big(:,2:end)*beta_hat;
+
+end
+
+% Reshaping data set for path-wise bootstrap later
 
 [y_small_Thai, ~] = construct_test_data(Thai_small,variable_y);
 [y_big_Thai, ~] = construct_test_data(Thai_big,variable_y);
@@ -103,6 +160,9 @@ Thai_big = Thai_data(big_mask,:);
 [educh_small_Thai, ~]  = construct_test_data(Thai_small,"educh");
 [educh_big_Thai, ~] = construct_test_data(Thai_big,"educh");
 
+
+% Container of covariates
+
 covariate_small_cg = cat(3,year_small_Thai);
 covariate_small = cat(3,  madult_small_Thai, fadult_small_Thai, ...
                          kids_small_Thai, maleh_small_Thai, farm_small_Thai, ageh_small_Thai, age2h_small_Thai,educh_small_Thai);
@@ -114,7 +174,7 @@ covariate_big = cat(3,  madult_big_Thai, fadult_big_Thai, ...
 end
 
 % Tuning Parameters
-p = 1;
+p = 1; % L1-Type stat
 
 % Bootstrapping
 btsp = 1;
@@ -172,13 +232,12 @@ end
 end
 
 % Number of grid points
-ngrid = 200;
+ngrid = 100;
 
-% grid
+% Grid Points
 grid = linspace(min(min(min(sample1),min(sample2)),[],'all'),max(max(max(sample1),max(sample2)),[],'all'),ngrid)';
 
 % Estimation Starts
-% Function for linear operator
 
 T = size(sample1,2)-1;
 N1 = size(sample1,1);
@@ -232,10 +291,9 @@ T_21_sum = r_N^p * trapz(Lamb_21_sum);
 T_22_sum = r_N^p * trapz(Lamb_22_sum);
     
 
-for b = 1:200
-disp(b)
+parfor b = 1:200
 
-% Bootstrapping 'Path-Wise'
+% Bootstrapping 'Path-Wise' 
 index_for_path_wise_construnction1 = 0:N1:N1*T;
 bootstrap_index1 = randi([1,N1],N1,1,btsp);
 pw_btsp_index1 = bootstrap_index1 + repmat(index_for_path_wise_construnction1,1,1,btsp);
@@ -247,21 +305,6 @@ pw_btsp_index2 = bootstrap_index2 + repmat(index_for_path_wise_construnction2,1,
 % Check whether we have to conduct regression
 
 if residual_flag == 1
-    
-id_index1 = sample1_id(bootstrap_index1,2);
-id_index2 = sample2_id(bootstrap_index2,2);
-
-id_index = [id_index1; id_index2];
-id_index = unique(id_index);
-index_mask = zeros(size(Thai_data.id));
-
-for i = 1: size(id_index)
-    temp = Thai_data.id == id_index(i);
-    index_mask = index_mask + temp;
-end
-index_mask = logical(index_mask);
-
-table_b = Thai_data(index_mask,:);
 
 % sample 1
 y_bsample1 = sample1_y(pw_btsp_index1);
@@ -282,42 +325,27 @@ covr_cg_bsample2 = sample2_covariate_cg(bootstrap_index2,:,:);
 y_b2 = reshape(y_bsample2,[size(y_bsample2,1)*size(y_bsample2,2),1]);
 covr_b2 = reshape(covr_bsample2,[size(covr_bsample2,1)*size(covr_bsample2,2),size(covr_bsample2,3)]);
 covr_cg_b2 = reshape(covr_cg_bsample2,[size(covr_cg_bsample2,1)*size(covr_cg_bsample2,2),size(covr_cg_bsample2,3)]);
+ 
+% OLS Regression Starts
+y_b = [y_b1; y_b2];
+covr_b = [covr_b1; covr_b2];
+covr_cg_b = [covr_cg_b1; covr_cg_b2];
 
-% Concatenating for Bootstrap Regression \hat \theta*
+year_dummy_b = dummyvar(categorical(covr_cg_b));
+Thai_array_b = [y_b, covr_b, year_dummy_b];
 
-table_b1 = table();
+y_b = Thai_array_b(:,1);
+X_b = Thai_array_b(:,2:end);
 
-table_b1.tc = y_b1;
-table_b1.madult = covr_b1(:,1);                     
-table_b1.fadult = covr_b1(:,2);                     
-table_b1.kids = covr_b1(:,3);                     
-table_b1.maleh = covr_b1(:,4);                     
-table_b1.farm = covr_b1(:,5);                     
-table_b1.ageh = covr_b1(:,6);                     
-table_b1.age2h = covr_b1(:,7);                     
-table_b1.year = covr_cg_b1(:,1);
-table_b1.educh = covr_b1(:,8);
+beta_hat_b = pinv(X_b'*X_b)*X_b'*y_b;
 
+X_b1 = X_b(1:size(y_b1,1),:);
+X_b2 = X_b(size(y_b1,1)+1:end,:);
 
-table_b2 = table();
+b1sample1      = y_b1 - X_b1*beta_hat_b;
+b2sample2      = y_b2 - X_b2*beta_hat_b;
 
-table_b2.tc = y_b2;
-table_b2.madult = covr_b2(:,1);                     
-table_b2.fadult = covr_b2(:,2);                     
-table_b2.kids = covr_b2(:,3);                     
-table_b2.maleh = covr_b2(:,4);                     
-table_b2.farm = covr_b2(:,5);                     
-table_b2.ageh = covr_b2(:,6);                     
-table_b2.age2h = covr_b2(:,7);                     
-table_b2.year = covr_cg_b2(:,1);
-table_b2.educh = covr_b2(:,8);
-
-b_fitted = fitlm(table_b, variable_y + '~ year + madult + fadult + kids + maleh'...
-                                + ' + farm + ageh + age2h + educh');
-
-b1sample1 = y_b1 - b_fitted.predict(table_b1);
 b1sample1 = b1sample1(pw_btsp_index1);
-b2sample2 = y_b2 - b_fitted.predict(table_b2);
 b2sample2 = b2sample2(pw_btsp_index2);
 
 else
@@ -407,6 +435,6 @@ Results = [Results; [design variable "(1,1)" p_value_11_sum_contact_2;
 end
 end
 end
-writematrix(Results,"P_Values_time_after" + after + "Thai_Micro_20211024.csv")
+writematrix(Results,"P_Values_time_after" + after + "Thai_Micro_20210424.csv")
 
 end
