@@ -4,8 +4,8 @@
 T = 4;       % Terminal Period
 ngrid = 100; % Number of Grid Points
 btsp = 200;  % Number of bootstrapiing
-p1=1;        %  L1 staistics
-p2=2;        %  L2 staistics
+p1=1;        % L1 statistic
+p2=2;        % L2 statistic
 
 % Significance Level
 alpha = 0.05;
@@ -44,7 +44,6 @@ sample2 = squeeze(Y(:,:));
 
 % Setting a grid
 grid = linspace(min(min(sample1,sample2),[],'all'),max(max(sample1,sample2),[],'all'),ngrid)';
-% Function for linear operator
 
 % Bootstrapping 'Path-Wise'
 b1sample1 = path_wise_bootstrap(sample1,btsp);
