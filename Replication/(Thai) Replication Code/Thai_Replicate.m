@@ -55,7 +55,7 @@ end
 
 Results = ["design" 'variable' 'order' 'contact'];
 
-for residual_flag = [0,1]    
+for residual_flag = [0, 1]    
     
 for variable = ["netinc",  "tc"] % "tc" , 
 
@@ -291,7 +291,7 @@ T_21_sum = r_N^p * trapz(Lamb_21_sum);
 T_22_sum = r_N^p * trapz(Lamb_22_sum);
     
 
-parfor b = 1:200
+for b = 1:200
 
 % Bootstrapping 'Path-Wise' 
 index_for_path_wise_construnction1 = 0:N1:N1*T;
@@ -435,6 +435,6 @@ Results = [Results; [design variable "(1,1)" p_value_11_sum_contact_2;
 end
 end
 end
-writematrix(Results,"P_Values_time_after" + after + "Thai_Micro_20210424.csv")
+writematrix(Results,"P_Values_time_after" + after + "Thai_Micro_20211024.csv")
 
 end
