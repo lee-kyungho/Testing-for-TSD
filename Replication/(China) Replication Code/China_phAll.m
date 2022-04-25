@@ -50,6 +50,9 @@ NCDC_phall = [NCDC_ph0; NCDC_ph1; NCDC_ph2];
 NCDC_phall.provgb = categorical(NCDC_phall.provgb);
 NCDC_phall.quarter = categorical(NCDC_phall.quarter);
 
+% We use residuals for testing
+residual_flag = 1;
+
 % ------- TEST STARTS ---------- %
 
 Results = ["design" 'residual_flag' "phase" 'order' 'contact'];
@@ -77,8 +80,6 @@ sample_data.quarter = categorical(sample_data.quarter);
 
 [visib_test_data_0, unique_id_0] = test_data(sample_data0, "visib");
 [visib_test_data_1, unique_id_1] = test_data(sample_data1, "visib");
-
-for residual_flag = [1]
 
 ngrid = 100;
 
@@ -381,6 +382,5 @@ Results = [Results; [design residual_flag phase "(1,1)" p_value_11_max_contact_2
 
 end
 writematrix(Results, "China_CNT_1028.csv")
-end
 end
 
