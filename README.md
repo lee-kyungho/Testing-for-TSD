@@ -1,4 +1,4 @@
-# Testing for TSD
+# Testing for Time Stochastic Dominance
 
 This repository contains MATLAB implementation of Testing for Time Stochastic Dominance (forthcoming, Journal of Econometrics) by Kyungho Lee, Oliver Linton, and Yoon-Jae Whang.
 
