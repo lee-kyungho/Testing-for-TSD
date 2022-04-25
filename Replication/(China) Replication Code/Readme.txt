@@ -1,6 +1,6 @@
 This folder contains MATLAB and Stata codes for replicating results in Section 8.2 of 'Testing for Time Stochastic Dominance' by Kyungho Lee, Oliver Linton, and Yoon-Jae Whang
 
-1. China_phall.m
+1. China_phAll.m
 - This MATLAB code implements time stochastic dominance testings Section 8.2.
 
 2. Visib_Desc_Analysis.do
