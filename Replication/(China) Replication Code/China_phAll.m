@@ -244,7 +244,7 @@ id_index1 = sample1_id(bootstrap_index1);
 id_index2 = sample2_id(bootstrap_index2);
 
 id_index = [id_index1; id_index2];
-id_index = unique(id_index);
+%id_index = unique(id_index);
 index_mask = zeros(size(NCDC_phall.stn));
 
 for i = 1: size(id_index,1)
@@ -252,9 +252,10 @@ for i = 1: size(id_index,1)
     index_mask = index_mask + temp;
 end
 
-index_mask = logical(index_mask);
+index_logic = logical(index_mask);
+index_wgt   = index_mask(index_logic ~= 0);
 
-table_b = NCDC_phall(index_mask,variables);
+table_b = NCDC_phall(index_logic,variables);
 table_b.provgb = categorical(table_b.provgb);
 table_b.quarter = categorical(table_b.quarter);
 
@@ -296,7 +297,7 @@ table_b2.quarter = categorical(covr_b2(:,5));
 % Note on Warning
 % Depending on bootstrap draws, some categorical values are multicollinear
 % One dummy will be dropped while fitlm runs
-b_fitted = fitlm(table_b, "visib" + '~ wdsp + temp + prcp + provgb + quarter');
+b_fitted = fitlm(table_b, "visib" + '~ wdsp + temp + prcp + provgb + quarter','Weight', index_wgt);
 
 b1sample1 = y_b1 - b_fitted.predict(table_b1);
 b1sample1 = b1sample1(pw_btsp_index1);
